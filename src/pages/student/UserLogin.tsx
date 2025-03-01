@@ -1,0 +1,208 @@
+
+import type React from "react"
+import { useState, useEffect, useRef } from "react"
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import LoginSlider from "../../components/user/LoginSlider";
+import '../../i18n'
+import { useTranslation } from "react-i18next";
+import england from '/images/england-flag.png'
+import azerbaijan from '/images/azerbaijan.png'
+import russian from '/images/russia.png'
+import { motion } from "framer-motion";
+
+export default function UserLogin() {
+
+    const { t, i18n } = useTranslation()
+
+
+    const [showPassword, setShowPassword] = useState(false)
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        // Handle login logic here
+        console.log({ email, password })
+    }
+
+    const languages = [
+        { code: "en", flag: england, name: "En" },
+        { code: "az", flag: azerbaijan, name: "Az" },
+        { code: "ru", flag: russian, name: "Ru" },
+    ];
+
+    const [selectedLang, setSelectedLang] = useState(i18n.language);
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
+    const changeLanguageItem = (code: string) => {
+        i18n.changeLanguage(code);
+        setSelectedLang(code);
+        setIsOpen(false); // Close dropdown on select
+    };
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    return (
+        <div className="min-h-screen bg-rose-500 flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl overflow-hidden w-full max-w-5xl flex shadow-xl h-[600px]">
+                {/* Left Image Section */}
+                <div className="w-1/2 relative hidden md:block p-10">
+                    {/* <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Ekran%20%C5%9F%C9%99kli%202025-02-27%20114258-JypUzQTAaCfaAMYUuNnAJaKrfqPI7d.png"
+            alt="Student with books"
+            width={600}
+            height={800}
+            className="object-cover h-full"
+          /> */}
+
+                    <div className="w-full h-full rounded-2xl">
+                        {/* <img src="/images/loginCover.png" className="w-full h-full object-cover rounded-2xl" alt="" /> */}
+                        <LoginSlider />
+
+                    </div>
+                </div>
+
+                {/* Right Content Section */}
+                <div className="w-full md:w-1/2 p-8 md:p-12">
+                    <div className="flex justify-between items-center mb-4">
+                        {/* Company Logo */}
+                        <div className="w-[220px] h-[100px] -ml-7 ">
+                            <img src="/images/main-logo.png" className="w-full h-full" />
+                        </div>
+
+                        {/* Language Selector */}
+                        <div className="flex gap-2">
+                            {/* {languages.map(({ code, flag }) => (
+                                <button
+                                    key={code}
+                                    onClick={() => i18n.changeLanguage(code)}
+                                 
+                                >
+                                    <span className="inline-block w-5 h-5">{flag}</span>
+                                    {code.toUpperCase()}
+                                </button>
+                            ))} */}
+
+                            <div className="relative" ref={dropdownRef}>
+                                <button
+                                    className="flex items-center gap-2 border border-gray-200 px-3 py-2 rounded-md shadow-md"
+                                    onClick={() => setIsOpen(!isOpen)}
+                                >
+                                    <img
+                                        src={languages.find((lang) => lang.code === selectedLang)?.flag}
+                                        alt=""
+                                        className="w-5 h-5"
+                                    />
+                                    {selectedLang.toUpperCase()}
+                                </button>
+
+                                {isOpen && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="absolute left-0 mt-2 bg-white border  border-gray-200 shadow-md rounded-md w-full"
+                                    >
+                                        {languages.map(({ code, flag, name }, index) => (
+                                            <button
+                                                key={code}
+                                                className={`flex items-center gap-2 p-2 hover:bg-gray-200 w-full ${index == 2 && ' rounded-b-md'} ${index == 0 && ' rounded-t-md'}`}
+                                                onClick={() => changeLanguageItem(code)}
+                                            >
+                                                <img src={flag} alt={name} className="w-5 h-5" />
+                                                {name}
+                                            </button>
+                                        ))}
+                                    </motion.div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="space-y-6">
+                        <div className="space-y-2">
+                            <h1 className="text-2xl font-bold">{t('title')}</h1>
+                            <p className="text-gray-600">
+                                {t('description')}
+                            </p>
+                        </div>
+
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="space-y-4">
+                                <div>
+                                    <label htmlFor="email" className="">
+                                        {t('email')}
+                                    </label>
+                                    <input
+                                        id="email"
+                                        type="email"
+                                        placeholder={t('emailText')}
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="w-full px-4 mt-2 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="relative">
+                                    <label htmlFor="password" className="">
+                                        {t('password')}
+                                    </label>
+                                    <input
+                                        id="password"
+                                        type={showPassword ? "text" : "password"}
+                                        placeholder="••••••••"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="w-full px-4 py-3 mt-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                        required
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                                    >
+                                        {showPassword ? <VisibilityOffIcon className="w-5 h-5" /> : <VisibilityIcon className="w-5 h-5" />}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="text-right">
+                                {/* <Link href="/forgot-password" className="text-blue-600 hover:underline text-sm">
+                  Forgot Password?
+                </Link> */}
+                                {t('forgotPassword')}
+
+                            </div>
+
+                            <button
+                                type="submit"
+                                className="w-full bg-yellow-400 text-black font-semibold py-3 rounded-lg hover:bg-yellow-500 transition-colors"
+                            >
+                                {t('login')}
+                            </button>
+                        </form>
+
+                        <div className="text-center space-y-2">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
