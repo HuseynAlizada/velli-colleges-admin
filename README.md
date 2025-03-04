@@ -1,7 +1,3 @@
-Here is the README content in a normal structure:
-
----
-
 # Family School 📚🎮
 
 Family School is an interactive educational platform built with React, TypeScript, Tailwind CSS, and Supabase. It allows students to take exams, follow news, play educational games, and track their rankings.
