@@ -42,6 +42,3 @@ Create a `.env` file and configure it with your Supabase credentials:
 VITE_SUPABASE_URL=your_supabase_url  
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key  
 ```
-
-
-You can find the original file [here](https://github.com/HuseynAlizada/family_school/blob/f80a50335b18599e2b027f689aff2336a482a123/README.md).
