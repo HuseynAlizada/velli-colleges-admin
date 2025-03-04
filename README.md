@@ -48,3 +48,53 @@ export default tseslint.config({
   },
 })
 ```
+
+
+
+
+
+
+
+
+
+Family School 📚🎮
+Family School is an interactive educational platform built with React, TypeScript, Tailwind CSS, and Supabase. It allows students to take exams, follow news, play educational games, and track their rankings, while admins can manage exams, news, games, and other school-related content.
+
+🚀 Features
+🎓 Students
+✅ Take and submit exams
+✅ Stay updated with the latest news
+✅ Play interactive educational games
+✅ View and compare rankings
+
+🛠 Admins
+✅ Create and manage exams
+✅ Publish news and announcements
+✅ Add and update games
+✅ Manage student rankings
+
+🏗 Tech Stack
+Frontend: React, TypeScript, Tailwind CSS
+Backend & Database: Supabase
+📦 Installation
+bash
+Copy
+Edit
+git clone https://github.com/your-repo/family-school.git  
+cd family-school  
+npm install  
+🚀 Running the Project
+bash
+Copy
+Edit
+npm run dev  
+⚙️ Environment Variables
+Create a .env file and configure it with your Supabase credentials:
+
+plaintext
+Copy
+Edit
+VITE_SUPABASE_URL=your_supabase_url  
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key  
+📜 License
+This project is licensed under MIT License.
