@@ -10,6 +10,7 @@ import StudentLayout from "../layout/StudentLayout";
 import Home from "../pages/student/Home";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import StudentNews from "../pages/student/StudentNews";
+import ExamDetails from "../pages/admin/ExamDetails";
 
 const router = createBrowserRouter([
     {
@@ -29,7 +30,10 @@ const router = createBrowserRouter([
             { path: "levels", element: <Levels /> },
             { path: "news", element: <News /> },
             { path: "add-student", element: <AddStudent /> },
+            { path: "edit-student/:id", element: <AddStudent /> },
             { path: "import-exam", element: <ImportExam /> },
+            { path: "import-exam/:id", element: <ImportExam /> },
+            { path: "exam-details/:id", element: <ExamDetails /> },
             { path: "manage-exam", element: <ManageExam /> },
         ],
     },

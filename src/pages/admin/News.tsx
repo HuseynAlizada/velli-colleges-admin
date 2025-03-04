@@ -55,11 +55,11 @@ export default function News() {
         autoClose={3000} />
       {popUp && (
         <div style={{ backgroundColor: "rgba(196, 194, 194, 0.6)" }} className="absolute  w-full h-screen top-0 left-0 flex items-center justify-center">
-          <NewsModal closePopUp={closePopUp} />
+          <NewsModal fetchNews={fetchNews} closePopUp={closePopUp} />
         </div>
       )}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-gray-800">Levels</h2>
+        <h2 className="text-xl font-semibold text-gray-800">News</h2>
         <button onClick={openPopUp} className="p-2 rounded-full bg-rose-500 text-white hover:bg-rose-600 transition-colors">
           <AddIcon className="w-5 h-5" />
         </button>
@@ -90,13 +90,13 @@ export default function News() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {news.map((item) => (
+            {news.map((item,index) => (
               <tr key={item.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.id}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item.title}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.description}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.link}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4  text-sm text-gray-500">{index+1}</td>
+                <td className="px-6 py-4  text-sm text-gray-900">{item.title}</td>
+                <td className="px-6 py-4  text-sm text-gray-500">{item.description}</td>
+                <td className="px-6 py-4  text-sm text-gray-500">{item.link}</td>
+                <td className="px-6 py-4  text-sm text-gray-500">
                   <img className="w-[60px] h-[60px] object-cover" src={item.image_url} alt="" />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

@@ -35,3 +35,52 @@ export interface news {
     title:string
 }
 
+
+
+export interface Podcast {
+    id: number
+    title: string
+    description: string
+    duration: string
+    author: string
+    image: string
+}
+
+
+export interface NewsItem {
+    id: number
+    title: string
+    author: string
+    date: string
+    image: string
+}
+
+// News type end
+
+
+
+
+
+
+// Exams type start
+
+export interface Exam{
+    id:number,
+    title:string,
+    file_url:string,
+    pass_score:number,
+    total_score:number,
+    duration:number,
+    level:string
+}
+
+
+// Exams type end
+
+
+
+
+
+
+
+

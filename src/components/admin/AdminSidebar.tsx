@@ -13,9 +13,9 @@ const AdminSidebar = () => {
                 <h3 className='whiteSpace-nowrap'>Family School</h3>
             </div>
             <div className='flex flex-col gap-3 text-white mt-16 px-4'>
-                {adminMenu.map(item => (
+                {adminMenu.map((item) => (
                     item.link ? (
-                        <Link to={`/admin/${item.link}`}>
+                        <Link to={`/admin/${item.link}`} key={item.id}>
                             <div key={item.id} className={`list`} onClick={() => setActiveMenu(item.id)}>
                                 <div className={`flex items-center gap-2 cursor-pointer menu-animation py-4 ${item.id === activeMenu ? 'active' : ''}`}>
                                     {item.icon}
@@ -37,7 +37,7 @@ const AdminSidebar = () => {
 
                         <div className={`flex flex-col gap-2 pl-10 submenu ${(item?.subMenu && item.id === activeMenu) ? 'active' : ''}`}>
                             {item.subMenu && item?.subMenu.map(subItem => (
-                              <Link to={`/admin/${subItem.link}`}>  <div key={subItem.id} className='py-2'>{subItem.title}</div></Link>
+                                <Link to={`/admin/${subItem.link}`} key={subItem.id}>  <div className='py-2'>{subItem.title}</div></Link>
                             ))}
                         </div>
                     </div>)

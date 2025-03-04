@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react"
 import { supabase } from "../../utils/supabase-client"
 import { Phone, Mail, User, UserCircle, Shield } from 'lucide-react'
+import { useNavigate } from "react-router-dom"
 
 interface Student {
-    id: string
+    id: string | string
     name: string
     email: string
     phone: string
@@ -15,6 +16,7 @@ interface Student {
 }
 
 export default function AdminDashboard() {
+    const navigate = useNavigate()
     const [students, setStudents] = useState<Student[]>([])
 
     useEffect(() => {
@@ -32,6 +34,9 @@ export default function AdminDashboard() {
         }
     }
 
+
+
+
     const getLevelColor = (level: string) => {
         const colors = {
             beginner: "bg-emerald-50 text-emerald-700 ring-emerald-600/20",
@@ -41,24 +46,25 @@ export default function AdminDashboard() {
         return colors[level.toLowerCase()] || "bg-gray-50 text-gray-700 ring-gray-600/20"
     }
 
-
     const handleDelete = async (id: number) => {
         try {
-            const { data, error } = await supabase.from('students').delete().eq('id', id)
+            const { error } = await supabase.from('students').delete().eq('id', id)
             if (error) {
                 console.log("Error deleting student", error);
                 return
             }
             setStudents((prevStudents) => prevStudents.filter(student => student.id !== id))
         }
-
         catch (err) {
             console.error("Unexpected error", err);
 
         }
+    }
 
 
-
+    const handleEdit = (id: number) => {
+        console.log(id);
+        navigate(`/admin/edit-student/${id}`)
     }
 
     return (
@@ -135,7 +141,7 @@ export default function AdminDashboard() {
 
                                 {/* Action Buttons */}
                                 <div className="mt-6 flex gap-2">
-                                    <button className="flex-1 px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg transition-all hover:scale-110 ">
+                                    <button className="flex-1 px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg transition-all hover:scale-110" onClick={() => handleEdit(student.id)} >
                                         Edit
                                     </button>
                                     {/* <button className="flex-1 px-4 py-2 text-sm font-medium text-white bg-yellow-500 rounded-lg  transition-all hover:scale-110">

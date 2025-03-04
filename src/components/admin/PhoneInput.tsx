@@ -11,8 +11,10 @@ interface PhoneInputProps {
   id: string
 }
 
-export function PhoneInput({ value, onChange, placeholder, name, id }: PhoneInputProps) {
-  const [inputValue, setInputValue] = useState(value || "+994 ")
+export function PhoneInput({ value, onChange, name, id }: PhoneInputProps) {
+  const [inputValue, setInputValue] = useState( value && value)
+  console.log(value, 'value data');
+  
 
   useEffect(() => {
     if (!value && inputValue !== "+994 ") {

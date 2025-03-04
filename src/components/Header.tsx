@@ -3,7 +3,7 @@ import PersonIcon from '@mui/icons-material/Person';
 
 const Header = () => {
     return (
-        <div className='flex items-center justify-between px-4 py-[12px] bg-[#D33D5A] text-white fixed top-0 w-full'>
+        <div className=' z-50 flex items-center justify-between px-4 py-[12px] bg-[#D33D5A] text-white fixed top-0 w-full'>
             <h1 className='text-xl font-semibold'>Student Dashboard</h1>
             <div>
                 <div className='flex items-center gap-4'>

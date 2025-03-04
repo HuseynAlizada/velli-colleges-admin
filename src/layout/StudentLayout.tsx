@@ -19,15 +19,15 @@ const StudentLayout = () => {
     return (
         <div>
             <Header />
-            <div className="h-screen p-4 mt-10 mx-auto gap-10">
+            <div className=" p-4 mt-10 mx-auto gap-10">
                 <div className="w-[10%] ">
                     <StudentSidebar />
                 </div>
-                <div className="flex  w-[80%] ml-auto border-2">
+                <div className="flex  w-[80%] ml-auto ">
                     <Outlet />
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

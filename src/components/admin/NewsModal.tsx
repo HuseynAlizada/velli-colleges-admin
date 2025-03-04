@@ -2,8 +2,9 @@ import type React from "react";
 import { useState, useRef } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { supabase } from "../../utils/supabase-client"; // Import Supabase client
+import { toast, ToastContainer } from "react-toastify";
 
-export default function NewsModal({ closePopUp }: { closePopUp: () => void }) {
+export default function NewsModal({ closePopUp,fetchNews }: { closePopUp: () => void ,fetchNews:()=>void}) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -33,6 +34,8 @@ export default function NewsModal({ closePopUp }: { closePopUp: () => void }) {
       }
 
       imageUrl = supabase.storage.from("news-images").getPublicUrl(data.path).data.publicUrl;
+      toast.success(`News"Added!`);
+      fetchNews()
 
     }
     console.log(imageUrl, 'imageUrl');
@@ -65,7 +68,6 @@ export default function NewsModal({ closePopUp }: { closePopUp: () => void }) {
       fileInputRef.current.value = "";
     }
 
-    alert("News submitted successfully!");
     setLoading(false);
     closePopUp();
   };
@@ -78,6 +80,8 @@ export default function NewsModal({ closePopUp }: { closePopUp: () => void }) {
 
   return (
     <div className="bg-white rounded-lg w-full max-w-md mx-4">
+      <ToastContainer autoClose={3000} />
+
       {/* Header */}
       <div className="flex items-center justify-between bg-rose-500 text-white px-6 py-4 rounded-t-lg">
         <h2 className="text-xl font-semibold">Articles & News</h2>

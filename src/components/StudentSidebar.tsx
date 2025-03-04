@@ -6,13 +6,13 @@ const StudentSidebar = () => {
     const [activeMenu, setActiveMenu] = useState<number | null>(null)
     return (
         <div className="h-screen fixed top-0 left-0 w-[230px] bg-[#D33D5A] py-10">
-            <div className=' mx-auto w-full  flex items-center justify-center gap-2 text-white'>
-                <div className='w-10 h-10'>
+            <div className=' mx-auto w-full mt-10  flex items-center justify-center gap-2 text-white'>
+                <div className='w-10 h-10 '>
                     <img src="/images/logo.png" alt="" />
                 </div>
                 <h3 className='whiteSpace-nowrap'>Family School</h3>
             </div>
-            <div className=' text-white mt-16 px-4 flex flex-col gap-3 '>
+            <div className=' text-white mt-12 px-4 flex flex-col gap-3 '>
                 {studentMenu.map(item => (
                     item.link ? (
                         <Link to={`/${item.link}`}>
