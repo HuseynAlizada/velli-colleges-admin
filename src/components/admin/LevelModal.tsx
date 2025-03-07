@@ -41,7 +41,7 @@ export default function LevelModal({ closePopUp, getLevels, editLevelData }: lev
   return (
     <div className="bg-white rounded-lg w-full max-w-md mx-4">
       <ToastContainer autoClose={3000} />
-      <div className="flex items-center justify-between bg-rose-500 text-white px-6 py-4 rounded-t-lg">
+      <div className="flex items-center justify-between inset-0 bg-gradient-to-r from-rose-500 to-pink-600  text-white px-6 py-4 rounded-t-lg">
         <h2 className="text-xl font-semibold">Levels</h2>
         <button className="text-white hover:text-gray-200 transition-colors" onClick={closePopUp}>
           <CloseIcon className="w-6 h-6" />
@@ -76,7 +76,7 @@ export default function LevelModal({ closePopUp, getLevels, editLevelData }: lev
         <div className="flex justify-end">
           <button
             type="submit"
-            className="px-4 py-2 bg-rose-500 text-white rounded-md hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
+            className="px-4 py-2 inset-0 bg-gradient-to-r from-rose-500 to-pink-600  text-white rounded-md hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
           >
             {editLevelData ? "Edit Level" : "Add Level"}
           </button>

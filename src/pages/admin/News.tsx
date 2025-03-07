@@ -52,9 +52,10 @@ export default function News() {
   return (
     <div className="p-6 w-full ">
       <ToastContainer
-        autoClose={3000} />
+        autoClose={3000}
+        closeOnClick={true} />
       {popUp && (
-        <div style={{ backgroundColor: "rgba(196, 194, 194, 0.6)" }} className="absolute  w-full h-screen top-0 left-0 flex items-center justify-center">
+        <div style={{ backgroundColor: "rgba(196, 194, 194, 0.6)" }} className="fixed  w-full h-screen top-0 left-0 flex items-center justify-center">
           <NewsModal fetchNews={fetchNews} closePopUp={closePopUp} />
         </div>
       )}
@@ -90,9 +91,9 @@ export default function News() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {news.map((item,index) => (
+            {news.map((item, index) => (
               <tr key={item.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4  text-sm text-gray-500">{index+1}</td>
+                <td className="px-6 py-4  text-sm text-gray-500">{index + 1}</td>
                 <td className="px-6 py-4  text-sm text-gray-900">{item.title}</td>
                 <td className="px-6 py-4  text-sm text-gray-500">{item.description}</td>
                 <td className="px-6 py-4  text-sm text-gray-500">{item.link}</td>

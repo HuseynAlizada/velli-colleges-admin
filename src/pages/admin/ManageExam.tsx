@@ -72,9 +72,9 @@ export default function ManageExam() {
                             <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                                 Pass Score
                             </th>
-                            <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                            {/* <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                                 Total Score
-                            </th>
+                            </th> */}
                             <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                                 Duration
                             </th>
@@ -95,7 +95,7 @@ export default function ManageExam() {
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{index + 1}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{exam.title}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{exam.pass_score}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{exam.total_score}</td>
+                                {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{exam.total_score}</td> */}
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{exam.duration} hr</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{exam.level}</td>

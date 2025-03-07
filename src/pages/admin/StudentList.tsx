@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/supabase-client";
+import { StudentData } from "../../types";
 
 
 export default function StudentList() {
-  const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState<StudentData[] | []>([]);
 
   useEffect(() => {
     fetchStudents();
@@ -11,6 +12,8 @@ export default function StudentList() {
 
   const fetchStudents = async () => {
     const { data, error } = await supabase.from("students").select("*");
+    console.log(data, 'data');
+
 
     if (error) {
       console.error("Error fetching students:", error);

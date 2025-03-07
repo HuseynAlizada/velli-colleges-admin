@@ -1,21 +1,16 @@
 import type React from "react"
-
 import { useState } from "react"
 import CloseIcon from '@mui/icons-material/Close';
-
-
 
 export default function ExamModal({ closePopUp }: { closePopUp: () => void }) {
     const [formData, setFormData] = useState({
         name: "",
         description: "",
     })
-
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         setFormData({ name: "", description: "" }) // Reset form
     }
-
 
     return (
         <div className="bg-white rounded-lg w-full max-w-md mx-4">
@@ -26,7 +21,6 @@ export default function ExamModal({ closePopUp }: { closePopUp: () => void }) {
                     <CloseIcon className="w-6 h-6" />
                 </button>
             </div>
-
             {/* Form */}
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 <div className="space-y-2">

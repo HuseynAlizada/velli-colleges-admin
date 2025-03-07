@@ -4,20 +4,20 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import SchoolIcon from '@mui/icons-material/School';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import GradeIcon from '@mui/icons-material/Grade';
+import { AdminMenu } from '../types';
 
-const adminMenu = [
+const adminMenu: AdminMenu[] = [
     {
         id: 1,
         icon: <DashboardIcon />,
         title: "Dashboard",
-
-        link:'dashboard'
+        link: 'dashboard'
     },
     {
         id: 2,
         icon: <UpgradeIcon />,
         title: "Levels",
-        link:"levels"
+        link: "levels"
     },
     {
         id: 3,
@@ -27,12 +27,12 @@ const adminMenu = [
             {
                 id: 7,
                 title: "Manage Exam",
-                link:"manage-exam"
+                link: "manage-exam"
             },
             {
                 id: 8,
                 title: "Import Exam File",
-                link:"import-exam"
+                link: "import-exam"
 
             }
         ]
@@ -45,7 +45,7 @@ const adminMenu = [
             {
                 id: 10,
                 title: "Add Student",
-                link:"add-student"
+                link: "add-student"
             }
         ]
     },
@@ -53,14 +53,14 @@ const adminMenu = [
         id: 5,
         icon: <NewspaperIcon />,
         title: "News & Articles",
-        link:"news"
+        link: "news"
 
     },
     {
         id: 6,
         icon: <GradeIcon />,
         title: "Exam Grade",
-        link:"exam-grade"
+        link: "exam-grade"
 
     }
 ]

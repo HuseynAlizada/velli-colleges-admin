@@ -8,7 +8,7 @@ const AdminLogin = () => {
     const navigate = useNavigate();
 
     const handleLogin = () => {
-        if (username === "Huseyn" && password === "123") {
+        if (username === "test23@gmail.com" && password === "test123") {
             const token = btoa(`${username}:${password}`); // Encode as a mock JWT
             Cookies.set("token", token, { expires: 1 / 24 }); // Set cookie for 1 day
             navigate("/admin/dashboard"); // Redirect to admin page
@@ -19,21 +19,22 @@ const AdminLogin = () => {
     };
 
     return (
-        <div className="bg-gray-400 w-full h-screen flex items-center justify-center">
+        <div className="bg-gray-300 w-full h-screen flex items-center justify-center">
 
             <div className="bg-white flex flex-col px-4 pt-6 pb-8  min-w-[500px] rounded-2xl">
                 <div className="flex items-center ">
                     <img src="/images/logo.png" className="w-[100px] h-[100px]" alt="" />
                     <span className="text-2xl -ml-4">Family School</span>
-                   
+
                 </div>
                 <div className="flex flex-col  w-[80%] mx-auto">
-                <h1 className="text-[32px] mb-10 text-center font-bold my-4 whitespace-nowrap">Sign in to your account
-                </h1>
+                    <h1 className="text-[32px] mb-10 text-center font-bold my-4 whitespace-nowrap">Sign in to your account
+                    </h1>
                     <label htmlFor="">Email Address</label>
                     <input
-                        type="text"
+                        type="email"
                         value={username}
+                        required
                         onChange={(e) => setUsername(e.target.value)}
                         className="h-10 mb-3 border-2 border-gray-300 rounded-sm mt-2 pl-2"
                     />
@@ -42,6 +43,7 @@ const AdminLogin = () => {
                     <input
                         type="password"
                         value={password}
+                        required
                         onChange={(e) => setPassword(e.target.value)}
                         className="h-10 border-2 border-gray-300 rounded-sm mt-2 pl-2"
                     />

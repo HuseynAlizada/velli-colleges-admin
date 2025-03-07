@@ -12,15 +12,19 @@ interface Student {
     phone: string
     level: string
     parent_name: string
-    parent_phone: string
+    parent_phone: string,
+    image_url: string
 }
 
 export default function AdminDashboard() {
     const navigate = useNavigate()
     const [students, setStudents] = useState<Student[]>([])
+    const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
+        setLoading(true)
         fetchStudents()
+        setLoading(false)
     }, [])
 
     const fetchStudents = async () => {
@@ -73,6 +77,7 @@ export default function AdminDashboard() {
                 Students List
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
                 {students.length > 0 ? (
                     students.map((student) => (
                         <div
@@ -83,7 +88,7 @@ export default function AdminDashboard() {
                             <div className="relative h-32 bg-gradient-to-r from-rose-400 to-rose-600">
                                 <div className="absolute -bottom-12 left-6">
                                     <img
-                                        src='/images/student_avatar.jpeg'
+                                        src={student.image_url || '/images/student_avatar.jpeg'}
                                         alt={student.name}
                                         className="w-24 h-24 rounded-xl object-cover border-4 border-white shadow-md"
                                     />

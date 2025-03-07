@@ -83,7 +83,7 @@ export default function NewsModal({ closePopUp,fetchNews }: { closePopUp: () => 
       <ToastContainer autoClose={3000} />
 
       {/* Header */}
-      <div className="flex items-center justify-between bg-rose-500 text-white px-6 py-4 rounded-t-lg">
+      <div className="flex items-center justify-between inset-0 bg-gradient-to-r from-rose-500 to-pink-600  text-white px-6 py-4 rounded-t-lg">
         <h2 className="text-xl font-semibold">Articles & News</h2>
         <button onClick={closePopUp} className="text-white hover:text-gray-200 transition-colors">
           <CloseIcon className="w-6 h-6" />
@@ -154,7 +154,7 @@ export default function NewsModal({ closePopUp,fetchNews }: { closePopUp: () => 
           <button
             type="submit"
             disabled={loading}
-            className="px-4 py-2 bg-rose-500 text-white rounded-md hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
+            className="px-4 py-2 inset-0 bg-gradient-to-r from-rose-500 to-pink-600  text-white rounded-md hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
           >
             {loading ? "Submitting..." : "Submit"}
           </button>

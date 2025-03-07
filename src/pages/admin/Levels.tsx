@@ -84,7 +84,7 @@ export default function Levels() {
       )}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold text-gray-800">Levels</h2>
-        <button onClick={openPopUp} className="p-2 rounded-full cursor-pointer bg-rose-500 text-white hover:bg-rose-600 transition-colors">
+        <button onClick={openPopUp} className="p-2 rounded-full cursor-pointer inset-0 bg-gradient-to-r from-rose-500 to-pink-600  text-white hover:bg-rose-600 transition-colors">
           <AddIcon className="w-5 h-5" />
         </button>
       </div>
