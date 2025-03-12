@@ -1,12 +1,14 @@
 import { Outlet } from "react-router-dom"
 import AdminSidebar from "../components/admin/AdminSidebar"
+import { useState } from "react"
 
 const AdminLayout = () => {
+
 
     return (
         <div className="flex ">
             <div className="xl:w-[20%] ">
-                <AdminSidebar />
+                <AdminSidebar  />
             </div>
 
             <div className=" xl:w-[80%] w-full">

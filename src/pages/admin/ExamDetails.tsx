@@ -11,7 +11,9 @@ const ExamDetails = () => {
     const [title, setTitle] = useState<string | null>(null);
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
     const [editedQuestion, setEditedQuestion] = useState<any>(null);
-    const [loading, setLoading] = useState(false); // Added for UI feedback
+    const [loading, setLoading] = useState(false);
+    const [maxOptions, setMaxOptions] = useState(0); // Track maximum number of options
+    const [optionLabels, setOptionLabels] = useState<string[]>([]); // Track option labels (A, B, C, etc.)
 
     useEffect(() => {
         const fetchExamData = async () => {
@@ -46,13 +48,26 @@ const ExamDetails = () => {
                 const reader = new FileReader();
                 reader.readAsArrayBuffer(blob);
                 reader.onload = (e) => {
-                    const data = new Uint8Array(e.target.result);
+                    const data = new Uint8Array(e.target.result as ArrayBuffer);
                     const workbook = XLSX.read(data, { type: "array" });
                     const sheetName = workbook.SheetNames[0];
                     const sheet = workbook.Sheets[sheetName];
                     const parsedData = XLSX.utils.sheet_to_json(sheet);
                     console.log("Parsed questions from file:", parsedData);
                     setQuestions(parsedData);
+
+                    // Determine the maximum number of options and their labels
+                    const optionKeysSet = new Set<string>();
+                    parsedData.forEach((q: any) => {
+                        Object.keys(q).forEach((key) => {
+                            if (key.startsWith("Option ")) {
+                                optionKeysSet.add(key);
+                            }
+                        });
+                    });
+                    const sortedOptionKeys = Array.from(optionKeysSet).sort();
+                    setMaxOptions(sortedOptionKeys.length);
+                    setOptionLabels(sortedOptionKeys.map((key) => key.split(" ")[1])); // Extract A, B, C, etc.
                     setLoading(false);
                 };
                 reader.onerror = () => {
@@ -196,10 +211,39 @@ const ExamDetails = () => {
         }
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         console.log(`Changing ${name} to ${value}`);
         setEditedQuestion((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const renderOptions = (question: any, isEditing: boolean, optionLabel: string) => {
+        const optionKey = `Option ${optionLabel}`;
+        if (isEditing && editingIndex !== null) {
+            return (
+                <td className="px-6 py-4 text-sm text-gray-900">
+                    <input
+                        type="text"
+                        name={optionKey}
+                        value={editedQuestion?.[optionKey] || ""}
+                        onChange={handleInputChange}
+                        className="w-full border rounded p-1"
+                        disabled={loading}
+                    />
+                </td>
+            );
+        }
+        return (
+            <td className="px-6 py-4 text-sm text-gray-900">
+                {question[optionKey] ? (
+                    <span className={question["Correct Option"] === optionKey ? "text-green-600" : ""}>
+                        {question[optionKey]}
+                    </span>
+                ) : (
+                    "-"
+                )}
+            </td>
+        );
     };
 
     return (
@@ -216,9 +260,18 @@ const ExamDetails = () => {
                         <tr>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Question</th>
+                            {optionLabels.map((label) => (
+                                <th
+                                    key={`option-${label}`}
+                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                >
+                                    Option {label}
+                                </th>
+                            ))}
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Correct Option</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Exam</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Level</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Correct Option</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Section</th>
                             <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
@@ -240,22 +293,30 @@ const ExamDetails = () => {
                                         question.Question
                                     )}
                                 </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{title}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{level}</td>
+                                {optionLabels.map((label) => renderOptions(question, editingIndex === index, label))}
                                 <td className="px-6 py-4 text-sm text-gray-900">
                                     {editingIndex === index ? (
-                                        <input
-                                            type="text"
-                                            name={question["Correct Option"]}
-                                            value={editedQuestion?.[question["Correct Option"]] || ""}
+                                        <select
+                                            name="Correct Option"
+                                            value={editedQuestion?.["Correct Option"] || ""}
                                             onChange={handleInputChange}
                                             className="w-full border rounded p-1"
                                             disabled={loading}
-                                        />
+                                        >
+                                            <option value="">Select Correct Option</option>
+                                            {optionLabels.map((label) => (
+                                                <option key={`option-${label}`} value={`Option ${label}`}>
+                                                    Option {label}
+                                                </option>
+                                            ))}
+                                        </select>
                                     ) : (
-                                        question[question["Correct Option"]]
+                                        question["Correct Option"] || "-"
                                     )}
                                 </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{title}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{level}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{question.Section}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div className="flex justify-end gap-2">
                                         {editingIndex === index ? (

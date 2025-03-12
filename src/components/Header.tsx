@@ -42,7 +42,7 @@ const Header = () => {
                     <h3>Hello, <span>{userData && userData.name}</span></h3>
                     <div className='flex items-center ' onClick={() => setMenu(!menu)}>
                         <div className='w-8 h-8 rounded-full  flex items-center justify-center '>
-                            <img src={userData?.image_url && userData.image_url} alt="" className='rounded-full' />
+                            <img src={userData?.image_url && userData.image_url} alt="" className='rounded-full w-full h-full' />
                         </div>
                         <KeyboardArrowDownIcon />
                     </div>
