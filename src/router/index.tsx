@@ -7,14 +7,16 @@ import Levels from "../pages/admin/Levels";
 import AdminLogin from "../pages/admin/AdminLogin";
 import RequireAuth from "../middleware";
 import StudentLayout from "../layout/StudentLayout";
-import Home from "../pages/student/Home";
+import Home from "../pages/user/Home";
 import AdminDashboard from "../pages/admin/AdminDashboard";
-import StudentNews from "../pages/student/StudentNews";
+import StudentNews from "../pages/user/StudentNews";
 import ExamDetails from "../pages/admin/ExamDetails";
-import ExamList from "../pages/student/ExamList";
-import ExamQuestions from "../pages/admin/ExamQuestions";
-import StudentProfile from "../pages/student/StudentProfile";
-import UserLogin from "../pages/student/UserLogin";
+import ExamQuestions from "../pages/user/ExamQuestions";
+import StudentProfile from "../pages/user/StudentProfile";
+import UserLogin from "../pages/user/UserLogin";
+import LockedExams from "../pages/user/LockedExams";
+import ExamRequests from "../pages/admin/ExamRequests";
+import ApprovedExams from "../pages/user/ApprovedExams";
 
 const router = createBrowserRouter([
     {
@@ -23,8 +25,9 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Home /> },
             { path: "news", element: <StudentNews /> },
-            { path: "exams", element: <ExamList /> },
-            { path: "exams/:id", element: <ExamQuestions /> },
+            { path: "locked-exams", element: <LockedExams /> },
+            { path: "approved-exams", element: <ApprovedExams /> },
+            { path: "approved-exams/:id", element: <ExamQuestions /> },
             { path: "practice-exam", element: <StudentNews /> },
             { path: "news", element: <StudentNews /> },
             { path: "exam-grade", element: <StudentNews /> },
@@ -44,6 +47,7 @@ const router = createBrowserRouter([
             { path: "import-exam", element: <ImportExam /> },
             { path: "import-exam/:id", element: <ImportExam /> },
             { path: "exam-details/:id", element: <ExamDetails /> },
+            { path: "exam-requests", element: <ExamRequests /> },
             { path: "manage-exam", element: <ManageExam /> },
         ],
     },

@@ -19,7 +19,6 @@ const ExamDetails = () => {
         const fetchExamData = async () => {
             try {
                 setLoading(true);
-                console.log("Fetching exam data for ID:", id);
                 const { data: examData, error: examError } = await supabase
                     .from("exams")
                     .select("*")
@@ -27,7 +26,6 @@ const ExamDetails = () => {
                     .single();
 
                 if (examError) throw examError;
-                console.log("Exam data:", examData);
                 setLevel(examData.level);
                 setTitle(examData.title);
 
@@ -40,7 +38,6 @@ const ExamDetails = () => {
                 }
 
                 const urlWithTimestamp = `${fileUrl}?t=${Date.now()}`;
-                console.log("Fetching file from URL:", urlWithTimestamp);
                 const response = await fetch(urlWithTimestamp);
                 if (!response.ok) throw new Error(`Failed to fetch Excel file: ${response.statusText}`);
                 const blob = await response.blob();
@@ -53,7 +50,6 @@ const ExamDetails = () => {
                     const sheetName = workbook.SheetNames[0];
                     const sheet = workbook.Sheets[sheetName];
                     const parsedData = XLSX.utils.sheet_to_json(sheet);
-                    console.log("Parsed questions from file:", parsedData);
                     setQuestions(parsedData);
 
                     // Determine the maximum number of options and their labels
@@ -84,7 +80,6 @@ const ExamDetails = () => {
     }, [id]);
 
     const handleEdit = (index: number) => {
-        console.log("Editing question at index:", index, questions[index]);
         setEditingIndex(index);
         setEditedQuestion({ ...questions[index] });
     };
@@ -92,7 +87,6 @@ const ExamDetails = () => {
     const handleSaveEdit = async () => {
         try {
             setLoading(true);
-            console.log("Saving edited question:", editedQuestion);
             const updatedQuestions = questions.map((q, i) =>
                 i === editingIndex ? editedQuestion : q
             );
@@ -102,14 +96,12 @@ const ExamDetails = () => {
             setEditedQuestion(null);
 
             const filePath = `exams/${id}.xlsx`;
-            console.log("File path for upload:", filePath);
 
             const ws = XLSX.utils.json_to_sheet(updatedQuestions);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Questions");
 
             const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-            console.log("Excel file size:", wbout.byteLength);
             const blob = new Blob([wbout], {
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             });
@@ -130,9 +122,7 @@ const ExamDetails = () => {
                 .from("uploads")
                 .getPublicUrl(filePath);
             const newFileUrl = `${publicURLData.publicUrl}?t=${Date.now()}`;
-            console.log("New public URL:", newFileUrl);
 
-            console.log("Updating database...");
             const { error: updateError } = await supabase
                 .from("exams")
                 .update({ file_url: newFileUrl })
@@ -213,7 +203,6 @@ const ExamDetails = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        console.log(`Changing ${name} to ${value}`);
         setEditedQuestion((prev) => ({ ...prev, [name]: value }));
     };
 

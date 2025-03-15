@@ -33,7 +33,6 @@ export default function ManageExam() {
 
     const handleEdit = (id: number) => {
         navigate(`/admin/import-exam/${id}`)
-        console.log("Edit level:", id)
     }
 
     const handleDelete = async (id: number) => {

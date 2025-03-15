@@ -62,6 +62,12 @@ const adminMenu: AdminMenu[] = [
         title: "Exam Grade",
         link: "exam-grade"
 
+    },
+    {
+        id: 7,
+        icon: <GradeIcon />,
+        title: "Exam Requests",
+        link: "exam-requests"
     }
 ]
 

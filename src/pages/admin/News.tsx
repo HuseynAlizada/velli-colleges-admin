@@ -11,7 +11,6 @@ export default function News() {
   const [popUp, setPopUp] = useState(false)
   const fetchNews = async () => {
     const { data, error } = await supabase.from("news").select('*')
-    console.log(data, 'data');
     if (error) {
       console.log('error');
     }

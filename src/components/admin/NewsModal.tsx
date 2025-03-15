@@ -38,7 +38,6 @@ export default function NewsModal({ closePopUp,fetchNews }: { closePopUp: () => 
       fetchNews()
 
     }
-    console.log(imageUrl, 'imageUrl');
     
 
     const { error: dbError } = await supabase.from("news").insert([

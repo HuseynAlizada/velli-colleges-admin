@@ -15,7 +15,19 @@ const studentMenu = [
         id: 2,
         icon: <LibraryBooksIcon />,
         title: "Exams",
-        link: "exams"
+
+        subMenu: [
+            {
+                id: 7,
+                title: "Approved Exam",
+                link: "approved-exams"
+            },
+            {
+                id: 8,
+                title: "Locked Exam",
+                link: "locked-exams"
+            },
+        ]
     },
     {
         id: 3,
@@ -62,7 +74,7 @@ export default studentMenu
 
 
 
-export const levelColors:LevelColors = {
+export const levelColors: LevelColors = {
     A1: {
         bg: "from-green-200 to-green-100/50",
         border: "border-green-200",

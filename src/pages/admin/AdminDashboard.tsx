@@ -67,7 +67,6 @@ export default function AdminDashboard() {
 
 
     const handleEdit = (id: number) => {
-        console.log(id);
         navigate(`/admin/edit-student/${id}`)
     }
 

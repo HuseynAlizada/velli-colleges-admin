@@ -19,7 +19,6 @@ const Header = () => {
                     .eq('id', userId)
                     .single()
                 if (error) throw error
-                console.log(data);
                 setUserData(data)
             }
             catch (err) {
@@ -35,7 +34,7 @@ const Header = () => {
     }
 
     return (
-        <div className=' z-50 flex items-center justify-between px-4 py-[12px]  bg-gradient-to-r from-rose-500 to-pink-600 text-white fixed top-0 w-full relative'>
+        <div className=' z-50 flex items-center justify-between px-4 py-[12px]  bg-gradient-to-r from-indigo-500 to-indigo-600 text-white fixed top-0 w-full '>
             <h1 className='text-xl font-semibold'>Student Dashboard</h1>
             <div className='relative'>
                 <div className='flex items-center gap-4'>
@@ -49,13 +48,12 @@ const Header = () => {
 
                 </div>
                 {menu && (
-                <div className='absolute right-0 w-[150px] top-[100%]  bg-gradient-to-r from-rose-500 to-pink-600'>
-                    <Link to='/student-profile' className=' py-3 px-4 w-full cursor-pointer '>My Profile</Link>
-                    <div className=' py-3 px-4 w-full cursor-pointer ' onClick={logoutUser}>Logout</div>
-                </div>
-            )}
+                    <div className='absolute right-0 w-[150px] top-[100%]  bg-gradient-to-r from-rose-500 to-pink-600'>
+                        <Link to='/student-profile' className=' py-3 px-4 w-full cursor-pointer '>My Profile</Link>
+                        <div className=' py-3 px-4 w-full cursor-pointer ' onClick={logoutUser}>Logout</div>
+                    </div>
+                )}
             </div>
-           
         </div>
     )
 }

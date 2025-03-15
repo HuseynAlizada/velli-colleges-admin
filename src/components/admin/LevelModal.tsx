@@ -20,7 +20,6 @@ export default function LevelModal({ closePopUp, getLevels, editLevelData }: lev
   }, [editLevelData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    console.log(typeof editLevelData.id, 'level modal');
     
 
     e.preventDefault();

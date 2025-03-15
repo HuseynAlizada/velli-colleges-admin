@@ -38,7 +38,6 @@ export default function ImportExam() {
           .eq("id", editExam)
           .single();
         if (error) throw error;
-        console.log(data);
 
         setExamData({
           selectedExam: data.title,

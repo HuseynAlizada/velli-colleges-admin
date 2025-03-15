@@ -13,7 +13,6 @@ interface PhoneInputProps {
 
 export function PhoneInput({ value, onChange, name, id }: PhoneInputProps) {
   const [inputValue, setInputValue] = useState( value && value)
-  console.log(value, 'value data');
   
 
   useEffect(() => {

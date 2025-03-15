@@ -25,7 +25,6 @@ export default function Levels() {
       if (error) {
         console.log('fetch error:', error);
       }
-      console.log(data);
       setLevels(data)
     }
     catch (err) {

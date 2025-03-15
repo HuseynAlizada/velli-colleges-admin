@@ -12,7 +12,6 @@ export default function StudentList() {
 
   const fetchStudents = async () => {
     const { data, error } = await supabase.from("students").select("*");
-    console.log(data, 'data');
 
 
     if (error) {

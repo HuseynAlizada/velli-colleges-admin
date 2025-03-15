@@ -5,7 +5,7 @@ import studentMenu from '../data/studentMenu';
 const StudentSidebar = () => {
     const [activeMenu, setActiveMenu] = useState<number | null>(null)
     return (
-        <div className="h-screen fixed top-0 left-0 w-[240px] inset-0 bg-gradient-to-r from-rose-500 to-pink-600 py-10">
+        <div className="h-screen fixed top-0 left-0 w-[240px] inset-0 bg-gradient-to-r from-indigo-500 to-indigo-600 py-10">
             <Link to='/' className=' mx-auto w-full mt-10  flex items-center justify-center gap-2 text-white'>
                 <div className='w-10 h-10 '>
                     <img src="/images/logo.png" alt="" />
@@ -35,11 +35,11 @@ const StudentSidebar = () => {
                             <span>{item.title}</span>
                         </div>
 
-                        {/* <div className={`flex flex-col gap-2 pl-10 submenu ${(item?.subMenu && item.id === activeMenu) ? 'active' : ''}`}>
+                        <div className={`flex flex-col gap-2 pl-10 submenu ${(item?.subMenu && item.id === activeMenu) ? 'active' : ''}`}>
                             {item.subMenu && item?.subMenu.map(subItem => (
                               <Link to={`/${subItem.link}`}>  <div key={subItem.id} className='py-2'>{subItem.title}</div></Link>
                             ))}
-                        </div> */}
+                        </div>
                     </div>)
                 ))}
             </div>

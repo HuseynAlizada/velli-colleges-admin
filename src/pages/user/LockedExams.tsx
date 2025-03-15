@@ -4,19 +4,16 @@ import ExamCard from "../../components/user/ExamCard"
 import { supabase } from "../../utils/supabase-client"
 import { Exam } from "../../types"
 
+// title, file_url, pass_score, duration, level
 
 
-
-export default function ExamList() {
+export default function LockedExams() {
     const [exams, setExams] = useState<Exam[] | []>([])
     const fetchExams = async () => {
         try {
             const { data, error } = await supabase.from('exams').select("*")
             if (error) throw error
-            console.log(data);
-
             setExams(data)
-
         }
         catch (err) {
             console.log(err);
@@ -38,13 +35,13 @@ export default function ExamList() {
                     <ExamCard key={exam.id} exam={exam} />
                 ))}
 
-                {exams.map((exam) => (
+                {/* {exams.map((exam) => (
                     <ExamCard key={exam.id} exam={exam} />
                 ))}
 
                 {exams.map((exam) => (
                     <ExamCard key={exam.id} exam={exam} />
-                ))}
+                ))} */}
             </div>
         </div>
     )
