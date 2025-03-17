@@ -181,3 +181,20 @@ export type examResults = {
 
 
 // RESULTS END
+
+
+
+// Start Student Grade
+
+export type studentGrade = {
+    id: number,
+    created_at: number,
+    student_id: number,
+    student_name: number,
+    exam_name: string,
+    student_level: string,
+    student_score: string
+}
+
+
+// End Student Grade

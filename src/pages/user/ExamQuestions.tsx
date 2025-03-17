@@ -1029,7 +1029,7 @@
 //                 )}
 
 //                 <div className="mt-12 text-center">
-               
+
 //                         <>
 //                             {examType === "Vocabulary" ? (
 //                                 <button
@@ -1109,7 +1109,7 @@
 //                             >
 //                                 Close
 //                             </button>
-                          
+
 //                         </div>
 //                     </motion.div>
 //                 </div>
@@ -1177,6 +1177,7 @@ export default function ExamQuestions() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [sectionScores, setSectionScores] = useState<{ [key: string]: number }>({});
     const [totalScore, setTotalScore] = useState<number | null>(null);
+    const [submited, setSubmited] = useState(false)
     const [sectionIncorrectAnswers, setSectionIncorrectAnswers] = useState<{
         [key: string]: { [key: number]: string };
     }>({});
@@ -1195,6 +1196,7 @@ export default function ExamQuestions() {
                     if (prev <= 1) {
                         clearInterval(timer);
                         handleSubmit(); // Automatically submit when time runs out
+                        setSubmited(true)
                         return 0;
                     }
                     return prev - 1;
@@ -1368,6 +1370,7 @@ export default function ExamQuestions() {
             }
 
             toast.success("Exam submitted successfully!");
+            setSubmited(true)
             setIsModalOpen(true);
         } catch (err) {
             console.error(err);
@@ -1600,34 +1603,63 @@ export default function ExamQuestions() {
                 )}
 
                 <div className="mt-12 text-center">
-                   
-                        <>
-                            {examType === "Vocabulary" ? (
+
+                    <>
+                        {
+                            !submited && (
+                                examType === "Vocabulary" ? (
+                                    <button
+                                        onClick={handleSubmit}
+                                        className="px-8 py-3 bg-indigo-600 text-white rounded-full font-medium hover:bg-indigo-700 transition-colors"
+                                    >
+                                        Submit Answers
+                                    </button>
+                                ) : (
+                                    <div className="flex justify-between max-w-lg mx-auto">
+                                        <button
+                                            onClick={() => handleNavigation("prev")}
+                                            disabled={examType === "Listening"}
+                                            className="px-4 py-2 bg-gray-500 text-white rounded-md disabled:opacity-50"
+                                        >
+                                            Previous
+                                        </button>
+                                        <button
+                                            onClick={() => handleNavigation("next")}
+                                            disabled={examType === "Vocabulary"}
+                                            className="px-4 py-2 bg-indigo-600 text-white rounded-md disabled:opacity-50"
+                                        >
+                                            Next
+                                        </button>
+                                    </div>
+                                )
+                            )
+                        }
+                        {/* {examType === "Vocabulary" ? (
+                            <button
+                                onClick={handleSubmit}
+                                className="px-8 py-3 bg-indigo-600 text-white rounded-full font-medium hover:bg-indigo-700 transition-colors"
+                            >
+                                Submit Answers
+                            </button>
+                        ) : (
+                            <div className="flex justify-between max-w-lg mx-auto">
                                 <button
-                                    onClick={handleSubmit}
-                                    className="px-8 py-3 bg-indigo-600 text-white rounded-full font-medium hover:bg-indigo-700 transition-colors"
+                                    onClick={() => handleNavigation("prev")}
+                                    disabled={examType === "Listening"}
+                                    className="px-4 py-2 bg-gray-500 text-white rounded-md disabled:opacity-50"
                                 >
-                                    Submit Answers
+                                    Previous
                                 </button>
-                            ) : (
-                                <div className="flex justify-between max-w-lg mx-auto">
-                                    <button
-                                        onClick={() => handleNavigation("prev")}
-                                        disabled={examType === "Listening"}
-                                        className="px-4 py-2 bg-gray-500 text-white rounded-md disabled:opacity-50"
-                                    >
-                                        Previous
-                                    </button>
-                                    <button
-                                        onClick={() => handleNavigation("next")}
-                                        disabled={examType === "Vocabulary"}
-                                        className="px-4 py-2 bg-indigo-600 text-white rounded-md disabled:opacity-50"
-                                    >
-                                        Next
-                                    </button>
-                                </div>
-                            )}
-                        </>
+                                <button
+                                    onClick={() => handleNavigation("next")}
+                                    disabled={examType === "Vocabulary"}
+                                    className="px-4 py-2 bg-indigo-600 text-white rounded-md disabled:opacity-50"
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        )} */}
+                    </>
                 </div>
             </div>
 
