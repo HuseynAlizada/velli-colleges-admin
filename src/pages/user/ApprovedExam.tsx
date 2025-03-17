@@ -1,4 +1,3 @@
-import React from 'react'
 import { RequestedExams } from '../../types'
 
 import { motion } from "framer-motion"

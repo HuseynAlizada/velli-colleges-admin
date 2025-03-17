@@ -1,3 +1,297 @@
+// import { useEffect, useState } from "react";
+// import { supabase } from "../../utils/supabase-client";
+// import { toast, ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
+// import { examOptions } from "../../data/examData";
+// import { useNavigate, useParams } from "react-router-dom";
+
+// export default function ImportExam() {
+//   const { id } = useParams();
+//   const navigate = useNavigate();
+
+//   const [examData, setExamData] = useState({
+//     selectedExam: "B1 U1",
+//     selectedFile: null,
+//     passScore: "",
+//     duration: "",
+//     level: "",
+//   });
+//   const [uploading, setUploading] = useState(false);
+//   const [editExam] = useState(id || null);
+
+//   const levels = [
+//     { id: "a1", name: "A1" },
+//     { id: "a2", name: "A2" },
+//     { id: "b1", name: "B1" },
+//     { id: "b1+", name: "B1+" },
+//     { id: "b2", name: "B2" },
+//     { id: "c1", name: "C1" },
+//   ];
+
+//   useEffect(() => {
+//     const fetchExamData = async () => {
+//       if (!editExam) return;
+//       try {
+//         const { data, error } = await supabase
+//           .from("exams")
+//           .select("*")
+//           .eq("id", editExam)
+//           .single();
+//         if (error) throw error;
+
+//         setExamData({
+//           selectedExam: data.title,
+//           selectedFile: data.file_url,
+//           passScore: data.pass_score,
+//           duration: data.duration,
+//           level: data.level,
+//         });
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     };
+//     fetchExamData();
+//   }, [editExam]);
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setExamData((prev) => ({ ...prev, [name]: value }));
+//   };
+
+//   const handleFileChange = (e) => {
+//     const file = e.target.files?.[0] || null;
+//     setExamData((prev) => ({ ...prev, selectedFile: file }));
+//   };
+
+//   const onClose = () => {
+//     setExamData({
+//       selectedExam: "",
+//       selectedFile: null,
+//       passScore: "",
+//       duration: "",
+//       level: "",
+//     });
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     if (
+//       !examData.selectedExam ||
+//       !examData.selectedFile ||
+//       !examData.passScore ||
+//       !examData.duration ||
+//       !examData.level
+//     ) {
+//       toast.error("Please fill in all required fields.");
+//       return;
+//     }
+
+//     setUploading(true);
+//     let fileUrl = examData.selectedFile;
+
+//     // If a new file is selected, upload it
+//     if (examData.selectedFile && typeof examData.selectedFile !== "string") {
+//       const fileName = `exams/${Date.now()}-${examData.selectedFile.name}`;
+//       const { data: fileData, error: fileError } = await supabase.storage
+//         .from("uploads")
+//         .upload(fileName, examData.selectedFile);
+
+//       if (fileError) {
+//         console.error("Upload error:", fileError);
+//         toast.error("File upload failed!");
+//         setUploading(false);
+//         return;
+//       }
+
+//       fileUrl = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/uploads/${fileName}`;
+//     }
+
+//     const operation = editExam
+//       ? supabase
+//           .from("exams")
+//           .update([
+//             {
+//               title: examData.selectedExam,
+//               file_url: fileUrl,
+//               pass_score: parseInt(examData.passScore),
+//               duration: parseInt(examData.duration),
+//               level: examData.level,
+//             },
+//           ])
+//           .eq("id", editExam)
+//       : supabase.from("exams").insert([
+//           {
+//             title: examData.selectedExam,
+//             file_url: fileUrl,
+//             pass_score: parseInt(examData.passScore),
+//             duration: parseInt(examData.duration),
+//             level: examData.level,
+//           },
+//         ]);
+
+//     const { error: dbError } = await operation;
+
+//     if (dbError) {
+//       console.error("Database insert/update error:", dbError);
+//       toast.error("Failed to save exam info!");
+//     } else {
+//       toast.success(editExam ? "Exam updated successfully!" : "Exam added successfully!");
+//       navigate("/admin/manage-exam");
+//       onClose();
+//     }
+
+//     setUploading(false);
+//   };
+
+//   return (
+//     <div className="min-h-screen w-full bg-gray-100 flex items-center justify-center py-10 -mt-[50px] -ml-[25px]">
+//       <div className="bg-white rounded-xl shadow-lg w-full  ">
+//         <ToastContainer position="top-right" autoClose={3000} />
+//         {/* Header */}
+//         <div className="inset-0 bg-gradient-to-r from-rose-500 to-pink-600 px-6 py-4 rounded-t-xl">
+//           <h1 className="text-white text-xl font-semibold">
+//             {editExam ? "Edit Exam" : "Import Exam"}
+//           </h1>
+//         </div>
+
+//         {/* Form Body */}
+//         <div className="p-6">
+//           <form onSubmit={handleSubmit} className="space-y-6">
+//             {/* Exam Title */}
+//             <div className="space-y-2">
+//               <label className="block text-sm font-medium text-gray-700">
+//                 Exam Title
+//               </label>
+//               <select
+//                 name="selectedExam"
+//                 value={examData.selectedExam}
+//                 onChange={handleChange}
+//                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
+//               >
+//                 {examOptions.map((item, index) => (
+//                   <option key={index} value={item}>
+//                     {item}
+//                   </option>
+//                 ))}
+//               </select>
+//             </div>
+
+//             {/* File Upload */}
+//             <div className="space-y-2">
+//               <label className="block text-sm font-medium text-gray-700">
+//                 Upload Exam File
+//               </label>
+//               {examData.selectedFile && typeof examData.selectedFile === "string" ? (
+//                 <div className="flex items-center gap-2 mb-2">
+//                   <span className="text-gray-600 text-sm">Current File:</span>
+//                   <a
+//                     href={examData.selectedFile}
+//                     target="_blank"
+//                     rel="noopener noreferrer"
+//                     className="inset-0 bg-gradient-to-r from-rose-500 to-pink-600 hover:underline text-white px-2 rounded-md"
+//                   >
+//                     View File
+//                   </a>
+//                 </div>
+//               ) : null}
+//               <input
+//                 type="file"
+//                 onChange={handleFileChange}
+//                 accept=".xlsx, .xls"
+//                 className="w-full border border-gray-300 rounded-lg p-2 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100 transition duration-200"
+//               />
+//             </div>
+
+//             {/* Pass Score and Duration */}
+//             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//               <div className="space-y-2">
+//                 <label className="block text-sm font-medium text-gray-700">
+//                   Pass Score
+//                 </label>
+//                 <input
+//                   type="number"
+//                   name="passScore"
+//                   placeholder="Pass Score"
+//                   value={examData.passScore}
+//                   onChange={handleChange}
+//                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
+//                 />
+//               </div>
+//               <div className="space-y-2">
+//                 <label className="block text-sm font-medium text-gray-700">
+//                   Duration (hours)
+//                 </label>
+//                 <input
+//                   type="number"
+//                   name="duration"
+//                   placeholder="Duration (hours)"
+//                   max="100"
+//                   value={examData.duration}
+//                   onChange={handleChange}
+//                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
+//                 />
+//               </div>
+//             </div>
+
+//             {/* Level */}
+//             <div className="space-y-2">
+//               <label className="block text-sm font-medium text-gray-700">
+//                 Level
+//               </label>
+//               <select
+//                 name="level"
+//                 value={examData.level}
+//                 onChange={handleChange}
+//                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
+//               >
+//                 <option value="">Select Level</option>
+//                 {levels.map((item) => (
+//                   <option key={item.id} value={item.name}>
+//                     {item.name}
+//                   </option>
+//                 ))}
+//               </select>
+//             </div>
+
+//             {/* Buttons */}
+//             <div className="flex justify-end gap-3 pt-4">
+//               <button
+//                 type="button"
+//                 onClick={onClose}
+//                 className="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition duration-200"
+//               >
+//                 Cancel
+//               </button>
+//               <button
+//                 type="submit"
+//                 disabled={uploading}
+//                 className={`px-5 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition duration-200 ${
+//                   uploading ? "opacity-50 cursor-not-allowed" : ""
+//                 }`}
+//               >
+//                 {editExam
+//                   ? uploading
+//                     ? "Updating..."
+//                     : "Update Exam"
+//                   : uploading
+//                   ? "Uploading..."
+//                   : "Upload Exam"}
+//               </button>
+//             </div>
+//           </form>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
+
 import { useEffect, useState } from "react";
 import { supabase } from "../../utils/supabase-client";
 import { toast, ToastContainer } from "react-toastify";
@@ -15,6 +309,7 @@ export default function ImportExam() {
     passScore: "",
     duration: "",
     level: "",
+    examType: "",  // Added new state for exam type
   });
   const [uploading, setUploading] = useState(false);
   const [editExam] = useState(id || null);
@@ -27,6 +322,8 @@ export default function ImportExam() {
     { id: "b2", name: "B2" },
     { id: "c1", name: "C1" },
   ];
+
+  const examTypes = ["Level Exam", "Practical Exam"];  // Options for the new input
 
   useEffect(() => {
     const fetchExamData = async () => {
@@ -45,6 +342,7 @@ export default function ImportExam() {
           passScore: data.pass_score,
           duration: data.duration,
           level: data.level,
+          examType: data.exam_type,  // Setting the exam type from the fetched data
         });
       } catch (err) {
         console.error(err);
@@ -70,6 +368,7 @@ export default function ImportExam() {
       passScore: "",
       duration: "",
       level: "",
+      examType: "",  // Reset the exam type
     });
   };
 
@@ -80,7 +379,8 @@ export default function ImportExam() {
       !examData.selectedFile ||
       !examData.passScore ||
       !examData.duration ||
-      !examData.level
+      !examData.level ||
+      !examData.examType  // Check for exam type
     ) {
       toast.error("Please fill in all required fields.");
       return;
@@ -109,25 +409,23 @@ export default function ImportExam() {
     const operation = editExam
       ? supabase
           .from("exams")
-          .update([
-            {
-              title: examData.selectedExam,
-              file_url: fileUrl,
-              pass_score: parseInt(examData.passScore),
-              duration: parseInt(examData.duration),
-              level: examData.level,
-            },
-          ])
-          .eq("id", editExam)
-      : supabase.from("exams").insert([
-          {
+          .update([{
             title: examData.selectedExam,
             file_url: fileUrl,
             pass_score: parseInt(examData.passScore),
             duration: parseInt(examData.duration),
             level: examData.level,
-          },
-        ]);
+            exam_type: examData.examType,  // Include exam type
+          }])
+          .eq("id", editExam)
+      : supabase.from("exams").insert([{
+          title: examData.selectedExam,
+          file_url: fileUrl,
+          pass_score: parseInt(examData.passScore),
+          duration: parseInt(examData.duration),
+          level: examData.level,
+          exam_type: examData.examType,  // Include exam type
+        }]);
 
     const { error: dbError } = await operation;
 
@@ -144,8 +442,8 @@ export default function ImportExam() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gray-100 flex items-center justify-center py-10 -mt-[50px] -ml-[25px]">
-      <div className="bg-white rounded-xl shadow-lg w-full  ">
+    <div className="min-h-screen md:w-[97%] w-[90%] mx-auto bg-gray-100 flex items-center justify-center py-5 mr-10 ">
+      <div className="bg-white rounded-xl shadow-lg w-full">
         <ToastContainer position="top-right" autoClose={3000} />
         {/* Header */}
         <div className="inset-0 bg-gradient-to-r from-rose-500 to-pink-600 px-6 py-4 rounded-t-xl">
@@ -188,7 +486,7 @@ export default function ImportExam() {
                     href={examData.selectedFile}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inset-0 bg-gradient-to-r from-rose-500 to-pink-600 hover:underline"
+                    className="inset-0 bg-gradient-to-r from-rose-500 to-pink-600 hover:underline text-white px-2 rounded-md"
                   >
                     View File
                   </a>
@@ -248,6 +546,26 @@ export default function ImportExam() {
                 {levels.map((item) => (
                   <option key={item.id} value={item.name}>
                     {item.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Exam Type */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Exam Type
+              </label>
+              <select
+                name="examType"
+                value={examData.examType}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
+              >
+                <option value="">Select Exam Type</option>
+                {examTypes.map((type, index) => (
+                  <option key={index} value={type}>
+                    {type}
                   </option>
                 ))}
               </select>

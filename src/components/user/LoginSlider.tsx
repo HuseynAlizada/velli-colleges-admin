@@ -10,6 +10,7 @@ import './style.css';
 
 // import required modules
 import { Autoplay, Pagination } from 'swiper/modules';
+const images = ['/images/login-slider1.avif', '/images/login-slider2.avif', '/images/login-slider3.avif', '/images/login-slider4.avif']
 
 export default function LoginSlider() {
     return (
@@ -23,14 +24,14 @@ export default function LoginSlider() {
                 }}
                 className="mySwiper">
                 {
-                    [1, 2, 3, 4, 5].map((_,index) => (
-                        <SwiperSlide  key={index}>
-                        <img src="/images/loginCover.png" className='rounded-2xl' alt="" />
-        
+                    images.map((image, index) => (
+                        <SwiperSlide key={index}>
+                            <img src={image} className='rounded-2xl' alt="" />
+
                         </SwiperSlide>
                     ))
                 }
-             
+
 
             </Swiper>
         </>

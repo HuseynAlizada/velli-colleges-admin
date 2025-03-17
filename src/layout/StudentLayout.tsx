@@ -16,9 +16,7 @@ const StudentLayout = () => {
             navigate('/login')
         }
     }, [userToken, navigate])
-    // if (!userToken) {
-    //     return <UserLogin />
-    // }
+
     return (
         <div>
             <Header />
@@ -26,7 +24,7 @@ const StudentLayout = () => {
                 <div className="w-[10%]  ">
                     <StudentSidebar />
                 </div>
-                <div className="flex w-[calc(100%-240px)] ">
+                <div className="flex md:w-[calc(100%-240px)] w-full ">
                     <Outlet />
                 </div>
             </div>

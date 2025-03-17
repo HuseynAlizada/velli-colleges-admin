@@ -1,8 +1,67 @@
 import { ArrowRight, BookOpen, Calendar, GraduationCap, Users } from "lucide-react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { supabase } from "../../utils/supabase-client"
+import Cookies from 'js-cookie'
+import { TakenExams } from "../../types"
+
 
 
 const HomeBanner = () => {
+    const userId = Cookies.get('studentID')
+    const [studentLevel, setStudentLevel] = useState<string | null>('')
+    const [takenExams, setTakenExams] = useState<TakenExams | null>(null)
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const { data, error } = await supabase.from('students')
+                    .select('*')
+                    .eq('id', userId)
+                    .single()
+                if (error) throw error
+                console.log(data, 'data')
+                setStudentLevel(data.level)
+                // setUserData(data)
+
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+        fetchUser()
+    }, [userId])
+
+
+    useEffect(() => {
+
+        const fetchExamsData = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from("taken-exams")
+                    .select("*")
+                    .eq("student_id", userId)
+                    .single()
+
+                if (error) throw Error
+                setTakenExams(data)
+
+            }
+            catch (err) {
+                console.log(err)
+            }
+        }
+
+        fetchExamsData()
+
+    }, [])
+
+    const stats = [
+        { icon: BookOpen, bgColor: "bg-gradient-to-r from-indigo-400 to-purple-500", iconColor: "text-white", value: studentLevel?.toUpperCase(), label: "Your Level" },
+        { icon: GraduationCap, bgColor: "bg-gradient-to-r from-rose-400 to-red-500", iconColor: "text-white", value: takenExams?.exam_count, label: "Taken Exams" },
+        { icon: Users, bgColor: "bg-gradient-to-r from-amber-400 to-yellow-500", iconColor: "text-white", value: takenExams?.practice_count, label: "Taken Practice Exams" },
+        { icon: Calendar, bgColor: "bg-gradient-to-r from-green-400 to-teal-500", iconColor: "text-white", value: 0, label: "Full Score Count" },
+    ];
     return (
         <section className="relative overflow-hidden bg-white">
             {/* Background Pattern */}
@@ -44,93 +103,28 @@ const HomeBanner = () => {
                             </Link>
 
                             <Link
-                                to="/courses"
+                                to="/locked-exams"
                                 className="inline-flex items-center px-6 py-3 bg-white text-indigo-600 font-medium rounded-lg border-2 border-indigo-600 hover:bg-indigo-50 transition-colors"
                             >
-                                Explore Courses
+                                Explore Exams
                             </Link>
                         </div>
 
-                        {/* Stats */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
-                            <div className="flex items-center gap-2">
-                                <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
-                                    <BookOpen className="w-5 h-5 text-indigo-600" />
-                                </div>
-                                <div>
-                                    <p className="text-2xl font-bold text-gray-900">100+</p>
-                                    <p className="text-sm text-gray-600">Courses</p>
-                                </div>
-                            </div>
 
-                            <div className="flex items-center gap-2">
-                                <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center">
-                                    <GraduationCap className="w-5 h-5 text-rose-600" />
-                                </div>
-                                <div>
-                                    <p className="text-2xl font-bold text-gray-900">50+</p>
-                                    <p className="text-sm text-gray-600">Instructors</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                                <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
-                                    <Users className="w-5 h-5 text-amber-600" />
-                                </div>
-                                <div>
-                                    <p className="text-2xl font-bold text-gray-900">1000+</p>
-                                    <p className="text-sm text-gray-600">Students</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                                    <Calendar className="w-5 h-5 text-green-600" />
-                                </div>
-                                <div>
-                                    <p className="text-2xl font-bold text-gray-900">95%</p>
-                                    <p className="text-sm text-gray-600">Success Rate</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     {/* Right Column - Illustration */}
-                    <div className="relative hidden lg:block">
-                        <div className="absolute -top-10 -right-10 w-20 h-20 bg-yellow-100 rounded-full"></div>
-                        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-indigo-100 rounded-full"></div>
-
-                        <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-                            <div className="h-12 bg-gray-100 flex items-center px-4 space-x-2">
-                                <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                                <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-                                <div className="w-3 h-3 rounded-full bg-green-400"></div>
-                                <div className="ml-2 text-sm text-gray-500">Student Dashboard</div>
-                            </div>
-
-                            <div className="p-6">
-                                <div className="grid grid-cols-2 gap-4 mb-6">
-                                    <div className="bg-indigo-50 p-4 rounded-lg">
-                                        <h3 className="font-medium text-indigo-600 mb-1">Current Courses</h3>
-                                        <p className="text-2xl font-bold">4</p>
+                    <div className="relative ">
+                        <div className="grid grid-cols-2 md:grid-cols-2 gap-6 pt-6">
+                            {stats.map((stat, index) => (
+                                <div key={index} className="relative flex flex-col items-center p-6 rounded-full shadow-xl bg-white hover:scale-105 transition-transform duration-300">
+                                    <div className={`w-16 h-16 rounded-full ${stat.bgColor} flex items-center justify-center shadow-lg`}>
+                                        <stat.icon className={`w-8 h-8 ${stat.iconColor}`} />
                                     </div>
-                                    <div className="bg-rose-50 p-4 rounded-lg">
-                                        <h3 className="font-medium text-rose-600 mb-1">Assignments</h3>
-                                        <p className="text-2xl font-bold">12</p>
-                                    </div>
+                                    <p className="mt-4 text-3xl font-extrabold text-gray-900">{stat.value}</p>
+                                    <p className="text-md text-gray-600">{stat.label}</p>
                                 </div>
-
-                                <div className="space-y-3 mb-6">
-                                    <div className="h-8 bg-gray-100 rounded-md w-full"></div>
-                                    <div className="h-8 bg-gray-100 rounded-md w-3/4"></div>
-                                    <div className="h-8 bg-gray-100 rounded-md w-5/6"></div>
-                                </div>
-
-                                <div className="flex justify-between items-center">
-                                    <div className="w-10 h-10 rounded-full bg-gray-200"></div>
-                                    <div className="w-24 h-8 bg-indigo-100 rounded-md"></div>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </div>
                 </div>

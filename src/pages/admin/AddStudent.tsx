@@ -6,6 +6,7 @@ import { supabase } from "../../utils/supabase-client";
 import { Link, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { ExamCount } from "../../types";
 
 const levels = [
   { id: "a1", name: "A1" },
@@ -34,6 +35,26 @@ export default function AddStudent() {
     studentSchool: "",
     studentPurpose: "",
   });
+
+  // Function to add student exam counts to the "taken-exams" table
+  const addStudentExamCounts = async (studentId: string) => {
+    try {
+      const { data, error } = await supabase.from("taken-exams").insert({
+        student_id: studentId,
+        exam_count: 0,
+        practice_count: 0,
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      console.log("Exam counts added successfully:", data);
+    } catch (err) {
+      console.error("Error adding exam counts:", err);
+      toast.error("Failed to add exam counts for the student");
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -138,10 +159,17 @@ export default function AddStudent() {
             image_url: imageUrl,
             student_school: formData.studentSchool,
             student_purpose: formData.studentPurpose,
-          });
+          }).select(); // Add .select() to return the inserted data
 
-      const { error } = await operation;
+      const { data, error } = await operation;
+
       if (error) throw error;
+
+      // If this is a new student (insert), add exam counts
+      if (!edit && data && data.length > 0) {
+        const studentId = data[0].id; // Get the student_id from the inserted data
+        await addStudentExamCounts(studentId); // Call the function to add exam counts
+      }
 
       toast.success(`Student ${action === "update" ? "Updated" : "Added"}!`);
       navigate("/admin/dashboard");
@@ -160,7 +188,7 @@ export default function AddStudent() {
         studentPurpose: "",
       });
     } catch (err) {
-      console.log(err);
+      console.error("Error saving student data:", err);
       toast.error("Failed to save student data");
     }
   };
@@ -228,7 +256,7 @@ export default function AddStudent() {
               <input
                 type="text"
                 id="studentPurpose"
-                name="studentPurpose" // Fixed typo
+                name="studentPurpose"
                 value={formData.studentPurpose}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"

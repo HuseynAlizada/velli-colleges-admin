@@ -4,7 +4,9 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import SchoolIcon from '@mui/icons-material/School';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import GradeIcon from '@mui/icons-material/Grade';
+import LoginIcon from '@mui/icons-material/Login';
 import { AdminMenu } from '../types';
+import { LockIcon } from 'lucide-react';
 
 const adminMenu: AdminMenu[] = [
     {
@@ -65,7 +67,7 @@ const adminMenu: AdminMenu[] = [
     },
     {
         id: 7,
-        icon: <GradeIcon />,
+        icon: <LockIcon />,
         title: "Exam Requests",
         link: "exam-requests"
     }

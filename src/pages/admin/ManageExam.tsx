@@ -77,11 +77,12 @@ export default function ManageExam() {
                             <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                                 Duration
                             </th>
-                            <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-700">
-                                Re Take
-                            </th>
+                         
                             <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                                 Level
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                                Type
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                                 Actions
@@ -96,8 +97,8 @@ export default function ManageExam() {
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{exam.pass_score}</td>
                                 {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{exam.total_score}</td> */}
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{exam.duration} hr</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{exam.level}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{exam.exam_type}</td>
 
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <div className="flex gap-2">

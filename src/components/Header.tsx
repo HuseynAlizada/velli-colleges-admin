@@ -35,10 +35,11 @@ const Header = () => {
 
     return (
         <div className=' z-50 flex items-center justify-between px-4 py-[12px]  bg-gradient-to-r from-indigo-500 to-indigo-600 text-white fixed top-0 w-full '>
-            <h1 className='text-xl font-semibold'>Student Dashboard</h1>
+            <h1 className='md:text-xl sm:text-md text-[12px] font-semibold'>Student Dashboard</h1>
+            <h3 className='md:text-xl text-md font-semibold md:block hidden'>Build your future</h3>
             <div className='relative'>
-                <div className='flex items-center gap-4'>
-                    <h3>Hello, <span>{userData && userData.name}</span></h3>
+                <div className='flex items-center md:gap-4 gap-0'>
+                    <h3 className='md:text-[18px] sm:text-md text-sm'>Hello, <span>{userData && userData.name}</span></h3>
                     <div className='flex items-center ' onClick={() => setMenu(!menu)}>
                         <div className='w-8 h-8 rounded-full  flex items-center justify-center '>
                             <img src={userData?.image_url && userData.image_url} alt="" className='rounded-full w-full h-full' />
@@ -48,7 +49,7 @@ const Header = () => {
 
                 </div>
                 {menu && (
-                    <div className='absolute right-0 w-[150px] top-[100%]  bg-gradient-to-r from-rose-500 to-pink-600'>
+                    <div className='absolute right-0 w-[150px] top-[100%]  bg-gradient-to-r from-indigo-500 to-indigo-600'>
                         <Link to='/student-profile' className=' py-3 px-4 w-full cursor-pointer '>My Profile</Link>
                         <div className=' py-3 px-4 w-full cursor-pointer ' onClick={logoutUser}>Logout</div>
                     </div>

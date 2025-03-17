@@ -17,6 +17,8 @@ import UserLogin from "../pages/user/UserLogin";
 import LockedExams from "../pages/user/LockedExams";
 import ExamRequests from "../pages/admin/ExamRequests";
 import ApprovedExams from "../pages/user/ApprovedExams";
+import PracticeExam from "../pages/user/PracticeExam";
+import ExamGrade from "../pages/admin/ExamGrade";
 
 const router = createBrowserRouter([
     {
@@ -28,7 +30,8 @@ const router = createBrowserRouter([
             { path: "locked-exams", element: <LockedExams /> },
             { path: "approved-exams", element: <ApprovedExams /> },
             { path: "approved-exams/:id", element: <ExamQuestions /> },
-            { path: "practice-exam", element: <StudentNews /> },
+            { path: "practice-exam/:id", element: <ExamQuestions /> },
+            { path: "practice-exam", element: <PracticeExam /> },
             { path: "news", element: <StudentNews /> },
             { path: "exam-grade", element: <StudentNews /> },
             { path: "student-profile", element: <StudentProfile /> },
@@ -49,6 +52,7 @@ const router = createBrowserRouter([
             { path: "exam-details/:id", element: <ExamDetails /> },
             { path: "exam-requests", element: <ExamRequests /> },
             { path: "manage-exam", element: <ManageExam /> },
+            { path: "exam-grade", element: <ExamGrade /> },
         ],
     },
     { path: 'login', element: <UserLogin /> },

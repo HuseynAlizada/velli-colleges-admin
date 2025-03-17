@@ -6,10 +6,11 @@ import { levelColors } from "../../data/studentMenu"
 import { useEffect, useState } from "react"
 import { supabase } from "../../utils/supabase-client"
 import Cookies from 'js-cookie'
+import { Link } from "react-router-dom"
 
 
 
-export default function ExamCard({ exam }: { exam: Exam }) {
+export default function ExamCard({ exam, practical }: { exam: Exam, practical: boolean }) {
     const colors = levelColors[exam.level]
     const userId = Cookies.get('studentID')
     const [userData, setUserData] = useState<StudentData | null>(null)
@@ -130,16 +131,37 @@ export default function ExamCard({ exam }: { exam: Exam }) {
 
 
                         {/* <Link to={`${exam.id}`}> */}
-                        <motion.button
-                            onClick={handleRequestUnlock}
-                            whileHover={{ scale: 1.02 }}
-                            disabled={sendRequest}
-                            whileTap={{ scale: 0.98 }}
-                            className={`w-full flex items-center justify-center gap-1 px-4 py-3 rounded-xl text-white font-medium ${colors.button} shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 mb-6`}
-                        >
-                            <PlayCircle className="w-5 h-5" />
-                            {sendRequest ? 'Request Sended' : 'Reuqest To Unlock'}
-                        </motion.button>
+
+
+                        {
+                            practical ?
+                                (
+                                    <Link to={`${exam.id}`}>
+                                        <motion.button
+                                            whileHover={{ scale: 1.02 }}
+                                            disabled={sendRequest}
+                                            whileTap={{ scale: 0.98 }}
+                                            className={`w-full flex items-center justify-center gap-1 px-4 py-3 rounded-xl text-white font-medium ${colors.button} shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 mb-6`}
+                                        >
+                                            <PlayCircle className="w-5 h-5" />
+                                            Start To Exam
+                                        </motion.button>
+                                    </Link>
+                                )
+                                :
+                                (
+                                    <motion.button
+                                        onClick={handleRequestUnlock}
+                                        whileHover={{ scale: 1.02 }}
+                                        disabled={sendRequest}
+                                        whileTap={{ scale: 0.98 }}
+                                        className={`w-full flex items-center justify-center gap-1 px-4 py-3 rounded-xl text-white font-medium ${colors.button} shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 mb-6`}
+                                    >
+                                        <PlayCircle className="w-5 h-5" />
+                                        {sendRequest ? 'Request Sended' : 'Reuqest To Unlock'}
+                                    </motion.button>
+                                )
+                        }
                         {/* </Link> */}
 
                         {/* Active Users Stats */}
@@ -163,7 +185,7 @@ export default function ExamCard({ exam }: { exam: Exam }) {
                         <div
                             className={`absolute bottom-0 left-0 -mb-4 ml-4 w-24 h-24 bg-opacity-5 rounded-full blur-xl ${colors.text}`}
                         />
-                    </motion.div>
+                    </motion.div >
                 )
             }
         </>

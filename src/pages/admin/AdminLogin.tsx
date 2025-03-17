@@ -22,9 +22,8 @@ const AdminLogin = () => {
         <div className="bg-gray-300 w-full h-screen flex items-center justify-center">
 
             <div className="bg-white flex flex-col px-4 pt-6 pb-8  min-w-[500px] rounded-2xl">
-                <div className="flex items-center ">
-                    <img src="/images/logo.png" className="w-[100px] h-[100px]" alt="" />
-                    <span className="text-2xl -ml-4">Family School</span>
+                <div className="flex items-center ml-6 ">
+                    <img src="/images/main-logo.png" className="w-auto h-[100px]" alt="" />
 
                 </div>
                 <div className="flex flex-col  w-[80%] mx-auto">

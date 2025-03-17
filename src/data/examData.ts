@@ -1,8 +1,8 @@
 export const examOptions = [
-    "B1 U1", "B1 U3", "B1 U4", "B1 U6", "B1 U8", "B1 U9", "B1 U10", "B1 U11", "B1 U12",
+    "B1 U1", "B1 U2", "B1 U3", "B1 U4", "B1 U6", "B1 U8", "B1 U9", "B1 U10", "B1 U11", "B1 U12",
     "B1 MidTerm", "B1 Final", "A1 U1", "A1 U2", "A1 U3", "A1 U4", "A1 U5", "A1 U6",
     "A1 U7", "A1 U8", "A1 U9", "A1 U10", "A1 U11", "A1 U12", "A1 Midterm", "A1 Final",
-    "B1 U5", "B1 U7", "B1+ U3", "B1+ U4", "B1+ U5", "B1+ U6", "B1+ U7", "B1+ U8",
+    "B1 U5", "B1 U7", "B1+ U1","B1+ U2","B1+ U3", "B1+ U4", "B1+ U5", "B1+ U6", "B1+ U7", "B1+ U8",
     "B1+ U9", "B1+ U10", "B1+ midterm", "B1+ final", "A2 U1", "A2 U2", "A2 U3", "B2 U1",
     "B2 U2", "B2 U3", "B2 U4", "B2 U5", "B2 U6", "B2 U7", "B2 U8", "B2 U9", "B2 Mid Term",
     "B2 Final", "A2 U4", "A2 U5", "A2 U6", "A2 U9", "A2 U10", "A2 U11", "A2 Midterm",
