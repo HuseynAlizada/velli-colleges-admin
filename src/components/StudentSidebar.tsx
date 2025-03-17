@@ -130,14 +130,14 @@ const StudentSidebar = () => {
             <button
                 onClick={() => setMobileMenu(!mobileMenu)}
                 aria-label={mobileMenu ? "Close menu" : "Open menu"}
-                className="md:hidden fixed top-4 left-4 z-50 bg-indigo-600 text-white p-2 rounded-md shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="md:hidden fixed top-4 left-4 z-50 bg-indigo-300 text-white p-2 rounded-md shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
             >
                 {mobileMenu ? <X size={24} /> : <Menu size={24} />}
             </button>
 
             {/* Sidebar */}
             <div
-                className={`fixed top-0 left-0 h-full w-[240px] bg-gradient-to-r from-indigo-500 to-indigo-600 py-10 z-40 transition-transform duration-300 ${mobileMenu ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+                className={`fixed top-0 left-0 h-full w-[240px] bg-gradient-to-r bg-blue-400 py-10 z-40 transition-transform duration-300 ${mobileMenu ? "translate-x-0" : "-translate-x-full md:translate-x-0"
                     }`}
             >
                 {/* Logo */}
@@ -157,7 +157,7 @@ const StudentSidebar = () => {
                     {/* Menu Item 1: Dashboard */}
                     <Link to="/" onClick={() => handleMenuClick(1)}>
                         <div
-                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-indigo-700 rounded-md px-2 ${1 === activeMenu ? "bg-indigo-700" : ""
+                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-400 rounded-md px-2 ${1 === activeMenu ? "bg-blue-400" : ""
                                 }`}
                         >
                             <DashboardIcon />

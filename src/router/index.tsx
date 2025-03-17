@@ -20,6 +20,7 @@ import ApprovedExams from "../pages/user/ApprovedExams";
 import PracticeExam from "../pages/user/PracticeExam";
 import ExamGrade from "../pages/admin/ExamGrade";
 import StudentGrade from "../pages/user/StudentGrade";
+import StudentsTargets from "../pages/admin/StudentsTargets";
 
 const router = createBrowserRouter([
     {
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
             { path: "exam-requests", element: <ExamRequests /> },
             { path: "manage-exam", element: <ManageExam /> },
             { path: "exam-grade", element: <ExamGrade /> },
+            { path: "students-targets", element: <StudentsTargets /> },
         ],
     },
     { path: 'login', element: <UserLogin /> },

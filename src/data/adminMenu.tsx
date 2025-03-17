@@ -4,9 +4,9 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import SchoolIcon from '@mui/icons-material/School';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import GradeIcon from '@mui/icons-material/Grade';
-import LoginIcon from '@mui/icons-material/Login';
 import { AdminMenu } from '../types';
 import { LockIcon } from 'lucide-react';
+import AdsClickIcon from '@mui/icons-material/AdsClick';
 
 const adminMenu: AdminMenu[] = [
     {
@@ -20,6 +20,12 @@ const adminMenu: AdminMenu[] = [
         icon: <UpgradeIcon />,
         title: "Levels",
         link: "levels"
+    },
+    {
+        id: 11,
+        icon: <AdsClickIcon />,
+        title: "Students Targets",
+        link: "students-targets"
     },
     {
         id: 3,
