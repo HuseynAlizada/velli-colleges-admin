@@ -9,12 +9,12 @@ import { Exam } from "../../types";
 import { Link, useNavigate } from "react-router-dom";
 
 
-export default function ManageExam() {
+export default function ManagePracticeExam() {
     const [exams, setExams] = useState<Exam[] | []>([])
     const navigate = useNavigate()
 
     const fetchExamFiles = async () => {
-        const { data, error } = await supabase.from("exams").select('*');
+        const { data, error } = await supabase.from("practice_exam").select('*');
 
         if (error) {
             console.error("Error fetching files:", error);
@@ -32,12 +32,12 @@ export default function ManageExam() {
     }, [])
 
     const handleEdit = (id: number) => {
-        navigate(`/admin/import-exam/${id}`)
+        navigate(`/admin/import-practice-exam/${id}`)
     }
 
     const handleDelete = async (id: number) => {
         try {
-            const { error } = await supabase.from('exams').delete().eq('id', id)
+            const { error } = await supabase.from('practice_exam').delete().eq('id', id)
             if (error) throw error
             setExams(exams.filter((level) => level.id !== id))
         }
@@ -46,7 +46,7 @@ export default function ManageExam() {
         }
     }
     const openPopUp = () => {
-        navigate('/admin/import-exam')
+        navigate('/admin/import-practice-exam')
     }
     return (
         <div className="p-6 w-full ">
@@ -113,7 +113,7 @@ export default function ManageExam() {
                                             <DeleteIcon className="w-4 h-4" />
                                             Delete
                                         </button>
-                                        <Link to={`/admin/exam-details/${exam.id}`}
+                                        <Link to={`/admin/practice-exam-details/${exam.id}`}
                                             className="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-rose-600 transition-colors inline-flex items-center gap-1"
                                         >
                                             <RemoveRedEyeIcon className="w-4 h-4" />

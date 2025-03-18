@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../utils/supabase-client";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
-import { examOptions } from "../../data/examData";
+import { PracticeExamOptions } from "../../data/examData";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-export default function ImportExam() {
+export default function ImportPracticeExam() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const {pathname}=useLocation()
-  const editedPathName=pathname.split('/')[2]
+  const { pathname } = useLocation()
+  const editedPathName = pathname.split('/')[2]
 
   console.log(editedPathName)
 
@@ -19,7 +19,6 @@ export default function ImportExam() {
     passScore: "",
     duration: "",
     level: "",
-    // examType: "",  // Added new state for exam type
   });
   const [uploading, setUploading] = useState(false);
   const [editExam] = useState(id || null);
@@ -33,14 +32,13 @@ export default function ImportExam() {
     { id: "c1", name: "C1" },
   ];
 
-  // const examTypes = ["Level Exam", "Practical Exam"];  // Options for the new input
 
   useEffect(() => {
     const fetchExamData = async () => {
       if (!editExam) return;
       try {
         const { data, error } = await supabase
-          .from("exams")
+          .from("practice_exam")
           .select("*")
           .eq("id", editExam)
           .single();
@@ -48,11 +46,10 @@ export default function ImportExam() {
 
         setExamData({
           selectedExam: data.title,
-          selectedFile: data.file_url,
+          selectedFile: data.exam_file,
           passScore: data.pass_score,
           duration: data.duration,
           level: data.level,
-          // examType: data.exam_type,  // Setting the exam type from the fetched data
         });
       } catch (err) {
         console.error(err);
@@ -78,7 +75,6 @@ export default function ImportExam() {
       passScore: "",
       duration: "",
       level: "",
-      // examType: "",  // Reset the exam type
     });
   };
 
@@ -89,7 +85,7 @@ export default function ImportExam() {
       !examData.selectedFile ||
       !examData.passScore ||
       !examData.duration ||
-      !examData.level 
+      !examData.level
     ) {
       toast.error("Please fill in all required fields.");
       return;
@@ -117,24 +113,22 @@ export default function ImportExam() {
 
     const operation = editExam
       ? supabase
-          .from("exams")
-          .update([{
-            title: examData.selectedExam,
-            file_url: fileUrl,
-            pass_score: parseInt(examData.passScore),
-            duration: parseInt(examData.duration),
-            level: examData.level,
-            // exam_type: examData.examType,  // Include exam type
-          }])
-          .eq("id", editExam)
-      : supabase.from("exams").insert([{
+        .from("practice_exam")
+        .update([{
           title: examData.selectedExam,
-          file_url: fileUrl,
+          exam_file: fileUrl,
           pass_score: parseInt(examData.passScore),
           duration: parseInt(examData.duration),
           level: examData.level,
-          // exam_type: examData.examType,  // Include exam type
-        }]);
+        }])
+        .eq("id", editExam)
+      : supabase.from("practice_exam").insert([{
+        title: examData.selectedExam,
+        exam_file: fileUrl,
+        pass_score: parseInt(examData.passScore),
+        duration: parseInt(examData.duration),
+        level: examData.level,
+      }]);
 
     const { error: dbError } = await operation;
 
@@ -175,7 +169,7 @@ export default function ImportExam() {
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
               >
-                {examOptions.map((item, index) => (
+                {PracticeExamOptions.map((item, index) => (
                   <option key={index} value={item}>
                     {item}
                   </option>
@@ -260,25 +254,6 @@ export default function ImportExam() {
               </select>
             </div>
 
-            {/* Exam Type */}
-            {/* <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">
-                Exam Type
-              </label>
-              <select
-                name="examType"
-                value={examData.examType}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
-              >
-                <option value="">Select Exam Type</option>
-                {examTypes.map((type, index) => (
-                  <option key={index} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-            </div> */}
 
             {/* Buttons */}
             <div className="flex justify-end gap-3 pt-4">
@@ -292,17 +267,16 @@ export default function ImportExam() {
               <button
                 type="submit"
                 disabled={uploading}
-                className={`px-5 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition duration-200 ${
-                  uploading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+                className={`px-5 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition duration-200 ${uploading ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
               >
                 {editExam
                   ? uploading
                     ? "Updating..."
                     : "Update Exam"
                   : uploading
-                  ? "Uploading..."
-                  : "Upload Exam"}
+                    ? "Uploading..."
+                    : "Upload Exam"}
               </button>
             </div>
           </form>

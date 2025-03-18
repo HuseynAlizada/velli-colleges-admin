@@ -24,3 +24,6 @@ export const examOptions = [
     "B1+ Video PT10", "B1+ Video PT11", "B1+ Video PT12", "B1+ Video PT13"
 ];
 
+
+
+export const PracticeExamOptions=["Reading", "Listening", "Writing", "Grammar"]

@@ -51,7 +51,7 @@ const AdminSidebar = () => {
                 </button>
 
                 {/* Menu Items */}
-                <div className="flex flex-col gap-3 text-white mt-[20px] px-4">
+                <div className="flex flex-col  text-white mt-[20px] px-4">
                     {adminMenu.map((item) => (
                         item.link ? (
                             <Link to={`/admin/${item.link}`} key={item.id} onClick={() => setMobileMenu(false)}>

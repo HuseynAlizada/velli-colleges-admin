@@ -13,8 +13,8 @@ export default function LockedExams() {
         try {
             const { data, error } = await supabase.from('exams').select("*")
             if (error) throw error
-            const exams = data.filter(item => item.exam_type == 'Level Exam')
-            setExams(exams)
+            // const exams = data.filter(item => item.exam_type == 'Level Exam')
+            setExams(data)
         }
         catch (err) {
             console.log(err);

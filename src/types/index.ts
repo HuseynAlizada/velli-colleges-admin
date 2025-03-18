@@ -89,7 +89,7 @@ export interface AdminMenu {
         id: number,
         title: string,
         link: string,
-        icon: JSX.Element
+        icon?: JSX.Element
     }[]
 }
 // Admin Menu End

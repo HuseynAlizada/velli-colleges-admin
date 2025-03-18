@@ -46,6 +46,23 @@ const adminMenu: AdminMenu[] = [
         ]
     },
     {
+        id: 12,
+        icon: <LibraryBooksIcon />,
+        title: "Practice Exam",
+        subMenu: [
+            {
+                id: 7,
+                title: "Manage Practice Exam",
+                link: "manage-practice-exam"
+            },
+            {
+                id: 8,
+                title: "Import Exam File",
+                link: "import-practice-exam"
+            }
+        ]
+    },
+    {
         id: 4,
         icon: <SchoolIcon />,
         title: "Students",

@@ -21,6 +21,9 @@ import PracticeExam from "../pages/user/PracticeExam";
 import ExamGrade from "../pages/admin/ExamGrade";
 import StudentGrade from "../pages/user/StudentGrade";
 import StudentsTargets from "../pages/admin/StudentsTargets";
+import ImportPracticeExam from "../pages/admin/ImportPracticeExam";
+import ManagePracticeExam from "../pages/admin/ManagePracticeExam";
+import PracticeExamDetails from "../pages/admin/PracticeExamDetails";
 
 const router = createBrowserRouter([
     {
@@ -49,12 +52,23 @@ const router = createBrowserRouter([
             { path: "news", element: <News /> },
             { path: "add-student", element: <AddStudent /> },
             { path: "edit-student/:id", element: <AddStudent /> },
+            //start level exam
             { path: "import-exam", element: <ImportExam /> },
             { path: "import-exam/:id", element: <ImportExam /> },
             { path: "exam-details/:id", element: <ExamDetails /> },
             { path: "exam-requests", element: <ExamRequests /> },
             { path: "manage-exam", element: <ManageExam /> },
             { path: "exam-grade", element: <ExamGrade /> },
+            //end  level exam
+
+            // start practice exam 
+            { path: "import-practice-exam", element: <ImportPracticeExam /> },
+            { path: "import-practice-exam/:id", element: <ImportPracticeExam /> },
+            { path: "manage-practice-exam", element: <ManagePracticeExam /> },
+            { path: "practice-exam-details/:id", element: <PracticeExamDetails /> },
+
+            // end practice exam
+
             { path: "students-targets", element: <StudentsTargets /> },
         ],
     },
