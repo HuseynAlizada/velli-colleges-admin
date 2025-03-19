@@ -72,9 +72,9 @@ padding-bottom: 0px;
 
 
 .question-header{
-  background-image:url('/images/exam-photo.jpg');
+  background-image:url('/images/questions-bg2.jpg');
   background-size: cover;
-  background-position: center 30%;
+  background-position: center 70%;
   padding: 10px;
   border-radius: 20px;
   height: 300px;

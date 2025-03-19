@@ -27,23 +27,18 @@ export default function LockedExams() {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
-            <div className="max-w-7xl mx-auto grid lg:grid-cols-4  sm:grid-cols-2 gap-3">
-                {exams.map((exam) => (
-                    <ExamCard key={exam.id} exam={exam} />
-                ))}
-
-                {exams.map((exam) => (
-                    <ExamCard key={exam.id} exam={exam} />
-                ))}
-
-                {exams.map((exam) => (
-                    <ExamCard key={exam.id} exam={exam} />
-                ))}
-
-                {exams.map((exam) => (
-                    <ExamCard key={exam.id} exam={exam} />
-                ))}
-            </div>
+            {
+                exams.length > 0 ? (
+                    <div className="max-w-7xl mx-auto grid lg:grid-cols-4  sm:grid-cols-2 gap-3">
+                        {exams.map((exam) => (
+                            <ExamCard key={exam.id} exam={exam} />
+                        ))}
+                    </div>
+                ) :
+                    (
+                        <h1 className="text-center text-3xl mt-4 w-full">There is no have any approved exam</h1>
+                    )
+            }
         </div>
     )
 }

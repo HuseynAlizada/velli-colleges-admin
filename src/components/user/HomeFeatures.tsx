@@ -60,10 +60,10 @@ const HomeFeatures = () => {
                                 </p>
 
                                 <Link
-                                    to="/courses"
+                                    to="/locked-exams"
                                     className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium group/link"
                                 >
-                                    Explore exams
+                                    Explore Level exams
                                     <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover/link:translate-x-1" />
                                 </Link>
                             </div>
@@ -89,10 +89,10 @@ const HomeFeatures = () => {
                                 </p>
 
                                 <Link
-                                    to="/assignments"
+                                    to="/practice-exam"
                                     className="inline-flex items-center text-rose-600 hover:text-rose-700 font-medium group/link"
                                 >
-                                    View assignments
+                                    View Practice Exams
                                     <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover/link:translate-x-1" />
                                 </Link>
                             </div>
@@ -116,7 +116,7 @@ const HomeFeatures = () => {
                                 <p className="text-gray-600 mb-6">Stay updated with the latest news from your institution.</p>
 
                                 <Link
-                                    to="/announcements"
+                                    to="/news"
                                     className="inline-flex items-center text-yellow-600 hover:text-yellow-700 font-medium group/link"
                                 >
                                     View news

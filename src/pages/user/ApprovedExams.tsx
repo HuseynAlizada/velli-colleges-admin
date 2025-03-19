@@ -85,14 +85,22 @@ const ApprovedExams = () => {
     }, [])
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
-           <div className="max-w-7xl mx-auto grid grid-cols-4 gap-3">
+        <div className="min-h-screen w-full bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
             {
-                exams.map(exam => (
-                    <ApprovedExam exam={exam} />
-                ))
+                exams.length > 0 ? (
+                    <div className="max-w-7xl mx-auto grid grid-cols-4 gap-3">
+                        {
+                            exams.map(exam => (
+                                <ApprovedExam exam={exam} />
+                            ))
+                        }
+                    </div>
+                ) :
+                    (
+                        <h1 className="text-center text-3xl mt-4 w-full">There is no have any approved exam</h1>
+                    )
             }
-            </div>
+
         </div>
     )
 }

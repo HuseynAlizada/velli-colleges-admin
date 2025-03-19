@@ -14,6 +14,7 @@ const ExamRequests = () => {
         .select("*");
       if (error) throw error;
       setRequestedExams(data);
+      console.log(data, 'data')
     } catch (error) {
       console.error("Error fetching exams:", error);
     }
@@ -32,13 +33,19 @@ const ExamRequests = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
       <div className="max-w-7xl mx-auto grid grid-cols-4 gap-3">
-        {requestedExams?.map((exam) => (
-          <ExamRequest
-            key={exam.id}
-            exam={exam}
-            onDataChange={handleDataChange} // Pass callback to child
-          />
-        ))}
+        {
+          requestedExams && requestedExams?.length > 0 ? (
+            requestedExams?.map((exam) => (
+              <ExamRequest
+                key={exam.id}
+                exam={exam}
+                onDataChange={handleDataChange} // Pass callback to child
+              />
+            ))
+          ) : (
+            <h1>There is no have any exam request</h1>
+          )
+        }
       </div>
     </div>
   );

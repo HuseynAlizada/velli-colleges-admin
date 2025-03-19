@@ -686,8 +686,10 @@ export default function ExamQuestions() {
                     .select("*")
                     .eq("id", id)
                     .single();
+
                 if (error) throw error;
                 setExam(data);
+
 
                 if (data.file_url) {
                     const response = await fetch(data.file_url);
@@ -832,6 +834,21 @@ export default function ExamQuestions() {
             toast.success("Exam submitted successfully!");
             setSubmited(true)
             setIsModalOpen(true);
+
+            try {
+
+                const { error } = await supabase
+                    .from("approved-exams")
+                    .delete()
+                    .eq('id', exam?.id)
+
+                if (error) throw error
+
+            }
+            catch (err) {
+                console.log(err)
+            }
+
         } catch (err) {
             console.error(err);
             toast.error("Failed to submit exam results. Please try again.");
