@@ -21,7 +21,7 @@ const StudentLayout = () => {
         <div>
             <Header />
             <div className="flex items-start justify-between p-4  gap-10">
-                <div className="w-[10%]  ">
+                <div className="md:w-[10%]  ">
                     <StudentSidebar />
                 </div>
                 <div className="flex md:w-[calc(100%-240px)] w-full ">

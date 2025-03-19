@@ -10,7 +10,7 @@ import { Link } from "react-router-dom"
 
 
 
-export default function ExamCard({ exam, practical }: { exam: Exam, practical: boolean }) {
+export default function ExamCard({ exam }: { exam: Exam }) {
     const colors = levelColors[exam.level]
     const userId = Cookies.get('studentID')
     const [userData, setUserData] = useState<StudentData | null>(null)
@@ -134,21 +134,7 @@ export default function ExamCard({ exam, practical }: { exam: Exam, practical: b
 
 
                         {
-                            practical ?
-                                (
-                                    <Link to={`${exam.id}`}>
-                                        <motion.button
-                                            whileHover={{ scale: 1.02 }}
-                                            disabled={sendRequest}
-                                            whileTap={{ scale: 0.98 }}
-                                            className={`w-full flex items-center justify-center gap-1 px-4 py-3 rounded-xl text-white font-medium ${colors.button} shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 mb-6`}
-                                        >
-                                            <PlayCircle className="w-5 h-5" />
-                                            Start To Exam
-                                        </motion.button>
-                                    </Link>
-                                )
-                                :
+                           
                                 (
                                     <motion.button
                                         onClick={handleRequestUnlock}

@@ -23,6 +23,7 @@ import StudentGrade from "../pages/user/StudentGrade";
 import StudentsTargets from "../pages/admin/StudentsTargets";
 import ImportPracticeExam from "../pages/admin/ImportPracticeExam";
 import ManagePracticeExam from "../pages/admin/ManagePracticeExam";
+import PracticeExamQuestions from "../pages/user/PracticeExamQuestions";
 import PracticeExamDetails from "../pages/admin/PracticeExamDetails";
 
 const router = createBrowserRouter([
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
             { path: "locked-exams", element: <LockedExams /> },
             { path: "approved-exams", element: <ApprovedExams /> },
             { path: "approved-exams/:id", element: <ExamQuestions /> },
-            { path: "practice-exam/:id", element: <ExamQuestions /> },
+            { path: "practice-exam/:id", element: <PracticeExamQuestions /> },
             { path: "practice-exam", element: <PracticeExam /> },
             { path: "news", element: <StudentNews /> },
             { path: "exam-grade", element: <StudentGrade /> },
