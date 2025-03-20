@@ -1,55 +1,40 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../utils/supabase-client";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
-import { PracticeExamOptions } from "../../data/examData";
+import "react-toastify/dist/ReactToastify.css";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-export default function ImportPracticeExam() {
+export default function ImportPlacementTest() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { pathname } = useLocation()
-  const editedPathName = pathname.split('/')[2]
+  const { pathname } = useLocation();
+  const editedPathName = pathname.split('/')[2];
 
-  console.log(editedPathName)
+  console.log(editedPathName);
 
   const [examData, setExamData] = useState({
-    selectedExam: "B1 U1",
     selectedFile: null,
     passScore: "",
     duration: "",
-    level: "",
   });
   const [uploading, setUploading] = useState(false);
   const [editExam] = useState(id || null);
-
-  const levels = [
-    { id: "a1", name: "A1" },
-    { id: "a2", name: "A2" },
-    { id: "b1", name: "B1" },
-    { id: "b1+", name: "B1+" },
-    { id: "b2", name: "B2" },
-    { id: "c1", name: "C1" },
-  ];
-
 
   useEffect(() => {
     const fetchExamData = async () => {
       if (!editExam) return;
       try {
         const { data, error } = await supabase
-          .from("practice_exam")
+          .from("placement_test")
           .select("*")
           .eq("id", editExam)
           .single();
         if (error) throw error;
 
         setExamData({
-          selectedExam: data.title,
           selectedFile: data.exam_file,
           passScore: data.pass_score,
           duration: data.duration,
-          level: data.level,
         });
       } catch (err) {
         console.error(err);
@@ -66,26 +51,22 @@ export default function ImportPracticeExam() {
   const handleFileChange = (e) => {
     const file = e.target.files?.[0] || null;
     setExamData((prev) => ({ ...prev, selectedFile: file }));
-  };
+};
 
   const onClose = () => {
     setExamData({
-      selectedExam: "",
       selectedFile: null,
       passScore: "",
       duration: "",
-      level: "",
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
-      !examData.selectedExam ||
       !examData.selectedFile ||
       !examData.passScore ||
-      !examData.duration ||
-      !examData.level
+      !examData.duration
     ) {
       toast.error("Please fill in all required fields.");
       return;
@@ -94,7 +75,6 @@ export default function ImportPracticeExam() {
     setUploading(true);
     let fileUrl = examData.selectedFile;
 
-    // If a new file is selected, upload it
     if (examData.selectedFile && typeof examData.selectedFile !== "string") {
       const fileName = `exams/${Date.now()}-${examData.selectedFile.name}`;
       const { data: fileData, error: fileError } = await supabase.storage
@@ -113,22 +93,18 @@ export default function ImportPracticeExam() {
 
     const operation = editExam
       ? supabase
-        .from("practice_exam")
-        .update([{
-          title: examData.selectedExam,
+          .from("placement_test")
+          .update([{
+            exam_file: fileUrl,
+            pass_score: parseInt(examData.passScore),
+            duration: parseInt(examData.duration),
+          }])
+          .eq("id", editExam)
+      : supabase.from("placement_test").insert([{
           exam_file: fileUrl,
           pass_score: parseInt(examData.passScore),
           duration: parseInt(examData.duration),
-          level: examData.level,
-        }])
-        .eq("id", editExam)
-      : supabase.from("practice_exam").insert([{
-        title: examData.selectedExam,
-        exam_file: fileUrl,
-        pass_score: parseInt(examData.passScore),
-        duration: parseInt(examData.duration),
-        level: examData.level,
-      }]);
+        }]);
 
     const { error: dbError } = await operation;
 
@@ -145,42 +121,20 @@ export default function ImportPracticeExam() {
   };
 
   return (
-    <div className="min-h-screen md:w-[93%] w-[90%] mx-auto  flex items-center justify-center py-5 mr-10 ">
+    <div className="min-h-screen md:w-[93%] w-[90%] mx-auto  flex items-center justify-center py-5 mr-10">
       <div className="bg-white rounded-xl shadow-lg w-full">
         <ToastContainer position="top-right" autoClose={3000} />
-        {/* Header */}
         <div className="inset-0 bg-gradient-to-r from-rose-500 to-pink-600 px-6 py-4 rounded-t-xl">
           <h1 className="text-white text-xl font-semibold">
-            {editExam ? "Edit Practice Exam" : "Import Practice Exam"}
+            {editExam ? "Edit Placement Test" : "Import Placement Test"}
           </h1>
         </div>
 
-        {/* Form Body */}
         <div className="p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Exam Title */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
-                Exam Title
-              </label>
-              <select
-                name="selectedExam"
-                value={examData.selectedExam}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
-              >
-                {PracticeExamOptions.map((item, index) => (
-                  <option key={index} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* File Upload */}
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">
-                Upload Exam File
+                Upload Test File
               </label>
               {examData.selectedFile && typeof examData.selectedFile === "string" ? (
                 <div className="flex items-center gap-2 mb-2">
@@ -203,7 +157,6 @@ export default function ImportPracticeExam() {
               />
             </div>
 
-            {/* Pass Score and Duration */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
@@ -234,28 +187,6 @@ export default function ImportPracticeExam() {
               </div>
             </div>
 
-            {/* Level */}
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">
-                Level
-              </label>
-              <select
-                name="level"
-                value={examData.level}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
-              >
-                <option value="">Select Level</option>
-                {levels.map((item) => (
-                  <option key={item.id} value={item.name}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-
-            {/* Buttons */}
             <div className="flex justify-end gap-3 pt-4">
               <button
                 type="button"
@@ -267,8 +198,7 @@ export default function ImportPracticeExam() {
               <button
                 type="submit"
                 disabled={uploading}
-                className={`px-5 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition duration-200 ${uploading ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
+                className={`px-5 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition duration-200 ${uploading ? "opacity-50 cursor-not-allowed" : ""}`}
               >
                 {editExam
                   ? uploading
@@ -284,4 +214,4 @@ export default function ImportPracticeExam() {
       </div>
     </div>
   );
-}
+} 

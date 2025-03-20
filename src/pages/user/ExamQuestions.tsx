@@ -651,6 +651,7 @@ export default function ExamQuestions() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [sectionScores, setSectionScores] = useState<{ [key: string]: number }>({});
     const [totalScore, setTotalScore] = useState<number | null>(null);
+    const [examScore, setExamScore] = useState<number | null>(null)
     const [submited, setSubmited] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [timeLeft, setTimeLeft] = useState(60 * 60);
@@ -754,6 +755,7 @@ export default function ExamQuestions() {
 
         setIsSubmitted(true);
         let totalCorrectCount = 0;
+        let totalExamScore = 0
         const newSectionScores: { [key: string]: number } = {};
 
         examSections.forEach((section) => {
@@ -772,6 +774,8 @@ export default function ExamQuestions() {
 
             newSectionScores[section] = correctCount;
             totalCorrectCount += correctCount;
+            totalExamScore = (totalCorrectCount * 100) / questions.length
+            setExamScore(totalExamScore)
         });
 
         setSectionScores(newSectionScores);
@@ -792,11 +796,12 @@ export default function ExamQuestions() {
             const studentName = studentData?.name || "Unknown";
 
             // Insert into student_results table with section scores
+            console.log(examScore,'examScore')
             const { error: resultError } = await supabase
                 .from("student_results")
                 .insert({
                     student_id: userId,
-                    student_score: totalCorrectCount,
+                    student_score: totalExamScore,
                     student_level: studentLevel,
                     exam_name: exam?.title || "Unnamed Exam",
                     student_name: studentName,
@@ -932,7 +937,7 @@ export default function ExamQuestions() {
             </div>
 
             {!isSubmitted && (
-                <div className="sticky top-18 right-0 w-full flex items-center justify-end">
+                <div className="sticky z-[999] top-18 right-0 w-full flex items-center justify-end">
                     <div className="w-[200px] z-10 bg-white shadow-md p-4 text-center">
                         <p className="text-xl font-semibold text-indigo-600">
                             Time Left: {formatTime(timeLeft)}
@@ -980,6 +985,7 @@ export default function ExamQuestions() {
                             <div className="text-center mb-12">
                                 <h2 className="text-2xl font-semibold text-gray-900">
                                     Total Score: {totalScore} / {questions.length}
+                                    {examScore} 
                                 </h2>
                             </div>
                         )}
@@ -1080,7 +1086,10 @@ export default function ExamQuestions() {
                         <div className="space-y-4">
                             <div className="text-center">
                                 <h3 className="text-xl font-semibold text-gray-900">
-                                    Total Score: {totalScore} / {questions.length}
+                                    Total Answers: {totalScore} / {questions.length}
+                                </h3>
+                                <h3 className="text-xl font-semibold text-gray-900">
+                                    Total Score: {examScore} %
                                 </h3>
                             </div>
                             <div className="space-y-2">

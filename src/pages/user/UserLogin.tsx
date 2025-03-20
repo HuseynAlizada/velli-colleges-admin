@@ -199,11 +199,11 @@ export default function UserLogin() {
                 </div>
               </div>
 
-              <div className="text-right">
+              {/* <div className="text-right">
                 <Link to="/forgot-password" className="text-blue-600 hover:underline text-sm">
                   {t("forgotPassword")}
                 </Link>
-              </div>
+              </div> */}
 
               <button
                 type="submit"

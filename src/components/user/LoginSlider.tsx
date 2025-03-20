@@ -10,7 +10,7 @@ import './style.css';
 
 // import required modules
 import { Autoplay, Pagination } from 'swiper/modules';
-const images = ['/images/login-slider1.avif', '/images/login-slider2.avif', '/images/login-slider3.avif', '/images/login-slider4.avif']
+const images = ['/images/login-image1.avif', '/images/login-image2.avif', '/images/login-image3.avif', '/images/login-slider4.avif']
 
 export default function LoginSlider() {
     return (

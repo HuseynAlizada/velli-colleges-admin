@@ -6,47 +6,38 @@ import ExamRequest from "./ExamRequest";
 const ExamRequests = () => {
   const [requestedExams, setRequestedExams] = useState<RequestedExams[] | null>(null);
 
-  // Function to fetch data, which can be called whenever needed
   const fetchRequestExams = async () => {
     try {
-      const { data, error } = await supabase
-        .from("approved-exams")
-        .select("*");
+      const { data, error } = await supabase.from("approved-exams").select("*");
       if (error) throw error;
       setRequestedExams(data);
-      console.log(data, 'data')
     } catch (error) {
       console.error("Error fetching exams:", error);
     }
   };
 
-  // Fetch data on component mount
   useEffect(() => {
     fetchRequestExams();
   }, []);
 
-  // Callback to pass to child to trigger data re-fetch
   const handleDataChange = () => {
-    fetchRequestExams(); // Re-fetch data after a change
+    fetchRequestExams();
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
-      <div className="max-w-7xl mx-auto grid grid-cols-4 gap-3">
-        {
-          requestedExams && requestedExams?.length > 0 ? (
-            requestedExams?.map((exam) => (
-              <ExamRequest
-                key={exam.id}
-                exam={exam}
-                onDataChange={handleDataChange} // Pass callback to child
-              />
-            ))
-          ) : (
-            <h1>There is no have any exam request</h1>
-          )
-        }
-      </div>
+    <div className="min-h-screen bg-gradient-to-b from-amber-50/50 to-white p-8 py-20 flex flex-col items-center">
+      {requestedExams && requestedExams.length > 0 ? (
+        <div className="max-w-7xl mx-auto grid grid-cols-4 gap-3">
+          {requestedExams.map((exam) => (
+            <ExamRequest key={exam.id} exam={exam} onDataChange={handleDataChange} />
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center h-full text-gray-700">
+          <h1 className="text-2xl font-semibold">No Exam Requests Available</h1>
+          <p className="text-gray-500">Check back later for updates.</p>
+        </div>
+      )}
     </div>
   );
 };

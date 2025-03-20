@@ -25,7 +25,7 @@ const StudentSidebar = () => {
                 aria-label={mobileMenu ? "Close menu" : "Open menu"}
                 className={`md:hidden fixed top-16 left-2 z-50 bg-blue-400 text-white p-2 rounded-md shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 ${mobileMenu && 'bg-white'}`}
             >
-                {mobileMenu ? <X size={24} className="text-blue-400" /> : <Menu size={24}  />}
+                {mobileMenu ? <X size={24} className="text-blue-400" /> : <Menu size={24} />}
             </button>
 
             {/* Sidebar */}
@@ -34,8 +34,8 @@ const StudentSidebar = () => {
                     }`}
             >
                 {/* Logo */}
-                <Link to="/" className="w-full flex justify-center" onClick={() => setMobileMenu(false)}>
-                    <div className="w-[70%] mt-[30px]">
+                <Link to="/" className="w-full flex justify-start" onClick={() => setMobileMenu(false)}>
+                    <div className="w-[90%] mt-[30px]">
                         <img
                             src="/images/main-logo.png"
                             alt="Logo"
@@ -93,28 +93,15 @@ const StudentSidebar = () => {
                         </div>
                     </Link>
 
-                    {/* Menu Item 4: Assignments (with submenu) */}
-                    {/* <div>
-            <div
-              className={`flex items-center gap-2 cursor-pointer py-4 menu-animation hover:bg-indigo-700 rounded-md px-2 ${
-                4 === activeMenu ? "bg-indigo-700" : ""
-              }`}
-              onClick={() => setActiveMenu(4 === activeMenu ? null : 4)}
-            >
-              <FileText />
-              <span>Assignments</span>
-            </div>
-            {4 === activeMenu && (
-              <div className="flex flex-col gap-2 pl-8 mt-2">
-                <Link to="/assignments/pending" onClick={() => setMobileMenu(false)}>
-                  <div className="py-2 hover:text-indigo-200">Pending</div>
-                </Link>
-                <Link to="/assignments/completed" onClick={() => setMobileMenu(false)}>
-                  <div className="py-2 hover:text-indigo-200">Completed</div>
-                </Link>
-              </div>
-            )}
-          </div> */}
+                    <Link to="/placement-tests" onClick={() => handleMenuClick(7)}>
+                        <div
+                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-indigo-700 rounded-md px-2 ${7 === activeMenu ? "bg-indigo-700" : ""
+                                }`}
+                        >
+                            <LibraryBooksIcon />
+                            <span>Placement Test</span>
+                        </div>
+                    </Link>
 
                     <Link to="/exam-grade" onClick={() => handleMenuClick(5)}>
                         <div
@@ -127,9 +114,9 @@ const StudentSidebar = () => {
                     </Link>
 
                     {/* Menu Item 5: Settings */}
-                    <Link to="/news" onClick={() => handleMenuClick(5)}>
+                    <Link to="/news" onClick={() => handleMenuClick(6)}>
                         <div
-                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-indigo-700 rounded-md px-2 ${5 === activeMenu ? "bg-indigo-700" : ""
+                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-indigo-700 rounded-md px-2 ${6 === activeMenu ? "bg-indigo-700" : ""
                                 }`}
                         >
                             <NewspaperIcon />

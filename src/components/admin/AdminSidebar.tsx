@@ -18,7 +18,7 @@ const AdminSidebar = () => {
     }, []);
 
     return (
-        <>
+        <div className="w-full">
             {/* Mobile Menu Button */}
             {
                 !mobileMenu && (
@@ -34,7 +34,7 @@ const AdminSidebar = () => {
 
             {/* Sidebar */}
             <div
-                className={`fixed top-0 left-0 h-full overflow-y-auto overflow-x-hidden     w-[260px] bg-blue-400 py-2 z-40 transition-transform duration-300 
+                className={`fixed top-0 left-0 h-full overflow-y-auto overflow-x-hidden     w-[310px] bg-blue-400 py-2 z-40 transition-transform duration-300 
                 ${mobileMenu ? "translate-x-0" : "-translate-x-full"} xl:translate-x-0 xl:block`}
             >
                 {/* Logo */}
@@ -51,13 +51,13 @@ const AdminSidebar = () => {
                 </button>
 
                 {/* Menu Items */}
-                <div className="flex flex-col  text-white mt-[20px] px-4">
+                <div className="flex flex-col  text-white mt-[0px] px-4">
                     {adminMenu.map((item) => (
                         item.link ? (
                             <Link to={`/admin/${item.link}`} key={item.id} onClick={() => setMobileMenu(false)}>
                                 <div className="list" onClick={() => setActiveMenu(item.id)}>
                                     <div
-                                        className={`flex items-center gap-2 text-md cursor-pointer py-4 menu-animation 
+                                        className={`flex items-center gap-2 text-md cursor-pointer py-3 menu-animation 
                                         ${item.id === activeMenu ? "active" : ""}`}
                                     >
                                         {item.icon}
@@ -96,7 +96,7 @@ const AdminSidebar = () => {
                     onClick={() => setMobileMenu(false)}
                 />
             )}
-        </>
+        </div>
     );
 };
 

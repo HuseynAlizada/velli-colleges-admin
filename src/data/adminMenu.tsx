@@ -63,6 +63,23 @@ const adminMenu: AdminMenu[] = [
         ]
     },
     {
+        id: 15,
+        icon: <LibraryBooksIcon />,
+        title: "Placement Test",
+        subMenu: [
+            {
+                id: 16,
+                title: "Manage Placement Test",
+                link: "manage-placement-test"
+            },
+            {
+                id: 17,
+                title: "Import Placement Test",
+                link: "import-placement-test"
+            }
+        ]
+    },
+    {
         id: 4,
         icon: <SchoolIcon />,
         title: "Students",
@@ -86,6 +103,20 @@ const adminMenu: AdminMenu[] = [
         icon: <GradeIcon />,
         title: "Exam Grade",
         link: "exam-grade"
+
+    },
+    {
+        id: 13,
+        icon: <GradeIcon />,
+        title: "Practice Exam Grade",
+        link: "practice-exam-grade"
+
+    },
+    {
+        id: 14,
+        icon: <GradeIcon />,
+        title: "Placement Test Grade",
+        link: "placement-test-grade"
 
     },
     {

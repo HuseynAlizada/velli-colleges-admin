@@ -11,7 +11,7 @@ const AdminLayout = () => {
                 <AdminSidebar  />
             </div>
 
-            <div className=" xl:w-[80%] w-full">
+            <div className=" xl:w-[80%] w-[90%] mx-auto">
                 <Outlet />
             </div>
 

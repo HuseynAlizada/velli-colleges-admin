@@ -265,7 +265,7 @@ export default function PracticeExamQuestions() {
             </div>
 
             {!isSubmitted && (
-                <div className="sticky top-18 right-0 w-full flex items-center justify-end">
+                <div className="sticky z-[999] top-18 right-0 w-full flex items-center justify-end">
                     <div className="w-[200px] z-10 bg-white shadow-md p-4 text-center">
                         <p className="text-xl font-semibold text-indigo-600">
                             Time Left: {formatTime(timeLeft)}

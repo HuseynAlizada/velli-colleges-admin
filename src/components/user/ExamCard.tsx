@@ -6,7 +6,6 @@ import { levelColors } from "../../data/studentMenu"
 import { useEffect, useState } from "react"
 import { supabase } from "../../utils/supabase-client"
 import Cookies from 'js-cookie'
-import { Link } from "react-router-dom"
 
 
 
@@ -15,8 +14,8 @@ export default function ExamCard({ exam }: { exam: Exam }) {
     const userId = Cookies.get('studentID')
     const [userData, setUserData] = useState<StudentData | null>(null)
     const [sendRequest, setSendRequest] = useState(false)
-    const [approvedExams, setApprovedExams] = useState<[number, string][] | null>(null)
-    const [data, setData] = useState<number | null>(null)
+    const [approvedExams, setApprovedExams] = useState<[number, string][][] | null>(null)
+    const [data, setData] = useState<string | null>(null)
 
 
     useEffect(() => {
@@ -163,7 +162,7 @@ export default function ExamCard({ exam }: { exam: Exam }) {
                         {/* Created At */}
                         <div className="mt-4 flex items-center gap-1.5 text-sm text-gray-500">
                             <Calendar className="w-4 h-4" />
-                            <span>Created {format(exam.created_at, "MMM d, yyyy")}</span>
+                            <span>Created {format( exam.created_at, "MMM d, yyyy")}</span>
                         </div>
 
                         {/* Decorative Elements */}

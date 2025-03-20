@@ -151,7 +151,7 @@ export default function ImportExam() {
   };
 
   return (
-    <div className="min-h-screen md:w-[97%] w-[90%] mx-auto bg-gray-100 flex items-center justify-center py-5 mr-10 ">
+    <div className="min-h-screen md:w-[93%] w-[90%] mx-auto  flex items-center justify-center py-5 mr-10 ">
       <div className="bg-white rounded-xl shadow-lg w-full">
         <ToastContainer position="top-right" autoClose={3000} />
         {/* Header */}

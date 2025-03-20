@@ -25,6 +25,13 @@ import ImportPracticeExam from "../pages/admin/ImportPracticeExam";
 import ManagePracticeExam from "../pages/admin/ManagePracticeExam";
 import PracticeExamQuestions from "../pages/user/PracticeExamQuestions";
 import PracticeExamDetails from "../pages/admin/PracticeExamDetails";
+import PracticeExamGrade from "../pages/admin/PracticeExamGrade";
+import ManagePlacementTest from "../pages/admin/ManagePlacementTest";
+import ImportPlacementTest from "../pages/admin/ImportPlacementTest";
+import PlacementTestDetails from "../pages/admin/PlacementTestDetails";
+import PlacementTestGrade from "../pages/admin/PlacementTestGrade";
+import PlacementTests from "../pages/user/PlacementTests";
+import PlacementTestQuestions from "../pages/user/PlacementTestQuestions";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +45,8 @@ const router = createBrowserRouter([
             { path: "approved-exams/:id", element: <ExamQuestions /> },
             { path: "practice-exam/:id", element: <PracticeExamQuestions /> },
             { path: "practice-exam", element: <PracticeExam /> },
+            { path: "placement-tests", element: <PlacementTests /> },
+            { path: "placement-tests/:id", element: <PlacementTestQuestions /> },
             { path: "news", element: <StudentNews /> },
             { path: "exam-grade", element: <StudentGrade /> },
             { path: "student-profile", element: <StudentProfile /> },
@@ -67,8 +76,16 @@ const router = createBrowserRouter([
             { path: "import-practice-exam/:id", element: <ImportPracticeExam /> },
             { path: "manage-practice-exam", element: <ManagePracticeExam /> },
             { path: "practice-exam-details/:id", element: <PracticeExamDetails /> },
-
+            { path: "practice-exam-grade", element: <PracticeExamGrade /> },
             // end practice exam
+
+            // start placement test
+            { path: "import-placement-test", element: <ImportPlacementTest /> },
+            { path: "import-placement-test/:id", element: <ImportPlacementTest /> },
+            { path: "manage-placement-test", element: <ManagePlacementTest /> },
+            { path: "placement-test-details/:id", element: <PlacementTestDetails /> },
+            { path: "placement-test-grade", element: <PlacementTestGrade /> },
+            // end placement test
 
             { path: "students-targets", element: <StudentsTargets /> },
         ],
