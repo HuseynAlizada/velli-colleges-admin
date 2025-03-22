@@ -49,12 +49,12 @@ export interface NewsItem {
 export interface Exam {
     created_at?: string | number | Date | undefined,
     id: number,
-    title: string,
+    title?: string,
     file_url: string,
     pass_score: number,
     total_score: number,
     duration: number,
-    level: string
+    level?: string
 }
 
 
