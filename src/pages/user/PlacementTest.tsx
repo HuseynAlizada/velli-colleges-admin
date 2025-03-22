@@ -1,9 +1,107 @@
 import { RequestedExams } from '../../types';
 import { Clock, Calendar, GraduationCap, Target, PlayCircle } from "lucide-react";
 import { format } from "date-fns";
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import { supabase } from '../../utils/supabase-client';
 
 const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
+  const [sendRequest, setSendRequest] = useState(false);
+  const [approvedExams, setApprovedExams] = useState<[number, string][] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isRequestLoading, setIsRequestLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const userId = Cookies.get('studentID');
+
+  console.log(exam, 'exam')
+
+  useEffect(() => {
+    const fetchApprovedExams = async () => {
+      setIsLoading(true);
+      try {
+        const { data, error } = await supabase.from('approved-exams').select('*');
+        if (error) throw error;
+        const titles = data.map(item => [item.student_id, item.title] as [number, string]);
+        setApprovedExams(titles);
+      } catch (err) {
+        console.error("Error fetching approved exams:", err);
+        setError("Failed to load exam data. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchApprovedExams();
+  }, []);
+
+  const handleRequestUnlock = async () => {
+    if (!userId) {
+      console.error("User ID not found.");
+      return;
+    }
+
+    setIsRequestLoading(true);
+    try {
+      const { error } = await supabase.from('approved-exams').insert({
+        student_id: Number(userId),
+        title: "Placement Test",
+        level: null,
+        duration: exam.duration,
+        pass_score: exam.pass_score,
+        created_at: exam.created_at,
+        file_url: exam.exam_file,
+        locked: false
+      });
+
+      if (error) throw error;
+      console.log("Exam request submitted successfully!");
+      setSendRequest(true);
+      setApprovedExams(prev => [...(prev || []), [Number(userId), "Placement Test"]]);
+
+      console.log(userId,exam.title, 'test data' )
+    } catch (err) {
+      console.error("Error submitting exam request:", err);
+      setError("Failed to request unlock. Please try again.");
+    } finally {
+      setIsRequestLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="w-full max-w-sm bg-white rounded-lg shadow-md p-6 border border-gray-200 flex items-center justify-center min-h-[300px]">
+        <div className="flex flex-col items-center gap-2">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-300"></div>
+          <span className="text-gray-600">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full max-w-sm bg-white rounded-lg shadow-md p-6 border border-gray-200 flex items-center justify-center min-h-[300px]">
+        <div className="text-red-600 text-center">{error}</div>
+      </div>
+    );
+  }
+
+  const isExamApproved = approvedExams && approvedExams.some(item => item[0] === Number(userId) && item[1] === "Placement Test");
+
+  // If the exam is approved, return the "no tests" UI only once
+  if (isExamApproved) {
+    return (
+      <div className="w-full max-w-sm bg-white rounded-lg shadow-md p-6 border border-gray-200 flex items-center justify-center min-h-[300px]">
+        <div className="text-center">
+          <GraduationCap className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-800">No Placement Tests Available</h3>
+          <p className="text-gray-600 mt-2">You have already requested or completed this placement test.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // If the exam is not approved, show the test card
   return (
     <div className="w-full max-w-sm bg-white rounded-lg shadow-md p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-300">
       {/* Header */}
@@ -36,14 +134,23 @@ const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
       </div>
 
       {/* Start Exam Button */}
-      <Link to={`${exam.id}`}>
-        <button
-          className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        >
-          <PlayCircle className="w-5 h-5" />
-          Start Exam
-        </button>
-      </Link>
+      <button
+        onClick={handleRequestUnlock}
+        disabled={sendRequest || isRequestLoading}
+        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+      >
+        {isRequestLoading ? (
+          <div className="flex items-center gap-2">
+            <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+            <span>Requesting...</span>
+          </div>
+        ) : (
+          <>
+            <PlayCircle className="w-5 h-5" />
+            {sendRequest ? 'Request Sent' : 'Request To Unlock'}
+          </>
+        )}
+      </button>
 
       {/* Created At */}
       <div className="mt-4 flex items-center gap-1.5 text-sm text-gray-500">

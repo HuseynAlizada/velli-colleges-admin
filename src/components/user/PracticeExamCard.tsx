@@ -17,7 +17,6 @@ interface PracticeExamCardProps {
 }
 
 const PracticeExamCard = ({ exam }: { exam: PracticeExamCardProps }) => {
-    console.log(exam, 'exam')
     const { title, level, duration, pass_score, created_at } = exam
     const [isHovered, setIsHovered] = useState(false)
 

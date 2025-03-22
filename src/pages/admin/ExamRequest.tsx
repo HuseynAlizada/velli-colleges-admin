@@ -16,7 +16,7 @@ const ExamRequest = ({
   const [approveExam, setApproveExam] = useState<boolean>(false);
   const [userData, setUserData] = useState<any>(null); // Define type for userData if possible
 
-  const colors = levelColors[exam?.level];
+  const colors = levelColors[exam.level ? exam?.level : 'C1'];
 
   useEffect(() => {
     const fetchUser = async () => {

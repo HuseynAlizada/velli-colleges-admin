@@ -1,21 +1,43 @@
 
 import { useEffect, useState } from "react"
-import ExamCard from "../../components/user/ExamCard"
 import { supabase } from "../../utils/supabase-client"
-import { Exam } from "../../types"
+import { Exam, StudentData } from "../../types"
 import PracticeExamCard from "../../components/user/PracticeExamCard"
-
+import Cookies from 'js-cookie'
 // title, file_url, pass_score, duration, level
 
 
 export default function PracticeExam() {
   const [exams, setExams] = useState<Exam[] | []>([])
+  const userId = Cookies.get('studentID')
+  const [userData, setUserData] = useState<StudentData | null>(null)
+
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const { data, error } = await supabase.from('students')
+          .select('*')
+          .eq('id', userId)
+          .single()
+        if (error) throw error
+        setUserData(data)
+      }
+      catch (err) {
+        console.log(err);
+      }
+    }
+    fetchUser()
+  }, [userId])
+
+
+
   const fetchExams = async () => {
     try {
       const { data, error } = await supabase.from('practice_exam').select("*")
       if (error) throw error
-      setExams(data)
-      console.log(data, 'data')
+      const filteredData = data.filter(item => item.level == userData?.level)
+      setExams(filteredData)
     }
     catch (err) {
       console.log(err);

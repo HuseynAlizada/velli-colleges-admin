@@ -72,6 +72,7 @@ export default function ImportExam() {
   };
 
   const onClose = () => {
+    navigate(-1)
     setExamData({
       selectedExam: "",
       selectedFile: null,
@@ -144,7 +145,7 @@ export default function ImportExam() {
     } else {
       toast.success(editExam ? "Exam updated successfully!" : "Exam added successfully!");
       navigate("/admin/manage-exam");
-      onClose();
+      // onClose();
     }
 
     setUploading(false);

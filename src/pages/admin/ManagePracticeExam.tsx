@@ -36,14 +36,18 @@ export default function ManagePracticeExam() {
     }
 
     const handleDelete = async (id: number) => {
-        try {
-            const { error } = await supabase.from('practice_exam').delete().eq('id', id)
-            if (error) throw error
-            setExams(exams.filter((level) => level.id !== id))
+        if (confirm("Are you sure?")) {
+            try {
+
+                const { error } = await supabase.from('practice_exam').delete().eq('id', id)
+                if (error) throw error
+                setExams(exams.filter((level) => level.id !== id))
+            }
+            catch (err) {
+                console.log(err);
+            }
         }
-        catch (err) {
-            console.log(err);
-        }
+
     }
     const openPopUp = () => {
         navigate('/admin/import-practice-exam')
@@ -77,11 +81,11 @@ export default function ManagePracticeExam() {
                             <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                                 Duration
                             </th>
-                         
+
                             <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                                 Level
                             </th>
-                           
+
                             <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                                 Actions
                             </th>

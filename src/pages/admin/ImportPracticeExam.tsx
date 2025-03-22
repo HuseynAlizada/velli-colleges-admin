@@ -14,7 +14,7 @@ export default function ImportPracticeExam() {
   console.log(editedPathName)
 
   const [examData, setExamData] = useState({
-    selectedExam: "B1 U1",
+    selectedExam: "Reading",
     selectedFile: null,
     passScore: "",
     duration: "",
@@ -69,8 +69,9 @@ export default function ImportPracticeExam() {
   };
 
   const onClose = () => {
+    navigate(-1)  
     setExamData({
-      selectedExam: "",
+      selectedExam: "Reading",
       selectedFile: null,
       passScore: "",
       duration: "",
@@ -137,9 +138,10 @@ export default function ImportPracticeExam() {
       toast.error("Failed to save exam info!");
     } else {
       toast.success(editExam ? "Exam updated successfully!" : "Exam added successfully!");
-      navigate("/admin/manage-exam");
-      onClose();
+      navigate("/admin/manage-practice-exam");
+      // onClose();
     }
+    navigate("/admin/manage-practice-exam");
 
     setUploading(false);
   };

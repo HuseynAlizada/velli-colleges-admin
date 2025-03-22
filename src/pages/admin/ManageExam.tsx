@@ -36,13 +36,15 @@ export default function ManageExam() {
     }
 
     const handleDelete = async (id: number) => {
-        try {
-            const { error } = await supabase.from('exams').delete().eq('id', id)
-            if (error) throw error
-            setExams(exams.filter((level) => level.id !== id))
-        }
-        catch (err) {
-            console.log(err);
+        if(confirm('Are you sure?')){
+            try {
+                const { error } = await supabase.from('exams').delete().eq('id', id)
+                if (error) throw error
+                setExams(exams.filter((level) => level.id !== id))
+            }
+            catch (err) {
+                console.log(err);
+            }
         }
     }
     const openPopUp = () => {
