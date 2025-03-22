@@ -7,7 +7,8 @@ import { levelColors } from '../../data/studentMenu'
 import { Link } from 'react-router-dom'
 
 const ApprovedExam = ({ exam }: { exam: RequestedExams }) => {
-    const colors = levelColors[exam.level]
+    console.log(exam, 'exam')
+    const colors = levelColors[exam.level ? exam?.level : "C1"]
 
     return (
         <div>

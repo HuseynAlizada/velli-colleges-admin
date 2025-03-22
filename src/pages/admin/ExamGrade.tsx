@@ -19,27 +19,27 @@ const ExamGrade = () => {
   // Filter and sort results
   const filteredResults = results
     ? results
-        .filter(
-          (result) =>
-            (filterLevel ? result.student_level === filterLevel : true) &&
-            (searchTerm
-              ? result.student_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                result.exam_name.toLowerCase().includes(searchTerm.toLowerCase())
-              : true),
-        )
-        .sort((a, b) => {
-          if (!sortConfig) return 0
+      .filter(
+        (result) =>
+          (filterLevel ? result.student_level === filterLevel : true) &&
+          (searchTerm
+            ? result.student_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            result.exam_name.toLowerCase().includes(searchTerm.toLowerCase())
+            : true),
+      )
+      .sort((a, b) => {
+        if (!sortConfig) return 0
 
-          const aValue = a[sortConfig.key as keyof examResults]
-          const bValue = b[sortConfig.key as keyof examResults]
+        const aValue = a[sortConfig.key as keyof examResults]
+        const bValue = b[sortConfig.key as keyof examResults]
 
-          if (typeof aValue === "string" && typeof bValue === "string") {
-            return sortConfig.direction === "ascending" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue)
-          } else if (typeof aValue === "number" && typeof bValue === "number") {
-            return sortConfig.direction === "ascending" ? aValue - bValue : bValue - aValue
-          }
-          return 0
-        })
+        if (typeof aValue === "string" && typeof bValue === "string") {
+          return sortConfig.direction === "ascending" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue)
+        } else if (typeof aValue === "number" && typeof bValue === "number") {
+          return sortConfig.direction === "ascending" ? aValue - bValue : bValue - aValue
+        }
+        return 0
+      })
     : []
 
   useEffect(() => {
@@ -200,6 +200,39 @@ const ExamGrade = () => {
                           </div>
                         </div>
 
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm text-gray-600">Reading</span>
+                          <div className="flex items-center gap-1">
+                            <Award className="w-4 h-4 text-indigo-500" />
+                            <span className="font-bold text-gray-900">{result.reading_score} correct</span>
+                          </div>
+                        </div>
+                        
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm text-gray-600">Listening</span>
+                          <div className="flex items-center gap-1">
+                            <Award className="w-4 h-4 text-indigo-500" />
+                            <span className="font-bold text-gray-900">{result.listening_score} correct</span>
+                          </div>
+                        </div>
+                        
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm text-gray-600">Grammar</span>
+                          <div className="flex items-center gap-1">
+                            <Award className="w-4 h-4 text-indigo-500" />
+                            <span className="font-bold text-gray-900">{result.grammar_score} correct</span>
+                          </div>
+                        </div>
+                        
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm text-gray-600">Vocabulary</span>
+                          <div className="flex items-center gap-1">
+                            <Award className="w-4 h-4 text-indigo-500" />
+                            <span className="font-bold text-gray-900">{result.vocabulary_score} correct</span>
+                          </div>
+                        </div>
+
+
                         {/* Progress Bar */}
                         <div className="h-3 w-full bg-gray-100 rounded-full overflow-hidden">
                           <div
@@ -213,7 +246,7 @@ const ExamGrade = () => {
                           {getScoreLabel(result.student_score)}
                         </p>
                       </div>
-                      
+
 
                       {/* Additional Info */}
                       {/* <div className="pt-4 border-t border-gray-100">

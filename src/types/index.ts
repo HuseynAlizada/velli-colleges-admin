@@ -176,7 +176,17 @@ export type examResults = {
     student_name: string,
     exam_name: string,
     student_level: string,
-    student_score: number
+    student_score: number,
+    reading_score?: number,
+    listening_score?: number,
+    grammar_score?: number    ,
+    vocabulary_score?: number,
+    total_score?:number,
+    listening?:number,
+    grammar?:number,
+    vocabulary?:number,
+    reading?:number
+
 }
 
 

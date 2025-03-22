@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { supabase } from "../../utils/supabase-client"
 import type { examResults } from "../../types"
-import { Search, Filter, ChevronDown, Award, BookOpen, AlertCircle, Loader2 } from "lucide-react"
+import { Search, Filter, Award, AlertCircle, Loader2 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const PlacementTestGrade = () => {
@@ -14,7 +14,7 @@ const PlacementTestGrade = () => {
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: "ascending" | "descending" } | null>(null)
 
   // Get unique levels for filter dropdown
-  const uniqueLevels = results ? [...new Set(results.map((result) => result.student_level))] : []
+  // const uniqueLevels = results ? [...new Set(results.map((result) => result.student_level))] : []
 
   // Filter and sort results
   const filteredResults = results
@@ -77,13 +77,13 @@ const PlacementTestGrade = () => {
     // No cleanup needed since this effect only runs once on mount
   }, []) // Empty dependency array ensures it runs only once on mount
 
-  const requestSort = (key: string) => {
-    let direction: "ascending" | "descending" = "ascending"
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === "ascending") {
-      direction = "descending"
-    }
-    setSortConfig({ key, direction })
-  }
+  // const requestSort = (key: string) => {
+  //   let direction: "ascending" | "descending" = "ascending"
+  //   if (sortConfig && sortConfig.key === key && sortConfig.direction === "ascending") {
+  //     direction = "descending"
+  //   }
+  //   setSortConfig({ key, direction })
+  // }
 
   const getScoreColor = (score: number) => {
     if (score >= 90) return "from-green-400 to-emerald-500"
@@ -193,12 +193,36 @@ const PlacementTestGrade = () => {
                       {/* Score Display */}
                       <div className="mb-4">
                         <div className="flex justify-between items-center mb-2">
-                          <span className="text-sm text-gray-600">Score</span>
+                          <span className="text-sm text-gray-600">Reading</span>
                           <div className="flex items-center gap-1">
                             <Award className="w-4 h-4 text-indigo-500" />
-                            <span className="font-bold text-gray-900">{result.total_score}%</span>
+                            <span className="font-bold text-gray-900">{result.reading}%</span>
                           </div>
                         </div>
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm text-gray-600">Listening</span>
+                          <div className="flex items-center gap-1">
+                            <Award className="w-4 h-4 text-indigo-500" />
+                            <span className="font-bold text-gray-900">{result.listening}%</span>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm text-gray-600">Vocabulary</span>
+                          <div className="flex items-center gap-1">
+                            <Award className="w-4 h-4 text-indigo-500" />
+                            <span className="font-bold text-gray-900">{result.vocabulary}%</span>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm text-gray-600">Grammar</span>
+                          <div className="flex items-center gap-1">
+                            <Award className="w-4 h-4 text-indigo-500" />
+                            <span className="font-bold text-gray-900">{result.grammar}%</span>
+                          </div>
+                        </div>
+
 
                         {/* Progress Bar */}
                         <div className="h-3 w-full bg-gray-100 rounded-full overflow-hidden">
@@ -207,10 +231,11 @@ const PlacementTestGrade = () => {
                             style={{ width: `${result.total_score}%` }}
                           />
                         </div>
+                        
 
                         {/* Score Label */}
                         <p className="text-right text-xs mt-1 font-medium text-gray-600">
-                          {getScoreLabel(result.score)}
+                          {getScoreLabel(result.total_score)}
                         </p>
                       </div>
 

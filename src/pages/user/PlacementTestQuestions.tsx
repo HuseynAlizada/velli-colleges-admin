@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 interface Exam {
     id: string;
     title: string;
-    exam_file: string;
+    file_url: string;
 }
 
 interface Question {
@@ -78,7 +78,7 @@ export default function PlacementTestQuestions() {
                 setLoading(true);
 
                 const { data, error } = await supabase
-                    .from('placement_test')
+                    .from('approved-exams')
                     .select("*")
                     .eq("id", id)
                     .single();
@@ -87,8 +87,8 @@ export default function PlacementTestQuestions() {
                 setExam(data);
 
 
-                if (data.exam_file) {
-                    const response = await fetch(data.exam_file);
+                if (data.file_url) {
+                    const response = await fetch(data.file_url);
                     if (!response.ok) throw new Error("Failed to fetch Excel file");
 
                     const arrayBuffer = await response.arrayBuffer();

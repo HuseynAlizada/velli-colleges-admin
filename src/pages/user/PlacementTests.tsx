@@ -174,19 +174,15 @@ const PlacementTests = () => {
                   <p className="font-medium text-gray-900">{approvedExam.pass_score}%</p>
                 </div>
               </div>
-
               {/* Start Exam Button */}
-              <Link to={`/placement-tests/${exams[0].id}`}>
+              <Link to={`/placement-tests/${approvedExam.id}`}>
                 <button
 
                   className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
                 >
-
                   <PlayCircle className="w-5 h-5" />
                   Start to Exam
-
                 </button>
-
               </Link>
               {/* Created At */}
               <div className="mt-4 flex items-center gap-1.5 text-sm text-gray-500">
