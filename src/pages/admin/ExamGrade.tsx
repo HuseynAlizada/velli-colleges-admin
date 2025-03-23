@@ -77,13 +77,13 @@ const ExamGrade = () => {
     // No cleanup needed since this effect only runs once on mount
   }, []) // Empty dependency array ensures it runs only once on mount
 
-  const requestSort = (key: string) => {
-    let direction: "ascending" | "descending" = "ascending"
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === "ascending") {
-      direction = "descending"
-    }
-    setSortConfig({ key, direction })
-  }
+  // const requestSort = (key: string) => {
+  //   let direction: "ascending" | "descending" = "ascending"
+  //   if (sortConfig && sortConfig.key === key && sortConfig.direction === "ascending") {
+  //     direction = "descending"
+  //   }
+  //   setSortConfig({ key, direction })
+  // }
 
   const getScoreColor = (score: number) => {
     if (score >= 90) return "from-green-400 to-emerald-500"

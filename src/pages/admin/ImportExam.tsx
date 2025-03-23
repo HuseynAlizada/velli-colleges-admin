@@ -61,15 +61,15 @@ export default function ImportExam() {
     fetchExamData();
   }, [editExam]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
     setExamData((prev) => ({ ...prev, [name]: value }));
-  };
+};
 
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0] || null;
-    setExamData((prev) => ({ ...prev, selectedFile: file }));
-  };
+const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0] || null; // File | null
+  setExamData((prev) => ({ ...prev, selectedFile: file }));
+};
 
   const onClose = () => {
     navigate(-1)
@@ -83,7 +83,7 @@ export default function ImportExam() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
       !examData.selectedExam ||

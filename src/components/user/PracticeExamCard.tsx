@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { BookOpen, Clock, Award, Calendar, ArrowRight } from "lucide-react"
 import { Link } from "react-router-dom"
+import { format } from "date-fns"
 
 interface PracticeExamCardProps {
     id?: number
@@ -18,10 +19,11 @@ interface PracticeExamCardProps {
 
 const PracticeExamCard = ({ exam }: { exam: PracticeExamCardProps }) => {
     const { title, level, duration, pass_score, created_at } = exam
+    console.log(level,'level')
     const [isHovered, setIsHovered] = useState(false)
 
     // Format the creation date
-    const formattedDate = new Date(created_at).toLocaleDateString("en-US", {
+    const formattedDate = new Date(created_at? format(new Date(created_at), "MMM d, yyyy") : "Unknown date").toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
@@ -110,7 +112,7 @@ const PracticeExamCard = ({ exam }: { exam: PracticeExamCardProps }) => {
         return percentages[level as keyof typeof percentages] || 33.4
     }
 
-    const colors = getLevelColors(level)
+    const colors = getLevelColors(level || "A2")
 
     return (
         <motion.div
@@ -159,10 +161,10 @@ const PracticeExamCard = ({ exam }: { exam: PracticeExamCardProps }) => {
                     <div className="mb-6">
                         <div className="flex justify-between items-center mb-2">
                             <p className="text-xs text-gray-500">Difficulty Level</p>
-                            <p className="text-xs font-medium text-gray-700">{getLevelDifficulty(level)}</p>
+                            <p className="text-xs font-medium text-gray-700">{getLevelDifficulty(level || 'A2')}</p>
                         </div>
                         <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-                            <div className={`h-full ${colors.accent}`} style={{ width: `${getLevelPercentage(level)}%` }} />
+                            <div className={`h-full ${colors.accent}`} style={{ width: `${getLevelPercentage(level || 'A2')}%` }} />
                         </div>
                     </div>
 

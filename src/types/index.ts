@@ -47,7 +47,7 @@ export interface NewsItem {
 
 // Exams type start
 export interface Exam {
-    created_at?: string | number | Date | undefined,
+    created_at?: string | undefined,
     id: number,
     title?: string,
     file_url: string,

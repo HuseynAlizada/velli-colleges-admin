@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
-import { Clock, Award, Calendar, GraduationCap, Target, PlayCircle } from "lucide-react";
-import { format } from "date-fns";
+import { Clock, GraduationCap, Target, PlayCircle } from "lucide-react";
 import { levelColors } from "../../data/studentMenu";
-import { RequestedExams } from "../../types";
+import { RequestedExams, StudentData } from "../../types";
 import { useEffect, useState } from "react";
 import { supabase } from "../../utils/supabase-client";
 
@@ -14,9 +13,9 @@ const ExamRequest = ({
   onDataChange: () => void; // Callback to notify parent of data change
 }) => {
   const [approveExam, setApproveExam] = useState<boolean>(false);
-  const [userData, setUserData] = useState<any>(null); // Define type for userData if possible
+  const [userData, setUserData] = useState<StudentData  | null>(null); // Define type for userData if possible
 
-  const colors = levelColors[exam.level ? exam?.level : 'C1'];
+  const colors = levelColors[ exam?.level || 'C1'];
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -40,7 +39,7 @@ const ExamRequest = ({
 
   const ApproveExam = async () => {
     try {
-      const { data, error } = await supabase
+      const {  error } = await supabase
         .from("approved-exams")
         .update({
           student_id: exam?.student_id,
