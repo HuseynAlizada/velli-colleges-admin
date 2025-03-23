@@ -227,7 +227,7 @@ const PlacementTestGrade = () => {
                         {/* Progress Bar */}
                         <div className="h-3 w-full bg-gray-100 rounded-full overflow-hidden">
                           <div
-                            className={`h-full rounded-full bg-gradient-to-r ${getScoreColor(result.total_score)}`}
+                            className={`h-full rounded-full bg-gradient-to-r ${getScoreColor(result.total_score ?? 0)}`}
                             style={{ width: `${result.total_score}%` }}
                           />
                         </div>
@@ -235,7 +235,7 @@ const PlacementTestGrade = () => {
 
                         {/* Score Label */}
                         <p className="text-right text-xs mt-1 font-medium text-gray-600">
-                          {getScoreLabel(result.total_score)}
+                          {getScoreLabel(result.total_score ?? 0)}
                         </p>
                       </div>
 

@@ -187,7 +187,8 @@ export type examResults = {
     grammar?:number,
     vocabulary?:number,
     reading?:number,
-    score?:number
+    score?:number,
+    name?:string
 
 }
 

@@ -11,7 +11,7 @@ const PracticeExamGrade = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState("")
   const [filterLevel, setFilterLevel] = useState<string | null>(null)
-  const [sortConfig, setSortConfig] = useState<{ key: string; direction: "ascending" | "descending" } | null>(null)
+  const [sortConfig] = useState<{ key: string; direction: "ascending" | "descending" } | null>(null)
 
   // Get unique levels for filter dropdown
   const uniqueLevels = results ? [...new Set(results.map((result) => result.student_level))] : []
@@ -23,9 +23,9 @@ const PracticeExamGrade = () => {
           (result) =>
             (filterLevel ? result.student_level === filterLevel : true) &&
             (searchTerm
-              ? result.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                result.exam_name.toLowerCase().includes(searchTerm.toLowerCase())
-              : true),
+              ? (result.name?.toLowerCase() ?? "").includes(searchTerm.toLowerCase()) ||
+              result.exam_name.toLowerCase().includes(searchTerm.toLowerCase())
+            : true),
         )
         .sort((a, b) => {
           if (!sortConfig) return 0
@@ -77,13 +77,13 @@ const PracticeExamGrade = () => {
     // No cleanup needed since this effect only runs once on mount
   }, []) // Empty dependency array ensures it runs only once on mount
 
-  const requestSort = (key: string) => {
-    let direction: "ascending" | "descending" = "ascending"
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === "ascending") {
-      direction = "descending"
-    }
-    setSortConfig({ key, direction })
-  }
+  // const requestSort = (key: string) => {
+  //   let direction: "ascending" | "descending" = "ascending"
+  //   if (sortConfig && sortConfig.key === key && sortConfig.direction === "ascending") {
+  //     direction = "descending"
+  //   }
+  //   setSortConfig({ key, direction })
+  // }
 
   const getScoreColor = (score: number) => {
     if (score >= 90) return "from-green-400 to-emerald-500"
@@ -210,7 +210,7 @@ const PracticeExamGrade = () => {
 
                         {/* Score Label */}
                         <p className="text-right text-xs mt-1 font-medium text-gray-600">
-                          {getScoreLabel(result.score)}
+                          {getScoreLabel(result.score ?? 0)}
                         </p>
                       </div>
                       

@@ -56,7 +56,7 @@ const StudentGrade = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [searchTerm, setSearchTerm] = useState("")
     const [filterLevel, setFilterLevel] = useState<string | null>(null)
-    const [sortConfig, setSortConfig] = useState<{ key: string; direction: "ascending" | "descending" } | null>(null)
+    const [sortConfig] = useState<{ key: string; direction: "ascending" | "descending" } | null>(null)
     const userId = Cookies.get('studentID')
 
     // Get unique levels for filter dropdown
