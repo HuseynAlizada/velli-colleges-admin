@@ -187,7 +187,7 @@ const PlacementTests = () => {
               {/* Created At */}
               <div className="mt-4 flex items-center gap-1.5 text-sm text-gray-500">
                 <Calendar className="w-4 h-4" />
-                <span>Created {format(approvedExam.created_at, "MMM d, yyyy")}</span>
+                <span>Created {approvedExam.created_at? format(new Date(approvedExam.created_at), "MMM d, yyyy") : "Unknown date"}</span>
               </div>
             </div>
           ))}

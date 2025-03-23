@@ -1,12 +1,10 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { supabase } from "../../utils/supabase-client"
-import type { News } from "../../types"
+import type { news } from "../../types"
 import { Search, Calendar, ExternalLink, Loader2 } from "lucide-react"
 
 const StudentNews = () => {
-  const [news, setNews] = useState<News[] | null>(null)
+  const [news, setNews] = useState<news[] | null>(null)
   const [search, setSearch] = useState<string>("")
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)

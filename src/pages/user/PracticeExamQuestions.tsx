@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../../utils/supabase-client";
 import * as XLSX from "xlsx";
 import { Loader2 } from "lucide-react";
@@ -288,7 +288,7 @@ export default function PracticeExamQuestions() {
                             </div>
                         )}
 
-                        {Object.entries(groupedQuestions).map(([groupKey, groupQuestions], groupIndex) => {
+                        {Object.entries(groupedQuestions).map(([groupKey, groupQuestions]) => {
                             const firstQuestion = groupQuestions[0];
                             const contentType = inferContentType(firstQuestion.content || "");
 

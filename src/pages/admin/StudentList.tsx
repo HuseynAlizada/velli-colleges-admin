@@ -51,7 +51,7 @@ export default function StudentList() {
             ))
           ) : (
             <tr>
-              <td colSpan="6" className="text-center py-4">
+              <td colSpan={6} className="text-center py-4">
                 No students found
               </td>
             </tr>

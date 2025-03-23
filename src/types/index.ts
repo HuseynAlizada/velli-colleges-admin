@@ -186,7 +186,8 @@ export type examResults = {
     listening?:number,
     grammar?:number,
     vocabulary?:number,
-    reading?:number
+    reading?:number,
+    score?:number
 
 }
 

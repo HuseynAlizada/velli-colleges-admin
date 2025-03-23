@@ -11,7 +11,7 @@ import azerbaijan from "/images/azerbaijan.png";
 import russian from "/images/russia.png";
 import { motion } from "framer-motion";
 import { supabase } from "../../utils/supabase-client";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 export default function UserLogin() {
   const { t, i18n } = useTranslation();
