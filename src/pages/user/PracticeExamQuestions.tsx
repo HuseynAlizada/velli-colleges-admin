@@ -28,7 +28,6 @@ interface Question {
 
 export default function PracticeExamQuestions() {
     const params = useParams();
-    const { pathname } = useLocation();
     const id = params?.id;
     const userId = Cookies.get("studentID");
 

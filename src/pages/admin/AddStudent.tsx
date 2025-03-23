@@ -6,7 +6,6 @@ import { supabase } from "../../utils/supabase-client";
 import { Link, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { ExamCount } from "../../types";
 
 const levels = [
   { id: "a1", name: "A1" },
@@ -122,7 +121,7 @@ export default function AddStudent() {
 
       if (formData.image) {
         const fileName = `student-images/${Date.now()}-${formData.image.name}`;
-        const { data: uploadData, error: uploadError } = await supabase.storage
+        const {  error: uploadError } = await supabase.storage
           .from("student-images")
           .upload(fileName, formData.image);
 

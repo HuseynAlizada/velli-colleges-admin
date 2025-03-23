@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "../../utils/supabase-client";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import {  Pencil, Trash2 } from "lucide-react";
 import * as XLSX from "xlsx";
 
 const ExamDetails = () => {
@@ -12,7 +12,7 @@ const ExamDetails = () => {
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
     const [editedQuestion, setEditedQuestion] = useState<any>(null);
     const [loading, setLoading] = useState(false);
-    const [maxOptions, setMaxOptions] = useState(0); // Track maximum number of options
+    const [ setMaxOptions] = useState(0); // Track maximum number of options
     const [optionLabels, setOptionLabels] = useState<string[]>([]); // Track option labels (A, B, C, etc.)
 
     useEffect(() => {
@@ -45,7 +45,7 @@ const ExamDetails = () => {
                 const reader = new FileReader();
                 reader.readAsArrayBuffer(blob);
                 reader.onload = (e) => {
-                    const data = new Uint8Array(e.target.result as ArrayBuffer);
+                    const data = new Uint8Array(e.target?.result as ArrayBuffer);
                     const workbook = XLSX.read(data, { type: "array" });
                     const sheetName = workbook.SheetNames[0];
                     const sheet = workbook.Sheets[sheetName];
