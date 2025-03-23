@@ -11,7 +11,7 @@ const PlacementTestGrade = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState("")
   const [filterLevel, setFilterLevel] = useState<string | null>(null)
-  const [sortConfig, setSortConfig] = useState<{ key: string; direction: "ascending" | "descending" } | null>(null)
+  const [sortConfig] = useState<{ key: string; direction: "ascending" | "descending" } | null>(null)
 
   // Get unique levels for filter dropdown
   // const uniqueLevels = results ? [...new Set(results.map((result) => result.student_level))] : []

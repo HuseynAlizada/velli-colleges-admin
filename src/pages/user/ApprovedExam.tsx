@@ -74,7 +74,7 @@ const ApprovedExam = ({ exam }: { exam: RequestedExams }) => {
                 {/* Created At */}
                 <div className="mt-4 flex items-center gap-1.5 text-sm text-gray-500">
                     <Calendar className="w-4 h-4" />
-                    <span>Created {format(exam.created_at, "MMM d, yyyy")}</span>
+                    <span>Created { exam.created_at ?format(new Date(exam.created_at), "MMM d, yyyy"):"Unknown date"}</span>
                 </div>
 
                 {/* Decorative Elements */}

@@ -15,7 +15,7 @@ export default function ImportPracticeExam() {
 
   const [examData, setExamData] = useState({
     selectedExam: "Reading",
-    selectedFile: null,
+    selectedFile: null as string | null,
     passScore: "",
     duration: "",
     level: "",
@@ -58,18 +58,18 @@ export default function ImportPracticeExam() {
     fetchExamData();
   }, [editExam]);
 
-  const handleChange = (e) => {
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>| React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     setExamData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     setExamData((prev) => ({ ...prev, selectedFile: file }));
   };
 
   const onClose = () => {
-    navigate(-1)  
+    navigate(-1)
     setExamData({
       selectedExam: "Reading",
       selectedFile: null,
@@ -79,7 +79,7 @@ export default function ImportPracticeExam() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:React.FormEvent) => {
     e.preventDefault();
     if (
       !examData.selectedExam ||
@@ -97,8 +97,8 @@ export default function ImportPracticeExam() {
 
     // If a new file is selected, upload it
     if (examData.selectedFile && typeof examData.selectedFile !== "string") {
-      const fileName = `exams/${Date.now()}-${examData.selectedFile.name}`;
-      const { data: fileData, error: fileError } = await supabase.storage
+      const fileName = `exams/${Date.now()}-${(examData.selectedFile as File).name}`;
+      const { error: fileError } = await supabase.storage
         .from("uploads")
         .upload(fileName, examData.selectedFile);
 

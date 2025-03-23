@@ -7,14 +7,14 @@ import { supabase } from "../../utils/supabase-client"
 import Cookies from 'js-cookie'
 
 export default function ExamCard({ exam }: { exam: Exam }) {
-    const colors = levelColors[exam.level]
+    const colors = levelColors[exam.level || "C1"]
     const userId = Cookies.get('studentID')
     const [userData, setUserData] = useState<StudentData | null>(null)
     const [sendRequest, setSendRequest] = useState(false)
-    const [approvedExams, setApprovedExams] = useState<[number, string][][] | null>(null)
+    const [approvedExams, setApprovedExams] = useState<[number, string][] | null>(null)
     const [data, setData] = useState<string | null>(null)
 
-    console.log( exam,'created_at')
+    console.log(exam, 'created_at')
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -40,8 +40,7 @@ export default function ExamCard({ exam }: { exam: Exam }) {
                 const { data, error } = await supabase.from('approved-exams')
                     .select('*')
                 if (error) throw error
-                const titles = data.map(item => [item.student_id, item.title])
-                console.log(titles)
+                const titles = data.map(item => [item.student_id, item.title] as [number, string]);
                 setApprovedExams(titles)
             }
             catch (err) {
@@ -83,7 +82,7 @@ export default function ExamCard({ exam }: { exam: Exam }) {
         <>
             {(userData?.level.toUpperCase() === exam.level &&
                 (!approvedExams ||
-                    !approvedExams.some(item => item[0] === userData.id && item[1] === exam.title))
+                    !approvedExams.some(item => item[0] === userData?.id && item[1] === exam.title))
             ) && (
                     <div
                         className={`relative w-full max-w-sm bg-gradient-to-b ${colors.bg} rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border ${colors.border}`}
