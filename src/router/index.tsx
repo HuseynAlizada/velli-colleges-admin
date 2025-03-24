@@ -32,6 +32,7 @@ import PlacementTestDetails from "../pages/admin/PlacementTestDetails";
 import PlacementTestGrade from "../pages/admin/PlacementTestGrade";
 import PlacementTests from "../pages/user/PlacementTests";
 import PlacementTestQuestions from "../pages/user/PlacementTestQuestions";
+import AdminRegister from "../pages/admin/AdminRegister";
 
 const router = createBrowserRouter([
     {
@@ -93,6 +94,7 @@ const router = createBrowserRouter([
     { path: 'login', element: <UserLogin /> },
 
     { path: "/admin/login", element: <AdminLogin /> },
+    { path: "/admin/register", element: <AdminRegister /> },
 
 
 ]);

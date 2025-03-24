@@ -55,7 +55,7 @@ export interface Exam {
     total_score: number,
     duration: number,
     level?: string,
-    exam_file?:string
+    exam_file?: string
 }
 
 
@@ -180,19 +180,19 @@ export type examResults = {
     student_score: number,
     reading_score?: number,
     listening_score?: number,
-    grammar_score?: number    ,
+    grammar_score?: number,
     vocabulary_score?: number,
-    total_score?:number,
-    listening?:number,
-    grammar?:number,
-    vocabulary?:number,
-    reading?:number,
-    score?:number,
-    name?:string,
-    reading_count?:number,
-    listening_count?:number,
-    grammar_count?:number,
-    vocabulary_count?:number,
+    total_score?: number,
+    listening?: number,
+    grammar?: number,
+    vocabulary?: number,
+    reading?: number,
+    score?: number,
+    name?: string,
+    reading_count?: number,
+    listening_count?: number,
+    grammar_count?: number,
+    vocabulary_count?: number,
 
 }
 
@@ -200,6 +200,17 @@ export type examResults = {
 // RESULTS END
 
 
+
+// START ADMIN DATA
+
+export interface adminData {
+    id: number,
+    created_at: number,
+    email: string,
+    password: string
+}
+
+// END ADMIN DATA
 
 // Start Student Grade
 

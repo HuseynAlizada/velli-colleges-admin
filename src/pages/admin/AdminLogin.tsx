@@ -1,14 +1,40 @@
-import  { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { supabase } from "../../utils/supabase-client";
+import { adminData } from "../../types";
 
 const AdminLogin = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [userData, setUserData] = useState<adminData[] | null>(null)
     const navigate = useNavigate();
 
+
+    useEffect(() => {
+
+        (async () => {
+            try {
+
+                const { data, error } = await supabase
+                    .from("admin_data")
+                    .select("*")
+                if (error) throw new Error
+                console.log(data[0].email, 'data')
+
+                setUserData(data)
+
+            }
+            catch (err) {
+                console.log(err)
+            }
+        })()
+
+    }, [])
+
+
     const handleLogin = () => {
-        if (username === "test23@gmail.com" && password === "test123") {
+        if (userData && username === userData[0].email && password === userData[0].password) {
             const token = btoa(`${username}:${password}`); // Encode as a mock JWT
             Cookies.set("token", token, { expires: 1 / 24 }); // Set cookie for 1 day
             navigate("/admin/dashboard"); // Redirect to admin page
@@ -47,6 +73,7 @@ const AdminLogin = () => {
                         className="h-10 border-2 border-gray-300 rounded-sm mt-2 pl-2"
                     />
                     <button onClick={handleLogin} className="w-full h-[40px] bg-[#D33D5A] mt-5 text-white rounded-sm">Login</button>
+                    <Link to='/admin/register' className="w-full h-[40px] bg-blue-400 mt-5 text-white rounded-sm text-center leading-[40px]" >Register</Link>
                 </div>
             </div>
         </div>
