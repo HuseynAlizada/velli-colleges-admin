@@ -17,9 +17,9 @@ export default function ImportPracticeExam() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { pathname } = useLocation()
-  const editedPathName = pathname.split('/')[2]
+  // const editedPathName = pathname.split('/')[2]
 
-  console.log(editedPathName)
+  // console.log(editedPathName)
 
   const [examData, setExamData] = useState<ExamData>({
     selectedExam: "Reading",

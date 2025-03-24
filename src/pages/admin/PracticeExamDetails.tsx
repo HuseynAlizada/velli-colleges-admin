@@ -762,7 +762,7 @@ interface Question {
 
 const PracticeExamDetails = () => {
   const { id } = useParams<{ id: string }>();
-  console.log(id);
+//   console.log(id);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [level, setLevel] = useState<string | null>(null);
   const [title, setTitle] = useState<string | null>(null);
@@ -912,7 +912,7 @@ const PracticeExamDetails = () => {
           .eq("id", id);
         if (updateError) throw updateError;
 
-        console.log("File deleted successfully");
+        // console.log("File deleted successfully");
         setLoading(false);
         return;
       }

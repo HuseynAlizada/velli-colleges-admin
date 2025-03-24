@@ -71,7 +71,7 @@ const ApprovedExams = () => {
         try {
             const { data, error } = await supabase.from('approved-exams').select("*")
             if (error) throw error
-            const approvedExams = data.filter(item => item.student_id == userId && item.locked)
+            const approvedExams = data.filter(item => item.student_id == userId && item.locked && item.title!="Placement Test")
             setExams(approvedExams)
             // console.log(approvedExams)
         }
@@ -97,7 +97,14 @@ const ApprovedExams = () => {
                     </div>
                 ) :
                     (
-                        <h1 className="text-center text-3xl mt-4 w-full">There is no have any approved exam</h1>
+                        <div className="flex flex-col items-center justify-center h-full text-center mt-10">
+                        <h1 className="text-3xl font-semibold text-gray-800 mb-2">
+                          No Approved Exams Available
+                        </h1>
+                        <p className="text-lg text-gray-500 max-w-md">
+                          It looks like there are no approved exams at the moment. Check back later!
+                        </p>
+                      </div>
                     )
             }
 

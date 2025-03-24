@@ -36,7 +36,7 @@ export default function ExamQuestions() {
     const userId = Cookies.get("studentID");
 
     const pathNameUrl = pathname.split('/');
-    console.log(pathNameUrl[1]);
+    // console.log(pathNameUrl[1]);
 
     const [exam, setExam] = useState<Exam | null>(null);
     const [questions, setQuestions] = useState<Question[]>([]);
@@ -192,7 +192,7 @@ export default function ExamQuestions() {
             const studentName = studentData?.name || "Unknown";
 
             // Insert into student_results table with section scores
-            console.log(examScore,'examScore')
+            // console.log(examScore,'examScore')
             const { error: resultError } = await supabase
                 .from("student_results")
                 .insert({

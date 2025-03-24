@@ -48,7 +48,6 @@ export default function AddStudent() {
         throw error;
       }
 
-      console.log("Exam counts added successfully:", data);
     } catch (err) {
       console.error("Error adding exam counts:", err);
       toast.error("Failed to add exam counts for the student");

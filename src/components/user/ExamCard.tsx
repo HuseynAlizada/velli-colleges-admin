@@ -14,7 +14,6 @@ export default function ExamCard({ exam }: { exam: Exam }) {
     const [approvedExams, setApprovedExams] = useState<[number, string][] | null>(null)
     const [data, setData] = useState<string | null>(null)
 
-    console.log(exam, 'created_at')
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -24,7 +23,6 @@ export default function ExamCard({ exam }: { exam: Exam }) {
                     .eq('id', userId)
                     .single()
                 if (error) throw error
-                console.log(data, 'data user')
                 setUserData(data)
             }
             catch (err) {
@@ -80,7 +78,7 @@ export default function ExamCard({ exam }: { exam: Exam }) {
 
     return (
         <>
-            {(userData?.level.toUpperCase() === exam.level &&
+            {(  
                 (!approvedExams ||
                     !approvedExams.some(item => item[0] === userData?.id && item[1] === exam.title))
             ) && (

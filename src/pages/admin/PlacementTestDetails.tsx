@@ -388,7 +388,7 @@ interface Question {
 
 const PlacementTestDetails = () => {
   const { id } = useParams<{ id: string }>(); // Explicitly type id as string
-  console.log(id);
+//   console.log(id);
   const [questions, setQuestions] = useState<Question[]>([]);
 //   const [level, setLevel] = useState<string | null>(null);
 //   const [title, setTitle] = useState<string | null>(null);
@@ -474,7 +474,7 @@ const PlacementTestDetails = () => {
       const updatedQuestions = questions.map((q, i) =>
         i === editingIndex ? editedQuestion : q
       );
-      console.log("Updated questions:", updatedQuestions);
+    //   console.log("Updated questions:", updatedQuestions);
       setQuestions(updatedQuestions);
       setEditingIndex(null);
       setEditedQuestion(null);
@@ -488,9 +488,9 @@ const PlacementTestDetails = () => {
       const blob = new Blob([wbout], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       });
-      console.log("Blob size:", blob.size);
+    //   console.log("Blob size:", blob.size);
 
-      console.log("Uploading to Supabase...");
+    //   console.log("Uploading to Supabase...");
       const { error: uploadError } = await supabase.storage
         .from("uploads")
         .upload(filePath, blob, {
@@ -499,7 +499,7 @@ const PlacementTestDetails = () => {
         });
 
       if (uploadError) throw uploadError;
-      console.log("File uploaded successfully");
+    //   console.log("File uploaded successfully");
 
       const { data: publicURLData } = supabase.storage
         .from("uploads")
@@ -512,7 +512,7 @@ const PlacementTestDetails = () => {
         .eq("id", id);
 
       if (updateError) throw updateError;
-      console.log("Database updated successfully");
+    //   console.log("Database updated successfully");
 
       setLoading(false);
     } catch (error) {
@@ -545,7 +545,7 @@ const PlacementTestDetails = () => {
           .eq("id", id);
         if (updateError) throw updateError;
 
-        console.log("File deleted successfully");
+        // console.log("File deleted successfully");
         setLoading(false);
         return;
       }
@@ -574,7 +574,7 @@ const PlacementTestDetails = () => {
         .eq("id", id);
       if (updateError) throw updateError;
 
-      console.log("Question deleted successfully");
+    //   console.log("Question deleted successfully");
       setLoading(false);
     } catch (error) {
       console.error("Error in handleDelete:", error);

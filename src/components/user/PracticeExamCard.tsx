@@ -19,7 +19,6 @@ interface PracticeExamCardProps {
 
 const PracticeExamCard = ({ exam }: { exam: PracticeExamCardProps }) => {
     const { title, level, duration, pass_score, created_at } = exam
-    console.log(level,'level')
     const [isHovered, setIsHovered] = useState(false)
 
     // Format the creation date

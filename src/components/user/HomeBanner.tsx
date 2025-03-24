@@ -20,7 +20,6 @@ const HomeBanner = () => {
                     .eq('id', userId)
                     .single()
                 if (error) throw error
-                console.log(data, 'data')
                 setStudentLevel(data.level)
                 // setUserData(data)
 

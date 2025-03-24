@@ -109,7 +109,7 @@ export default function StudentProfile() {
                     ...prev,
                     avatar: imageUrl,
                 }));
-                console.log("Image uploaded successfully:", imageUrl);
+                // console.log("Image uploaded successfully:", imageUrl);
             } catch (err) {
                 console.error("Error uploading image:", err);
             }

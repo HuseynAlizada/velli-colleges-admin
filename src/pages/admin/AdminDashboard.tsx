@@ -203,7 +203,6 @@ export default function AdminDashboard() {
         if (error) {
             console.error("Error fetching students:", error);
         } else {
-            console.log("Fetched students:", data);
             setStudents(data);
         }
     };

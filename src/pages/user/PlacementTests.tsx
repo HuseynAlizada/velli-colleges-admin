@@ -20,10 +20,10 @@ const PlacementTests = () => {
                     .select("*")
                     .eq("student_id", userId); // Filter by student_id
                 if (error) throw error;
-                console.log(data, 'data approved');
+                // console.log(data, 'data approved');
                 const filteredData = data.filter(item => item.title === 'Placement Test' && item.locked === true);
                 setApprovedData(filteredData);
-                console.log(filteredData.length, 'approved');
+                // console.log(filteredData.length, 'approved');
             } catch (err: unknown) {
                 console.log(err);
             }
@@ -38,7 +38,6 @@ const PlacementTests = () => {
         try {
             const { data, error } = await supabase.from('placement_test').select("*");
             if (error) throw error;
-            console.log(data[0], 'dataawdawdaddd');
             setExams(data);
         } catch (err: unknown) {
             console.log(err);

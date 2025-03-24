@@ -1,18 +1,46 @@
 import { useEffect, useState } from "react"
 import ExamCard from "../../components/user/ExamCard"
 import { supabase } from "../../utils/supabase-client"
-import { Exam } from "../../types"
+import { Exam, StudentData } from "../../types"
+import Cookies from 'js-cookie'
 
 export default function LockedExams() {
     const [exams, setExams] = useState<Exam[] | []>([])
     const [isLoading, setIsLoading] = useState(true)
+    const userId = Cookies.get('studentID')
+    const [userData, setUserData] = useState<StudentData | null>(null)
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const { data, error } = await supabase.from('students')
+                    .select('*')
+                    .eq('id', userId)
+                    .single()
+                if (error) throw error
+                console.log(data, 'data test mock')
+                setUserData(data)
+            }
+            catch (err) {
+                console.log(err)
+            }
+        }
+        fetchUser()
+    }, [userId])
+
 
     const fetchExams = async () => {
         try {
             setIsLoading(true)
             const { data, error } = await supabase.from('exams').select("*")
             if (error) throw error
-            setExams(data)
+
+            console.log(userData, 'user')
+            const filteredData = data.filter(item => item.level == "B2")
+            setExams(filteredData)
+            console.log(filteredData);
+            
+            // console.log(userData, 'data test')
         }
         catch (err) {
             console.log(err)
@@ -23,7 +51,7 @@ export default function LockedExams() {
 
     useEffect(() => {
         fetchExams()
-    }, [])
+    }, [userData])
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">

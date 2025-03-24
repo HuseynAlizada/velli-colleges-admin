@@ -50,12 +50,23 @@ export default function PracticeExam() {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
-      <div className="w-full mx-auto grid lg:grid-cols-4 sm:grid-cols-2  gap-3">
+    {exams.length > 0 ? (
+      <div className="w-full mx-auto grid lg:grid-cols-4 sm:grid-cols-2 gap-3">
         {exams.map((exam) => (
           <PracticeExamCard key={exam.id} exam={exam} />
         ))}
       </div>
-    </div>
+    ) : (
+      <div className="flex flex-col items-center justify-center h-full text-center mt-10">
+        <h1 className="text-3xl font-semibold text-gray-800 mb-2">
+          No Practice Exams Available
+        </h1>
+        <p className="text-lg text-gray-500 max-w-md">
+          It seems there are no practice exams for your level yet. Please check back later!
+        </p>
+      </div>
+    )}
+  </div>
   )
 }
 

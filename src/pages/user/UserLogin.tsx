@@ -287,7 +287,6 @@ export default function UserLogin() {
     useEffect(() => {
         const studentID = Cookies.get("studentID");
         if (studentID) {
-            console.log("Existing studentID found:", studentID);
             navigate("/news");
         }
     }, [navigate]);
@@ -305,9 +304,7 @@ export default function UserLogin() {
                 return;
             }
 
-            console.log("Logged in:", { email, userId: user.id });
             Cookies.set("studentID", user.id, { expires: 1, secure: true, sameSite: "Strict" });
-            console.log("Cookie set, navigating to /news");
             navigate("/news", { replace: true });
         } catch (err) {
             console.error("Unexpected error:", err);

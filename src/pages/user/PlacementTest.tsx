@@ -14,7 +14,7 @@ const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
 
   const userId = Cookies.get('studentID');
 
-  console.log(exam, 'exam')
+  // console.log(exam, 'exam')
 
   useEffect(() => {
     const fetchApprovedExams = async () => {
@@ -54,11 +54,11 @@ const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
       });
 
       if (error) throw error;
-      console.log("Exam request submitted successfully!");
+      // console.log("Exam request submitted successfully!");
       setSendRequest(true);
       setApprovedExams(prev => [...(prev || []), [Number(userId), "Placement Test"]]);
 
-      console.log(userId,exam.title, 'test data' )
+      // console.log(userId,exam.title, 'test data' )
     } catch (err) {
       console.error("Error submitting exam request:", err);
       setError("Failed to request unlock. Please try again.");

@@ -50,7 +50,7 @@ const PlacementTestGrade = () => {
         if (error) throw error
 
         // Log the raw data to debug  
-        console.log("Raw data from Supabase:", data)
+        // console.log("Raw data from Supabase:", data)
 
         // Ensure data is unique by ID (assuming each result has a unique 'id')
         const uniqueData = data.reduce((acc: examResults[], current: examResults) => {
@@ -61,7 +61,7 @@ const PlacementTestGrade = () => {
         }, [])
 
         // Log the deduplicated data
-        console.log("Deduplicated data:", uniqueData)
+        // console.log("Deduplicated data:", uniqueData)
 
         // Set the deduplicated data to state
         setResults(uniqueData)
