@@ -38,7 +38,7 @@ export default function AddStudent() {
   // Function to add student exam counts to the "taken-exams" table
   const addStudentExamCounts = async (studentId: string) => {
     try {
-      const { data, error } = await supabase.from("taken-exams").insert({
+      const {  error } = await supabase.from("taken-exams").insert({
         student_id: studentId,
         exam_count: 0,
         practice_count: 0,

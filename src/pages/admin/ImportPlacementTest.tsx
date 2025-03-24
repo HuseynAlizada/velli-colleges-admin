@@ -222,7 +222,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../utils/supabase-client";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 
 // Define the type for examData
 interface ExamData {
@@ -234,7 +234,7 @@ interface ExamData {
 export default function ImportPlacementTest() {
   const { id } = useParams<{ id?: string }>(); // id is optional since editExam can be null
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
   // const editedPathName = pathname.split("/")[2];
 
 

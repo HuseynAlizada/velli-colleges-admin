@@ -1,7 +1,7 @@
 
 
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../../utils/supabase-client";
 import * as XLSX from "xlsx";
 import { Loader2 } from "lucide-react";
@@ -252,7 +252,7 @@ export default function PlacementTestQuestions() {
             setIsModalOpen(true);
         }
 
-      
+
     };
 
     const filteredQuestions = questions.filter((question) => question.Section === examType);
@@ -379,7 +379,7 @@ export default function PlacementTestQuestions() {
                             <div className="text-center mb-12">
                                 <h2 className="text-2xl font-semibold text-gray-900">
                                     Total Score: {totalScore} / {questions.length}
-                                    {examScore} 
+                                    {examScore}
                                 </h2>
                             </div>
                         )}

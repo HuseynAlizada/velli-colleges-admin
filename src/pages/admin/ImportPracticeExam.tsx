@@ -3,7 +3,7 @@ import { supabase } from "../../utils/supabase-client";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 import { PracticeExamOptions } from "../../data/examData";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 
 interface ExamData {
   selectedExam: string;
@@ -16,7 +16,7 @@ interface ExamData {
 export default function ImportPracticeExam() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { pathname } = useLocation()
+  // const { pathname } = useLocation()
   // const editedPathName = pathname.split('/')[2]
 
   // console.log(editedPathName)
