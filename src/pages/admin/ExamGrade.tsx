@@ -202,7 +202,7 @@ const ExamGrade = () => {
                           <span className="text-sm text-gray-600">Reading</span>
                           <div className="flex items-center gap-1">
                             <Award className="w-4 h-4 text-indigo-500" />
-                            <span className="font-bold text-gray-900">{result.reading_score} correct</span>
+                            <span className="font-bold text-gray-900">{result.reading_score} / {result.reading_count}</span>
                           </div>
                         </div>
                         
@@ -210,7 +210,7 @@ const ExamGrade = () => {
                           <span className="text-sm text-gray-600">Listening</span>
                           <div className="flex items-center gap-1">
                             <Award className="w-4 h-4 text-indigo-500" />
-                            <span className="font-bold text-gray-900">{result.listening_score} correct</span>
+                            <span className="font-bold text-gray-900">{result.listening_score} / {result.listening_count}</span>
                           </div>
                         </div>
                         
@@ -218,7 +218,7 @@ const ExamGrade = () => {
                           <span className="text-sm text-gray-600">Grammar</span>
                           <div className="flex items-center gap-1">
                             <Award className="w-4 h-4 text-indigo-500" />
-                            <span className="font-bold text-gray-900">{result.grammar_score} correct</span>
+                            <span className="font-bold text-gray-900">{result.grammar_score} / {result.grammar_count}</span>
                           </div>
                         </div>
                         
@@ -226,7 +226,7 @@ const ExamGrade = () => {
                           <span className="text-sm text-gray-600">Vocabulary</span>
                           <div className="flex items-center gap-1">
                             <Award className="w-4 h-4 text-indigo-500" />
-                            <span className="font-bold text-gray-900">{result.vocabulary_score} correct</span>
+                            <span className="font-bold text-gray-900">{result.vocabulary_score} / {result.vocabulary_count}</span>
                           </div>
                         </div>
 

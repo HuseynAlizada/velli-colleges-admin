@@ -192,18 +192,25 @@ const PlacementTestGrade = () => {
 
                       {/* Score Display */}
                       <div className="mb-4">
+                      <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm text-gray-600">Reading</span>
+                          <div className="flex items-center gap-1">
+                            <Award className="w-4 h-4 text-indigo-500" />
+                            <span className="font-bold text-gray-900">{result.total_score}%</span>
+                          </div>
+                        </div>
                         <div className="flex justify-between items-center mb-2">
                           <span className="text-sm text-gray-600">Reading</span>
                           <div className="flex items-center gap-1">
                             <Award className="w-4 h-4 text-indigo-500" />
-                            <span className="font-bold text-gray-900">{result.reading}%</span>
+                            <span className="font-bold text-gray-900">{result.reading} / {result.reading_count}</span>
                           </div>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                           <span className="text-sm text-gray-600">Listening</span>
                           <div className="flex items-center gap-1">
                             <Award className="w-4 h-4 text-indigo-500" />
-                            <span className="font-bold text-gray-900">{result.listening}%</span>
+                            <span className="font-bold text-gray-900">{result.listening} / {result.listening_count}</span>
                           </div>
                         </div>
 
@@ -211,7 +218,7 @@ const PlacementTestGrade = () => {
                           <span className="text-sm text-gray-600">Vocabulary</span>
                           <div className="flex items-center gap-1">
                             <Award className="w-4 h-4 text-indigo-500" />
-                            <span className="font-bold text-gray-900">{result.vocabulary}%</span>
+                            <span className="font-bold text-gray-900">{result.vocabulary} / {result.vocabulary_count}</span>
                           </div>
                         </div>
 
@@ -219,7 +226,7 @@ const PlacementTestGrade = () => {
                           <span className="text-sm text-gray-600">Grammar</span>
                           <div className="flex items-center gap-1">
                             <Award className="w-4 h-4 text-indigo-500" />
-                            <span className="font-bold text-gray-900">{result.grammar}%</span>
+                            <span className="font-bold text-gray-900">{result.grammar} / {result.grammar_count}</span>
                           </div>
                         </div>
 
