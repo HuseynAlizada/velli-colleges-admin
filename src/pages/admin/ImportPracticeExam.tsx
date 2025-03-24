@@ -5,6 +5,14 @@ import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 import { PracticeExamOptions } from "../../data/examData";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
+interface ExamData {
+  selectedExam: string;
+  selectedFile: string | File | null; // Updated to include File
+  passScore: string;
+  duration: string;
+  level: string;
+}
+
 export default function ImportPracticeExam() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -13,9 +21,9 @@ export default function ImportPracticeExam() {
 
   console.log(editedPathName)
 
-  const [examData, setExamData] = useState({
+  const [examData, setExamData] = useState<ExamData>({
     selectedExam: "Reading",
-    selectedFile: null as string | null,
+    selectedFile: null, // No need for `as string | null` now
     passScore: "",
     duration: "",
     level: "",
@@ -63,11 +71,10 @@ export default function ImportPracticeExam() {
     setExamData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    setExamData((prev) => ({ ...prev, selectedFile: file }));
+const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null; // File | null
+    setExamData((prev) => ({ ...prev, selectedFile: file })); // TypeScript now accepts this
   };
-
   const onClose = () => {
     navigate(-1)
     setExamData({
