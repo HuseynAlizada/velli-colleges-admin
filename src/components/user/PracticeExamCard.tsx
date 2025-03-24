@@ -22,7 +22,7 @@ const PracticeExamCard = ({ exam }: { exam: PracticeExamCardProps }) => {
     const [isHovered, setIsHovered] = useState(false)
 
     // Format the creation date
-    const formattedDate = new Date(created_at? format(new Date(created_at), "MMM d, yyyy") : "Unknown date").toLocaleDateString("en-US", {
+    const formattedDate = new Date(created_at ? format(new Date(created_at), "MMM d, yyyy") : "Unknown date").toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
@@ -174,19 +174,19 @@ const PracticeExamCard = ({ exam }: { exam: PracticeExamCardProps }) => {
                     </div>
 
                     {/* Start Button */}
-                   <Link to={`${exam.id}`}>
-                   <motion.button
-                        whileHover={{ scale: 1.03 }}
-                        whileTap={{ scale: 0.98 }}
-                        className={`mt-auto w-full py-3 px-4 rounded-xl text-white font-medium flex items-center justify-center gap-2 ${colors.button} transition-all duration-300`}
-                    >
-                        <BookOpen className="w-5 h-5" />
-                        Start Exam
-                        <motion.div animate={{ x: isHovered ? 4 : 0 }} transition={{ duration: 0.2 }}>
-                            <ArrowRight className="w-5 h-5" />
-                        </motion.div>
-                    </motion.button>
-                   </Link>
+                    <Link to={`${exam.id}`}>
+                        <motion.button
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.98 }}
+                            className={`mt-auto w-full py-3 px-4 rounded-xl text-white font-medium flex items-center justify-center gap-2 ${colors.button} transition-all duration-300`}
+                        >
+                            <BookOpen className="w-5 h-5" />
+                            Start Practice Exam
+                            <motion.div animate={{ x: isHovered ? 4 : 0 }} transition={{ duration: 0.2 }}>
+                                <ArrowRight className="w-5 h-5" />
+                            </motion.div>
+                        </motion.button>
+                    </Link>
                 </div>
             </div>
 

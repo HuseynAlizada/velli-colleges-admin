@@ -122,7 +122,7 @@ export default function ExamCard({ exam }: { exam: Exam }) {
                             className={`w-full flex items-center justify-center gap-1 px-4 py-3 rounded-xl text-white font-medium ${colors.button} shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 mb-6`}
                         >
                             <PlayCircle className="w-5 h-5" />
-                            {sendRequest ? 'Request Sended' : 'Reuqest To Unlock'}
+                            {sendRequest ? 'Request Sended' : 'Request To Unlock'}
                         </button>
 
                         {/* Active Users Stats */}
