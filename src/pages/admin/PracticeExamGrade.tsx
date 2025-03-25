@@ -105,7 +105,7 @@ const PracticeExamGrade = () => {
         <div className="w-full max-w-7xl mx-auto p-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
             <div>
-              <h2 className="text-2xl font-bold text-gray-800">Exam Results</h2>
+              <h2 className="text-2xl font-bold text-gray-800">Practice Exam Results</h2>
               <p className="text-gray-500 mt-1">View and analyze student performance</p>
             </div>
 
