@@ -44,6 +44,8 @@ const PracticeExamGrade = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log('test');
+      
       setIsLoading(true)
       try {
         const { data, error } = await supabase.from("student_practice_results").select("*")
@@ -65,6 +67,8 @@ const PracticeExamGrade = () => {
 
         // Set the deduplicated data to state
         setResults(uniqueData)
+        console.log(data);
+        
       } catch (err) {
         console.error("Error fetching exam results:", err)
       } finally {
@@ -75,15 +79,9 @@ const PracticeExamGrade = () => {
     fetchData()
 
     // No cleanup needed since this effect only runs once on mount
-  }, []) // Empty dependency array ensures it runs only once on mount
+  }, []) 
 
-  // const requestSort = (key: string) => {
-  //   let direction: "ascending" | "descending" = "ascending"
-  //   if (sortConfig && sortConfig.key === key && sortConfig.direction === "ascending") {
-  //     direction = "descending"
-  //   }
-  //   setSortConfig({ key, direction })
-  // }
+ 
 
   const getScoreColor = (score: number) => {
     if (score >= 90) return "from-green-400 to-emerald-500"
