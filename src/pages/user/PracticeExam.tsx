@@ -36,7 +36,8 @@ export default function PracticeExam() {
     try {
       const { data, error } = await supabase.from('practice_exam').select("*")
       if (error) throw error
-      const filteredData = data.filter(item => item.level == userData?.level)
+      console.log(userData, 'userData?.level.toUpperCase()')
+      const filteredData = data.filter(item => item.level == userData?.level.toUpperCase())
       setExams(filteredData)
     }
     catch (err) {
@@ -46,12 +47,12 @@ export default function PracticeExam() {
 
   useEffect(() => {
     fetchExams()
-  }, [])
+  }, [userData])
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
     {exams.length > 0 ? (
-      <div className="w-full mx-auto grid lg:grid-cols-4 sm:grid-cols-2 gap-3">
+      <div className="w-full mx-auto grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-3">
         {exams.map((exam) => (
           <PracticeExamCard key={exam.id} exam={exam} />
         ))}

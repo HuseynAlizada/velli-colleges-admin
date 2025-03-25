@@ -35,8 +35,8 @@ export default function LockedExams() {
             const { data, error } = await supabase.from('exams').select("*")
             if (error) throw error
 
-            console.log(userData, 'user')
-            const filteredData = data.filter(item => item.level == "B2")
+            console.log(userData?.level.toUpperCase(), 'user')
+            const filteredData = data.filter(item => item.level == userData?.level.toUpperCase())
             setExams(filteredData)
             console.log(filteredData);
             
