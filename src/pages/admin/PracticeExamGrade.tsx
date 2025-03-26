@@ -194,7 +194,7 @@ const PracticeExamGrade = () => {
                           <span className="text-sm text-gray-600">Score</span>
                           <div className="flex items-center gap-1">
                             <Award className="w-4 h-4 text-indigo-500" />
-                            <span className="font-bold text-gray-900">{result.score}%</span>
+                            <span className="font-bold text-gray-900">{result.score?.toFixed(2)}%</span>
                           </div>
                         </div>
 

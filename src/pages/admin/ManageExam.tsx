@@ -94,7 +94,7 @@ export default function ManageExam() {
                             <tr key={exam.id} className="hover:bg-gray-50">
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{index + 1}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{exam.title}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{exam.pass_score}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{exam.pass_score.toFixed(2)}</td>
                                 {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{exam.total_score}</td> */}
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{exam.duration} hr</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{exam.level}</td>

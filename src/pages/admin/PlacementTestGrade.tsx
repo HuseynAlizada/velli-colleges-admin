@@ -192,11 +192,11 @@ const PlacementTestGrade = () => {
 
                       {/* Score Display */}
                       <div className="mb-4">
-                      <div className="flex justify-between items-center mb-2">
+                        <div className="flex justify-between items-center mb-2">
                           <span className="text-sm text-gray-600">Reading</span>
                           <div className="flex items-center gap-1">
                             <Award className="w-4 h-4 text-indigo-500" />
-                            <span className="font-bold text-gray-900">{result.total_score}%</span>
+                            <span className="font-bold text-gray-900">{result.total_score?.toFixed(2)}%</span>
                           </div>
                         </div>
                         <div className="flex justify-between items-center mb-2">
@@ -238,7 +238,7 @@ const PlacementTestGrade = () => {
                             style={{ width: `${result.total_score}%` }}
                           />
                         </div>
-                        
+
 
                         {/* Score Label */}
                         <p className="text-right text-xs mt-1 font-medium text-gray-600">
