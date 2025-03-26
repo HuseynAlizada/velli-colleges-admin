@@ -33,7 +33,7 @@ const AdminLogin = () => {
 
 
     const handleLogin = () => {
-        if (userData && username === userData[0].email && password === userData[0].password) {
+        if (userData && username === userData[0]?.email && password === userData[0]?.password) {
             const token = btoa(`${username}:${password}`); // Encode as a mock JWT
             Cookies.set("token", token, { expires: 1 / 24 }); // Set cookie for 1 day
             navigate("/admin/dashboard"); // Redirect to admin page
