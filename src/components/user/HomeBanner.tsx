@@ -81,7 +81,7 @@ const HomeBanner = () => {
                         </div> */}
 
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
-                            You Are Part
+                            You Are a Part
                             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-rose-500">
                                 Of Our Family
                             </span>
