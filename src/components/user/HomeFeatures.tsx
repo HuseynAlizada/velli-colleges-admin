@@ -143,7 +143,7 @@ const HomeFeatures = () => {
                             Join thousands of students who are already using our platform to achieve their academic goals.
                         </p>
                         <Link
-                            to="/signup"
+                            to="/locked-exams"
                             className="inline-flex items-center gap-2 bg-white text-rose-600 px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors group"
                         >
                             Get Started Today
