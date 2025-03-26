@@ -54,7 +54,7 @@ export default function LockedExams() {
     }, [userData])
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
+        <div className="min-h-screen w-full bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
             {isLoading ? (
                 <div className="max-w-7xl mx-auto flex justify-center items-center min-h-[50vh]">
                     <div className="flex flex-col items-center gap-4">

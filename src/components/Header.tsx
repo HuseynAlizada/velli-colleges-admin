@@ -36,18 +36,18 @@ const Header = () => {
       className="z-50 flex items-center justify-between px-4 py-[12px] bg-white text-blue-400 fixed top-0 w-full 
                         shadow-[0_4px_20px_rgba(59,130,246,0.3)] border-b border-blue-100"
     >
-      <h1 className="text-xl  font-semibold">Student Dashboard</h1>
+      <h1 className="md:text-xl text-[18px]  font-semibold">Student Dashboard</h1>
       {/* <h3 className='md:text-xl text-md font-semibold md:block hidden'>Build your future</h3> */}
       <div className="relative">
-        <div className="flex items-center gap-4 ">
-          <h3 className="text-[18px]">
+        <div className="flex items-center md:gap-4 gap-1">
+          <h3 className="md:text-[18px] text-[14px]">
             Hello, <span className="font-medium">{userData && userData.name}</span>
           </h3>
           <div
-            className="flex items-center cursor-pointer hover:opacity-80 transition-opacity"
+            className="flex items-center cursor-pointer hover:opacity-80 transition-opacity "
             onClick={() => setMenu(!menu)}
           >
-            <div className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden border-2 border-blue-200 shadow-sm">
+            <div className="w-8 h-8  rounded-full flex items-center justify-center overflow-hidden border-2 border-blue-200 shadow-sm">
               <img
                 src={userData?.image_url || "/placeholder.svg"}
                 alt=""
