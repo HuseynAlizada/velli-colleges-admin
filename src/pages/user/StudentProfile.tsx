@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { supabase } from "../../utils/supabase-client";
 import { useNavigate } from "react-router-dom";
 
-const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
+const levels = ["A1", "A2", "B1", "B1+", "B2", "C1"];
 
 export default function StudentProfile() {
     const [formData, setFormData] = useState({
@@ -268,7 +268,7 @@ export default function StudentProfile() {
                                     className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                                 >
                                     {levels.map((level) => (
-                                        <option key={level} value={level}>
+                                        <option key={level} value={level} disabled>
                                             {level}
                                         </option>
                                     ))}
