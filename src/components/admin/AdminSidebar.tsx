@@ -24,7 +24,7 @@ const AdminSidebar = () => {
                 !mobileMenu && (
                     <button
                     onClick={() => setMobileMenu(true)}
-                    className="xl:hidden fixed top-4 left-4 z-50 bg-blue-400 text-white p-2 rounded-full shadow-lg"
+                    className="2xl:hidden fixed top-4 left-4 z-50 bg-blue-400 text-white p-2 rounded-full shadow-lg"
                 >
                     <Menu size={24} />
                 </button>
@@ -35,7 +35,7 @@ const AdminSidebar = () => {
             {/* Sidebar */}
             <div
                 className={`fixed top-0 left-0 h-full overflow-y-auto overflow-x-hidden     w-[310px] bg-blue-400 py-2 z-40 transition-transform duration-300 
-                ${mobileMenu ? "translate-x-0" : "-translate-x-full"} xl:translate-x-0 xl:block`}
+                ${mobileMenu ? "translate-x-0" : "-translate-x-full"} 2xl:translate-x-0 2xl:block`}
             >
                 {/* Logo */}
                 <div className="flex ">
@@ -44,7 +44,7 @@ const AdminSidebar = () => {
 
                 {/* Close Button for Mobile */}
                 <button
-                    className="absolute top-4 right-4 text-white xl:hidden"
+                    className="absolute top-4 right-4 text-white 2xl:hidden"
                     onClick={() => setMobileMenu(false)}
                 >
                     <X size={24} />
@@ -92,7 +92,7 @@ const AdminSidebar = () => {
             {/* Background Overlay on Mobile */}
             {mobileMenu && (
                 <div
-                    className="fixed inset-0 bg-black opacity-50 z-30 xl:hidden"
+                    className="fixed inset-0 bg-black opacity-50 z-30 2xl:hidden"
                     onClick={() => setMobileMenu(false)}
                 />
             )}

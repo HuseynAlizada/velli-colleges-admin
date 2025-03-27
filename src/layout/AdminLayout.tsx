@@ -7,11 +7,11 @@ const AdminLayout = () => {
 
     return (
         <div className="flex ">
-            <div className="xl:w-[20%]  ">
+            <div className="2xl:w-[20%]  ">
                 <AdminSidebar  />
             </div>
 
-            <div className=" xl:w-[80%] w-[90%] mx-auto">
+            <div className=" 2xl:w-[80%] w-[90%] mx-auto">
                 <Outlet />
             </div>
 
