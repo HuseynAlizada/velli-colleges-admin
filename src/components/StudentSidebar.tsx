@@ -35,7 +35,7 @@ const StudentSidebar = () => {
             >
                 {/* Logo */}
                 <Link to="/" className="w-full flex justify-start" onClick={() => setMobileMenu(false)}>
-                    <div className="w-[90%] mt-[30px]">
+                    <div className="w-[70%] mt-[30px]">
                         <img
                             src="/images/main-logo.png"
                             alt="Logo"

@@ -573,7 +573,7 @@ export default function PlacementTestQuestions() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [timeLeft, setTimeLeft] = useState(60 * 60);
     const examSections = ["Listening", "Reading", "Grammar", "Vocabulary"];
-    
+
     // New state for section totals
     const [sectionTotals, setSectionTotals] = useState<{ [key: string]: number }>({});
 
@@ -803,8 +803,10 @@ export default function PlacementTestQuestions() {
             <div className="question-header mt-12 relative">
                 <div className="text-center mb-12">
                     <h1 className="text-3xl font-bold text-gray-900 mb-4">{exam.title}</h1>
-                    <p className="text-gray-600 italic text-xl">
-                        Please read each question carefully and select the correct answer.
+                    <p className="text-gray-600  text-xl">
+                        Read the questions carefully
+                    </p> <p className="text-gray-600  text-xl">
+                        Good Luck
                     </p>
                 </div>
 

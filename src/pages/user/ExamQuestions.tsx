@@ -353,8 +353,10 @@ export default function ExamQuestions() {
             <div className="question-header mt-12 relative">
                 <div className="text-center mb-12">
                     <h1 className="text-3xl font-bold text-gray-900 mb-4">{exam.title}</h1>
-                    <p className="text-gray-600 italic md:text-2xl text-xl font-bold">
-                    Dive into each question with curiosity and choose the answer that shines brightest!
+                    <p className="text-white  text-2xl">
+                        Read the questions carefully
+                    </p> <p className="text-gray-600  text-xl">
+                        Good Luck
                     </p>
                 </div>
 

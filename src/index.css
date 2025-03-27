@@ -71,13 +71,13 @@ padding-bottom: 0px;
 } */
 
 
-.question-header{
-  background-image:url('/images/questions-bg2.jpg');
+.question-header {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url('/images/question-banner2.jpg');
   background-size: cover;
-  background-position: center 70%;
+  background-position: center 75%;
   padding: 10px;
   border-radius: 20px;
-  height: 300px;
+  height: 350px;
 }
 
 
