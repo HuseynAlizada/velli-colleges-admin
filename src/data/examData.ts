@@ -8,7 +8,7 @@ export const examOptions = [
     "A1 Video PT6", "A1 Video PT7", "A1 Video PT8", "A1 Video PT9", "A1 Video PT10",
     "A1 Video PT11", "A1 Video PT12",
     "A2 U1", "A2 U2", "A2 U3", "A2 U4", "A2 U5", "A2 U6", "A2 U7", "A2 U8",
-    "A2 U9", "A2 U10", "A2 U11", "A2 Midterm", "A2 Final",
+    "A2 U9", "A2 U10", "A2 U11","A2 U12", "A2 Midterm", "A2 Final",
     "A2 Reading PT1", "A2 Reading PT2", "A2 Reading PT3", "A2 Reading PT4",
     "A2 Reading PT5", "A2 Reading PT6", "A2 Reading PT7", "A2 Reading PT8",
     "A2 Reading PT9", "A2 Reading PT10", "A2 Reading PT11", "A2 Reading PT12",
