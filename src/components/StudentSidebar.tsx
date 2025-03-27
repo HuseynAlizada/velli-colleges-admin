@@ -30,7 +30,7 @@ const StudentSidebar = () => {
 
             {/* Sidebar */}
             <div
-                className={`fixed top-0 left-0 h-full w-[240px] bg-gradient-to-r bg-blue-400 py-10 z-40 transition-transform duration-300 ${mobileMenu ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+                className={`fixed top-0 left-0 h-full w-[240px] bg-gradient-to-r bg-white py-10 z-40 transition-transform duration-300 ${mobileMenu ? "translate-x-0" : "-translate-x-full md:translate-x-0"
                     }`}
             >
                 {/* Logo */}
@@ -46,11 +46,11 @@ const StudentSidebar = () => {
                 </Link>
 
                 {/* Menu Items */}
-                <nav className="text-white mt-4 px-4 flex flex-col gap-3">
+                <nav className="text-blue-600 mt-4 px-4 flex flex-col gap-3">
                     {/* Menu Item 1: Dashboard */}
                     <Link to="/" onClick={() => handleMenuClick(1)}>
                         <div
-                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-400 rounded-md px-2 ${1 === activeMenu ? "bg-blue-400" : ""
+                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${1 === activeMenu ? "bg-blue-600 text-white" : ""
                                 }`}
                         >
                             <DashboardIcon />
@@ -64,7 +64,7 @@ const StudentSidebar = () => {
                     {/* Menu Item 3: Courses (with submenu) */}
                     <div>
                         <div
-                            className={`flex items-center gap-2 cursor-pointer py-4 menu-animation hover:bg-indigo-700 rounded-md px-2 ${3 === activeMenu ? "bg-indigo-700" : ""
+                            className={`flex items-center gap-2 cursor-pointer py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${3 === activeMenu ? "bg-blue-600 text-white" : ""
                                 }`}
                             onClick={() => setActiveMenu(3 === activeMenu ? null : 3)}
                         >
@@ -85,7 +85,7 @@ const StudentSidebar = () => {
 
                     <Link to="/practice-exam" onClick={() => handleMenuClick(2)}>
                         <div
-                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-indigo-700 rounded-md px-2 ${2 === activeMenu ? "bg-indigo-700" : ""
+                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${2 === activeMenu ? "bg-blue-600 text-white" : ""
                                 }`}
                         >
                             <LibraryBooksIcon />
@@ -95,7 +95,7 @@ const StudentSidebar = () => {
 
                     <Link to="/placement-tests" onClick={() => handleMenuClick(7)}>
                         <div
-                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-indigo-700 rounded-md px-2 ${7 === activeMenu ? "bg-indigo-700" : ""
+                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${7 === activeMenu ? "bg-blue-600 text-white" : ""
                                 }`}
                         >
                             <LibraryBooksIcon />
@@ -105,7 +105,7 @@ const StudentSidebar = () => {
 
                     <Link to="/exam-grade" onClick={() => handleMenuClick(5)}>
                         <div
-                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-indigo-700 rounded-md px-2 ${5 === activeMenu ? "bg-indigo-700" : ""
+                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${5 === activeMenu ? "bg-blue-600 text-white" : ""
                                 }`}
                         >
                             <GradeIcon />
@@ -116,7 +116,7 @@ const StudentSidebar = () => {
                     {/* Menu Item 5: Settings */}
                     <Link to="/news" onClick={() => handleMenuClick(6)}>
                         <div
-                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-indigo-700 rounded-md px-2 ${6 === activeMenu ? "bg-indigo-700" : ""
+                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${6 === activeMenu ? "bg-blue-600 text-white" : ""
                                 }`}
                         >
                             <NewspaperIcon />

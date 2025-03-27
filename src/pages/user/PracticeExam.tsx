@@ -53,8 +53,8 @@ export default function PracticeExam() {
     <div className="min-h-screen w-full bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
     {exams.length > 0 ? (
       <div className="w-full mx-auto grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-3">
-        {exams.map((exam) => (
-          <PracticeExamCard key={exam.id} exam={exam} />
+        {exams.map((exam,index) => (
+          <PracticeExamCard key={exam.id} exam={exam} index={index} />
         ))}
       </div>
     ) : (

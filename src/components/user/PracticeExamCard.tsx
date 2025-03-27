@@ -17,7 +17,7 @@ interface PracticeExamCardProps {
     onStartExam?: (examId: number) => void
 }
 
-const PracticeExamCard = ({ exam }: { exam: PracticeExamCardProps }) => {
+const PracticeExamCard = ({ exam ,index}: { exam: PracticeExamCardProps,index:number }) => {
     const { title, level, duration, pass_score, created_at } = exam
     const [isHovered, setIsHovered] = useState(false)
 
@@ -131,7 +131,7 @@ const PracticeExamCard = ({ exam }: { exam: PracticeExamCardProps }) => {
             <div className="p-6">
                 <div className="flex flex-col h-full">
                     {/* Title */}
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">{title} - Unit {index+1}</h3>
 
                     {/* Exam Details */}
                     <div className="grid grid-cols-2 gap-4 mb-6">
