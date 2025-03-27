@@ -88,7 +88,7 @@ const ApprovedExams = () => {
         <div className="min-h-screen w-full bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
             {
                 exams.length > 0 ? (
-                    <div className="max-w-7xl mx-auto grid grid-cols-4 gap-3">
+                    <div className="max-w-7xl mx-auto grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-3">
                         {
                             exams.map(exam => (
                                 <ApprovedExam exam={exam} />

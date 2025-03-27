@@ -59,7 +59,7 @@ const HomeBanner = () => {
         { icon: BookOpen, bgColor: "bg-gradient-to-r from-indigo-400 to-purple-500", iconColor: "text-white", value: studentLevel?.toUpperCase(), label: "Your Level" },
         { icon: GraduationCap, bgColor: "bg-gradient-to-r from-rose-400 to-red-500", iconColor: "text-white", value: takenExams?.exam_count, label: "Taken Exams" },
         { icon: Users, bgColor: "bg-gradient-to-r from-amber-400 to-yellow-500", iconColor: "text-white", value: takenExams?.practice_count, label: "Taken Practice Exams" },
-        { icon: Calendar, bgColor: "bg-gradient-to-r from-green-400 to-teal-500", iconColor: "text-white", value: 0, label: "Full Score Count" },
+        { icon: Calendar, bgColor: "bg-gradient-to-r from-green-400 to-teal-500", iconColor: "text-white", value: 0, label: "GPA" },
     ];
     return (
         <section className="relative overflow-hidden bg-white">

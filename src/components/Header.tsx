@@ -49,7 +49,7 @@ const Header = () => {
           >
             <div className="w-8 h-8  rounded-full flex items-center justify-center overflow-hidden border-2 border-blue-200 shadow-sm">
               <img
-                src={userData?.image_url || "/placeholder.svg"}
+                src={userData?.image_url || "/images/student_avatar.jpeg"}
                 alt=""
                 className="rounded-full w-full h-full object-cover"
               />

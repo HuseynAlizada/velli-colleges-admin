@@ -147,7 +147,7 @@ export default function ExamQuestions() {
 
     const handleSubmit = async () => {
         if (!userId) {
-            toast.error("Kullanıcı ID bulunamadı. Lütfen tekrar giriş yapın.");
+            toast.error("User ID not found. Please log in again.");
             return;
         }
 
@@ -187,11 +187,11 @@ export default function ExamQuestions() {
                 .single();
 
             if (studentError) {
-                throw new Error("Öğrenci seviyesi alınamadı: " + studentError.message);
+                throw new Error("Failed to get student level: " + studentError.message);
             }
 
-            const studentLevel = studentData?.level || "Bilinmiyor";
-            const studentName = studentData?.name || "Bilinmiyor";
+            const studentLevel = studentData?.level || "Unknown";
+            const studentName = studentData?.name || "Unknown";
 
             const { error: resultError } = await supabase
                 .from("student_results")
@@ -212,7 +212,7 @@ export default function ExamQuestions() {
                 });
 
             if (resultError) {
-                throw new Error("Sınav sonuçları kaydedilemedi: " + resultError.message);
+                throw new Error("Exam results could not be saved: " + resultError.message);
             }
 
             const { data: takenExamsData, error: fetchError } = await supabase
@@ -222,7 +222,7 @@ export default function ExamQuestions() {
                 .single();
 
             if (fetchError) {
-                throw new Error("Mevcut sınav sayısı alınamadı: " + fetchError.message);
+                throw new Error("Unable to take the available number of exams: " + fetchError.message);
             }
 
             const currentExamCount = takenExamsData?.exam_count || 0;
@@ -233,10 +233,10 @@ export default function ExamQuestions() {
                 .eq("student_id", userId);
 
             if (updateError) {
-                throw new Error("Sınav sayısı güncellenemedi: " + updateError.message);
+                throw new Error("Failed to update the number of exams: " + updateError.message);
             }
 
-            toast.success("Sınav başarıyla gönderildi!");
+            toast.success("The exam was successfully submitted!");
             setSubmited(true);
             setIsModalOpen(true);
 
@@ -252,7 +252,7 @@ export default function ExamQuestions() {
             }
         } catch (err) {
             console.error(err);
-            toast.error("Sınav sonuçları gönderilemedi. Lütfen tekrar deneyin.");
+            toast.error("The exam results could not be sent. Please try again.");
             setIsModalOpen(true);
         }
     };
@@ -278,7 +278,7 @@ export default function ExamQuestions() {
                     <h2 className="text-2xl font-semibold text-gray-900 mb-4">Listening Voice</h2>
                     <audio controls className="w-full max-w-md mx-auto">
                         <source src={content} type="audio/mpeg" />
-                        Tarayıcınız ses etiketini desteklemiyor.
+                        Your browser does not support the audio tag.
                     </audio>
                 </div>
             );
@@ -293,16 +293,16 @@ export default function ExamQuestions() {
             if (content.endsWith(".jpg") || content.endsWith(".png")) {
                 return (
                     <div className="mb-6">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">Resim İçeriği</h2>
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">PDF Content</h2>
                         <img src={content} alt="Soru İçeriği" className="max-w-full h-auto rounded-lg" />
                     </div>
                 );
             } else if (content.endsWith(".pdf")) {
                 return (
                     <div className="mb-6">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">PDF İçeriği</h2>
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">PDF Content</h2>
                         <a href={content} target="_blank" rel="noopener noreferrer" className="text-indigo-600 underline">
-                            PDF İçeriğini Görüntüle
+                        View PDF Content
                         </a>
                     </div>
                 );
@@ -310,7 +310,7 @@ export default function ExamQuestions() {
         }
         return (
             <div className="mb-6 text-gray-700">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">Ek İçerik</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">Content</h2>
                 <p>{content}</p>
             </div>
         );
@@ -321,7 +321,7 @@ export default function ExamQuestions() {
             <div className="min-h-screen flex items-center justify-center w-full bg-gradient-to-br from-gray-50 to-gray-100">
                 <div className="text-center">
                     <Loader2 className="w-8 h-8 text-indigo-600 animate-spin mx-auto mb-4" />
-                    <p className="text-gray-600">Sınav soruları yükleniyor...</p>
+                    <p className="text-gray-600">Exam Questions Loading...</p>
                 </div>
             </div>
         );
@@ -341,7 +341,7 @@ export default function ExamQuestions() {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
                 <div className="text-center text-gray-600">
-                    <p>Sınav bulunamadı.</p>
+                    <p>Exam Not Found.</p>
                 </div>
             </div>
         );
@@ -353,8 +353,8 @@ export default function ExamQuestions() {
             <div className="question-header mt-12 relative">
                 <div className="text-center mb-12">
                     <h1 className="text-3xl font-bold text-gray-900 mb-4">{exam.title}</h1>
-                    <p className="text-gray-600 italic text-xl">
-                        Lütfen her soruyu dikkatlice okuyun ve doğru cevabı seçin.
+                    <p className="text-gray-600 italic md:text-2xl text-xl font-bold">
+                    Dive into each question with curiosity and choose the answer that shines brightest!
                     </p>
                 </div>
 
@@ -381,7 +381,7 @@ export default function ExamQuestions() {
                 <div className="sticky z-[999] top-18 right-0 w-full flex items-center justify-end">
                     <div className="w-[200px] z-10 bg-white shadow-md p-4 text-center">
                         <p className="text-xl font-semibold text-indigo-600">
-                            Kalan Süre: {formatTime(timeLeft)}
+                        Time Remaining {formatTime(timeLeft)}
                         </p>
                     </div>
                 </div>
@@ -390,7 +390,7 @@ export default function ExamQuestions() {
             <div className="max-w-4xl mx-auto px-4 py-12">
                 {filteredQuestions.length === 0 ? (
                     <div className="text-center text-gray-600">
-                        <p>{examType} bölümü için soru bulunmamaktadır.</p>
+                        <p>{examType} There are no questions for the section.</p>
                     </div>
                 ) : (
                     <div className="space-y-12">
@@ -466,7 +466,7 @@ export default function ExamQuestions() {
                                 onClick={handleSubmit}
                                 className="px-8 py-3 bg-indigo-600 text-white rounded-full font-medium hover:bg-indigo-700 transition-colors"
                             >
-                                Cevapları Gönder
+                                Send Answers
                             </button>
                         ) : (
                             <div className="flex justify-between max-w-lg mx-auto">
@@ -475,14 +475,14 @@ export default function ExamQuestions() {
                                     disabled={examType === "Listening"}
                                     className="px-4 py-2 bg-gray-500 text-white rounded-md disabled:opacity-50"
                                 >
-                                    Önceki
+                                    Prev
                                 </button>
                                 <button
                                     onClick={() => handleNavigation("next")}
                                     disabled={examType === "Vocabulary"}
                                     className="px-4 py-2 bg-indigo-600 text-white rounded-md disabled:opacity-50"
                                 >
-                                    Sonraki
+                                    Next
                                 </button>
                             </div>
                         )
@@ -498,24 +498,24 @@ export default function ExamQuestions() {
                         exit={{ opacity: 0, scale: 0.8 }}
                         className="bg-white rounded-lg p-8 max-w-lg w-full mx-4 shadow-lg"
                     >
-                        <h2 className="text-2xl font-bold text-gray-900 mb-4">Sınav Sonuçları</h2>
+                        <h2 className="text-2xl font-bold text-gray-900 mb-4"> Examination Results</h2>
                         <p className="text-gray-600 mb-6">
                             {timeLeft === 0
-                                ? "Süre doldu! İşte sonuçlarınız:"
-                                : "Sınavı tamamladığınız için tebrikler! İşte sonuçlarınız:"}
+                                ? "Time's up! Here are your results:"
+                                : "Congratulations on completing the exam! Here are your results:"}
                         </p>
                         <div className="space-y-4">
                             <div className="text-center">
                                 <h3 className="text-xl font-semibold text-gray-900">
-                                    Toplam Cevap: {totalScore} / {questions.length}
+                                Total Answer: {totalScore} / {questions.length}
                                 </h3>
                                 <h3 className="text-xl font-semibold text-gray-900">
-                                    Toplam Puan: {examScore} %
+                                Total Score: {examScore} %
                                 </h3>
                             </div>
                             <div className="space-y-2">
                                 <h4 className="text-lg font-semibold text-gray-900">
-                                    Bölüm Puanları ve Toplamlar:
+                                Section Scores and Totals:
                                 </h4>
                                 {examSections.map((section) => (
                                     <p key={section} className="text-gray-700">
