@@ -43,7 +43,7 @@ const NewsSection = () => {
                     </h2>
                     <Link
                         to="/news"
-                        className="flex items-center gap-2 text-rose-500 hover:text-rose-600 transition-colors font-medium"
+                        className="flex items-center gap-2 whitespace-nowrap text-rose-500 hover:text-rose-600 transition-colors font-medium"
                     >
                         View All
                         <ArrowRight className="w-4 h-4" />

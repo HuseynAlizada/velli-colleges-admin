@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Book, ClipboardList, Megaphone, ArrowRight } from "lucide-react"
 import { Link } from "react-router-dom"
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 const HomeFeatures = () => {
 
@@ -136,20 +137,41 @@ const HomeFeatures = () => {
                     <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10"></div>
 
                     <div className="relative px-8 py-16 md:py-16 text-center">
-                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 [text-wrap:balance]">
-                            Ready to enhance your learning experience?
+                        <h2 className="text-2xl md:text-4xl font-bold text-white mb-6 [text-wrap:balance]">
+                            Visit our website to stay updated with the latest news.
                         </h2>
-                        <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
+                        <p className="text-white/90 md:text-lg text-md mb-8 max-w-2xl mx-auto">
                             Join thousands of students who are already using our platform to achieve their academic goals.
                         </p>
-                        <Link
-                            to="/locked-exams"
-                            className="inline-flex items-center gap-2 bg-white text-rose-600 px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors group"
-                        >
-                            Get Started Today
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                        </Link>
+                        <div className="flex items-center gap-3 justify-center">
+                            <a
+                                href="https://familyschool.az/"
+                                target="_blank"
+                                className="inline-flex items-center gap-2 bg-white text-rose-600 px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors group"
+                            >
+                                Visit Website
+                                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                            </a>
+                            <a
+                                target="_blank"
+                                href="https://www.instagram.com/familyschool.az/"
+                                className="inline-flex items-center gap-2 bg-rose-600 text-white px-6 py-3 rounded-full font-medium hover:bg-rose-700 transition-colors"
+                            >
+                                <InstagramIcon />
+                            </a>
+                        </div>
+                        <div className="flex flex-col  justify-center items-center gap-2 mt-3 text-white">
+
+                            <div>
+                                Number: +994 (55) 430 12 13
+                            </div>
+                            <div>
+                                Location: Həsən Əliyev küç., 245. Kovaa Plaza 3-cü mərtəbə, Bakı
+                            </div>
+                        </div>
                     </div>
+
+
 
                     {/* Decorative Elements */}
                     <div className="absolute top-0 left-0 w-32 h-32 bg-rose-400/20 rounded-full blur-2xl"></div>
