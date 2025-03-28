@@ -203,6 +203,7 @@ export default function StudentProfile() {
                                     <input
                                         type="text"
                                         name="name"
+                                        disabled
                                         value={formData.name}
                                         onChange={handleInputChange}
                                         className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
@@ -218,6 +219,8 @@ export default function StudentProfile() {
                                     <input
                                         type="email"
                                         name="email"
+                                        disabled
+
                                         value={formData.email}
                                         onChange={handleInputChange}
                                         className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
@@ -233,6 +236,8 @@ export default function StudentProfile() {
                                     <input
                                         type="tel"
                                         name="phone"
+                                        disabled
+
                                         value={formData.phone}
                                         onChange={handleInputChange}
                                         className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
@@ -248,6 +253,8 @@ export default function StudentProfile() {
                                     <input
                                         type="tel"
                                         name="parentPhone"
+                                        disabled
+
                                         value={formData.parentPhone}
                                         onChange={handleInputChange}
                                         className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
@@ -263,6 +270,8 @@ export default function StudentProfile() {
                                 <label className="block text-sm font-medium text-gray-700">Level</label>
                                 <select
                                     name="level"
+                                    disabled
+
                                     value={formData.level}
                                     onChange={handleInputChange}
                                     className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
@@ -281,6 +290,8 @@ export default function StudentProfile() {
                                     <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                                     <input
                                         type="text"
+                                        disabled
+
                                         name="parentName"
                                         value={formData.parentName}
                                         onChange={handleInputChange}
@@ -296,6 +307,7 @@ export default function StudentProfile() {
                                     <School className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                                     <input
                                         type="text"
+                                        disabled
                                         name="studentSchool"
                                         value={formData.studentSchool}
                                         onChange={handleInputChange}
@@ -334,7 +346,7 @@ export default function StudentProfile() {
                                 Saving...
                             </>
                         ) : (
-                            <div>
+                            <div className='flex items-center gap-1'>
                                 <Check className="w-4 h-4" />
                                 Save changes
                             </div>
