@@ -94,10 +94,10 @@ const HomeBanner = () => {
 
                         <div className="flex flex-wrap gap-4">
                             <Link
-                                to="/dashboard"
+                                to="/news"
                                 className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors shadow-lg hover:shadow-indigo-200 group"
                             >
-                                Go to Dashboard
+                                Go to News
                                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </Link>
 
