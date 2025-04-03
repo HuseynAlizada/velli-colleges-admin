@@ -70,6 +70,9 @@ export default function AddStudent() {
           console.log("get single student error");
           throw error;
         }
+
+        
+
         setFormData({
           name: data.name || "",
           email: data.email || "",

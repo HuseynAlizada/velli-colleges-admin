@@ -1,3 +1,4 @@
+
 import type React from "react";
 import { useState, useEffect } from "react";
 
@@ -9,14 +10,13 @@ interface PhoneInputProps {
   id: string;
 }
 
-export function PhoneInput({ value, onChange, name, id }: PhoneInputProps) {
+export function PhoneInput({ value, onChange, name, id, placeholder }: PhoneInputProps) {
   const [inputValue, setInputValue] = useState(value || "+994 ");
 
+  // Sync internal state with the value prop whenever it changes
   useEffect(() => {
-    if (!value && inputValue !== "+994 ") {
-      setInputValue("+994 ");
-    }
-  }, [value, inputValue]);
+    setInputValue(formatPhoneNumber(value || "+994 ")); // Format and set the value
+  }, [value]);
 
   const formatPhoneNumber = (input: string) => {
     // Remove all non-digit characters except '+'
@@ -31,19 +31,15 @@ export function PhoneInput({ value, onChange, name, id }: PhoneInputProps) {
     let formatted = "+994 ";
     const remaining = cleaned.slice(4);
 
-    // Add first group (3 digits)
     if (remaining.length > 0) {
       formatted += remaining.slice(0, 3);
     }
-    // Add space and second group (3 digits)
     if (remaining.length > 3) {
       formatted += " " + remaining.slice(3, 6);
     }
-    // Add space and third group (2 digits)
     if (remaining.length > 6) {
       formatted += " " + remaining.slice(6, 8);
     }
-    // Add space and fourth group (2 digits)
     if (remaining.length > 8) {
       formatted += " " + remaining.slice(8, 10);
     }
@@ -54,11 +50,10 @@ export function PhoneInput({ value, onChange, name, id }: PhoneInputProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhoneNumber(e.target.value);
     setInputValue(formatted);
-    onChange(formatted);
+    onChange(formatted); // Notify parent of the change
   };
 
   const isValidPhoneNumber = (phone: string) => {
-    // Should match pattern: +994 XXX XXX XX XX where X are digits
     return /^\+994 \d{3} \d{3} \d{2} \d{2}$/.test(phone);
   };
 
@@ -68,11 +63,11 @@ export function PhoneInput({ value, onChange, name, id }: PhoneInputProps) {
         type="tel"
         id={id}
         name={name}
-        value={inputValue}
+        value={inputValue} // Controlled by internal state, synced with prop
         onChange={handleChange}
         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-        placeholder="+994 050 562 53 06"
-        minLength={17} // +994 (4) + space (1) + 3 + space (1) + 3 + space (1) + 2 + space (1) + 2 = 17
+        placeholder={placeholder || "+994 050 562 53 06"}
+        minLength={17}
         maxLength={18}
         pattern="^\+994 \d{3} \d{3} \d{2} \d{2}$"
         required
@@ -83,3 +78,6 @@ export function PhoneInput({ value, onChange, name, id }: PhoneInputProps) {
     </div>
   );
 }
+
+
+
