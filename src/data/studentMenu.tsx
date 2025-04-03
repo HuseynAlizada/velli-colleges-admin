@@ -104,6 +104,16 @@ export const levelColors: LevelColors = {
         button: "bg-blue-500 hover:bg-blue-600 focus:ring-blue-500",
 
     },
+    'B1+': {
+        bg: "from-red-200 to-blue-100/50",
+        border: "border-blue-200",
+        text: "text-blue-700",
+        icon: "text-blue-600",
+        badge: "bg-blue-100 text-blue-700",
+        highlight: "text-blue-700",
+        button: "bg-blue-500 hover:bg-blue-600 focus:ring-blue-500",
+
+    },
     B2: {
         bg: "from-indigo-200 to-indigo-100/50",
         border: "border-indigo-200",
