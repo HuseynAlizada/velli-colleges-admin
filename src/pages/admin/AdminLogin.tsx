@@ -65,7 +65,7 @@ const AdminLogin = () => {
                     <label htmlFor="">Password</label>
 
                     <input
-                        type="text"
+                        type="password"
                         value={password}
                         required
                         onChange={(e) => setPassword(e.target.value)}
