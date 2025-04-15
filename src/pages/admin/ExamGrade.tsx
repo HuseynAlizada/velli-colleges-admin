@@ -42,6 +42,8 @@ const ExamGrade = () => {
       })
     : []
 
+  console.log(filteredResults, 'filteredResults')
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
@@ -205,7 +207,7 @@ const ExamGrade = () => {
                             <span className="font-bold text-gray-900">{result.reading_score} / {result.reading_count}</span>
                           </div>
                         </div>
-                        
+
                         <div className="flex justify-between items-center mb-2">
                           <span className="text-sm text-gray-600">Listening</span>
                           <div className="flex items-center gap-1">
@@ -213,7 +215,7 @@ const ExamGrade = () => {
                             <span className="font-bold text-gray-900">{result.listening_score} / {result.listening_count}</span>
                           </div>
                         </div>
-                        
+
                         <div className="flex justify-between items-center mb-2">
                           <span className="text-sm text-gray-600">Grammar</span>
                           <div className="flex items-center gap-1">
@@ -221,7 +223,7 @@ const ExamGrade = () => {
                             <span className="font-bold text-gray-900">{result.grammar_score} / {result.grammar_count}</span>
                           </div>
                         </div>
-                        
+
                         <div className="flex justify-between items-center mb-2">
                           <span className="text-sm text-gray-600">Vocabulary</span>
                           <div className="flex items-center gap-1">
@@ -242,6 +244,10 @@ const ExamGrade = () => {
                         {/* Score Label */}
                         <p className="text-right text-xs mt-1 font-medium text-gray-600">
                           {getScoreLabel(result.student_score)}
+                        </p>
+
+                        <p className="text-left text-md mt-1 font-medium text-gray-600">
+                          Date: {result?.created_at.split("T")[0]}
                         </p>
                       </div>
 
