@@ -210,6 +210,9 @@ const PracticeExamGrade = () => {
                         <p className="text-right text-xs mt-1 font-medium text-gray-600">
                           {getScoreLabel(result.score ?? 0)}
                         </p>
+                        <p className="text-left text-md mt-1 font-medium text-gray-600">
+                          Date: {result?.created_at.split("T")[0]}
+                        </p>
                       </div>
                       
 
