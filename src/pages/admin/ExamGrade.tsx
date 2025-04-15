@@ -247,7 +247,7 @@ const ExamGrade = () => {
                         </p>
 
                         <p className="text-left text-md mt-1 font-medium text-gray-600">
-                          Date: {result?.created_at.split("T")[0]}
+                          Date: {String(result?.created_at).split("T")[0]}
                         </p>
                       </div>
 
