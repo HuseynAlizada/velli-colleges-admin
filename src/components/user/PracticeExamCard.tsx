@@ -10,9 +10,8 @@ import {
   ArrowRight,
   Lock,
 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-import { adminData } from "../../types";
 import { supabase } from "../../utils/supabase-client";
 
 interface PracticeExamCardProps {

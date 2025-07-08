@@ -46,7 +46,9 @@ export default function PracticeExam() {
   }, [userData]);
 
   // Filter exams based on selectedCategory
-  const filteredExams = exams.filter(exam => exam.title.toLowerCase() === selectedCategory.toLowerCase());
+  const filteredExams = exams.filter(
+    exam => typeof exam?.title === 'string' && exam.title.toLowerCase() === selectedCategory.toLowerCase()
+  );
 
   const categories = ['Listening', 'Reading', 'Grammar'];
 
