@@ -44,7 +44,7 @@ const AdminLogin = () => {
                 return;
             }
 
-            const { data, error } = await supabase
+            const {  error } = await supabase
                 .from("admin_data")
                 .update({ password: newPassword })
                 .eq("email", resetEmail);
