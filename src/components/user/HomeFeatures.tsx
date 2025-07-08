@@ -165,8 +165,11 @@ const HomeFeatures = () => {
                             <div>
                                 Number: +994 (55) 430 12 13
                             </div>
-                            <div>
-                                Location: Həsən Əliyev küç., 245. Kovaa Plaza 3-cü mərtəbə, Bakı
+                            {/* <div>
+                                Location: Hesen Eliyev 212A. Kovaa Plaza 3-cü mərtəbə, Bakı
+                            </div> */}
+                             <div>
+                                Location: Hesen Eliyev 212A 
                             </div>
                         </div>
                     </div>

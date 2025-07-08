@@ -158,7 +158,7 @@ const PracticeExamCard = ({
         <div className="fixed inset-0 bg-[rgba(0,0,0,0.7)] bg-opacity-40 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-sm shadow-lg">
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-              <Lock /> Enter Exam Password
+              <Lock /> Password Needed
             </h2>
             <input
               type="password"
