@@ -67,7 +67,6 @@ export default function AddStudent() {
           .single();
 
         if (error) {
-          console.log("get single student error");
           throw error;
         }
 
@@ -132,7 +131,6 @@ export default function AddStudent() {
           .upload(fileName, formData.image);
 
         if (uploadError) {
-          console.log("Image upload error:", uploadError);
           throw new Error("Failed to upload image");
         }
 

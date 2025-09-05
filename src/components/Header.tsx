@@ -19,6 +19,7 @@ const Header = () => {
         const { data, error } = await supabase.from("students").select("*").eq("id", userId).single()
         if (error) throw error
         setUserData(data)
+        localStorage.setItem("studentId", data.id)
       } catch (err) {
         console.log(err)
       }

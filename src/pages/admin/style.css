@@ -1,0 +1,29 @@
+.label-fail {
+  color: #dc2626; /* red */
+  font-weight: bold;
+}
+
+.label-pass {
+  color: #2563eb; /* blue */
+  font-weight: bold;
+}
+
+.label-credit {
+  color: #059669; /* green */
+  font-weight: bold;
+}
+
+.label-distinction {
+  color: #9333ea; /* purple */
+  font-weight: bold;
+}
+
+.label-high {
+  color: #d97706; /* orange */
+  font-weight: bold;
+}
+
+.label-na {
+  color: #6b7280; /* gray */
+  font-style: italic;
+}

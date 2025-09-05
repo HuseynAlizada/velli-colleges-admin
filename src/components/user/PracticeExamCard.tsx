@@ -47,8 +47,6 @@ const PracticeExamCard = ({
         const { data, error } = await supabase.from("admin_data").select("*");
         if (error) throw new Error();
 
-        console.log(data[0].password, 'admin Data')
-        
                 setCorrectPassword(data[0].password)
       } catch (err) {
         console.log(err);

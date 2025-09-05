@@ -10,7 +10,11 @@ const AdminSidebar = () => {
     // Auto-close mobile menu on large screens
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth >= 1280) setMobileMenu(false);
+           if (window.innerWidth > 1000) {
+        setMobileMenu(true); // show sidebar
+      } else {
+        setMobileMenu(false); // collapse into mobile menu
+      }
         };
         window.addEventListener("resize", handleResize);
         handleResize();
@@ -89,13 +93,13 @@ const AdminSidebar = () => {
                 </div>
             </div>
 
-            {/* Background Overlay on Mobile */}
+            {/* Background Overlay on Mobile
             {mobileMenu && (
                 <div
                     className="fixed inset-0 bg-black opacity-50 z-30 2xl:hidden"
                     onClick={() => setMobileMenu(false)}
-                />
-            )}
+                />  
+            )} */}
         </div>
     );
 };
