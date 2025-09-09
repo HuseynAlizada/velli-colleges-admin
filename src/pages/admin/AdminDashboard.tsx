@@ -32,6 +32,7 @@ export default function AdminDashboard() {
       console.error("Error fetching students:", error);
     } else {
       setStudents(data);
+      console.log(data, 'user data')
     }
   };
 
@@ -149,17 +150,24 @@ export default function AdminDashboard() {
                 </div>
                 <div className="mt-6 flex gap-2">
                   <button
-                    className="flex-1 px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg transition-all hover:scale-110"
+                    className="flex-1 cursor-pointer px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg transition-all hover:scale-110"
                     onClick={() => handleEdit(student.id)}
                   >
                     Edit
                   </button>
                   <button
-                    className="flex-1 px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg transition-all hover:scale-110"
+                    className="flex-1 cursor-pointer px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg transition-all hover:scale-110"
                     onClick={() => handleDelete(student.id)}
                   >
                     Delete
                   </button>
+                    <button
+                    className="flex-1 cursor-pointer px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg transition-all hover:scale-110"
+                    onClick={() => navigate(`/admin/student-profile/${student.id}`)}
+                  >
+                    Ətraflı
+                  </button>
+                  
                 </div>
               </div>
             </div>

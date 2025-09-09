@@ -309,7 +309,7 @@ export default function ExamQuestions() {
             }
         }
         return (
-            <div className="mb-6 text-gray-700">
+            <div className="mb-6 text-gray-700 select-none">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">Content</h2>
                 <p>{content}</p>
             </div>
@@ -348,7 +348,7 @@ export default function ExamQuestions() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br w-full">
+        <div className="min-h-screen bg-gradient-to-br w-full select-none">
             <ToastContainer autoClose={3000} />
             <div className="question-header mt-12 relative">
                 <div className="text-center mb-12">

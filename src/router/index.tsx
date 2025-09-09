@@ -33,6 +33,7 @@ import PlacementTestGrade from "../pages/admin/PlacementTestGrade";
 import PlacementTests from "../pages/user/PlacementTests";
 import PlacementTestQuestions from "../pages/user/PlacementTestQuestions";
 import AdminRegister from "../pages/admin/AdminRegister";
+import StudentProfileData from "../pages/admin/StudentProfileData";
 
 const router = createBrowserRouter([
     {
@@ -59,6 +60,7 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <AdminDashboard /> },
             { path: "dashboard", element: <AdminDashboard /> },
+            {path:"student-profile/:id", element:<StudentProfileData />},
             { path: "levels", element: <Levels /> },
             { path: "news", element: <News /> },
             { path: "add-student", element: <AddStudent /> },

@@ -328,7 +328,7 @@ const ExamGrade = () => {
                               result.student_level
                             );
                             return (
-                            <div className="flex items-center gap-2"> 
+                            <div className="flex items-center gap-2 text-[10px]"> 
                              Result:
                               <p
                                 className={`text-right text-md  font-medium ${className}`}

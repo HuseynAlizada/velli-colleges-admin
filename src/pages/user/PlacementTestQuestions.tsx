@@ -798,7 +798,7 @@ export default function PlacementTestQuestions() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br w-full">
+        <div className="min-h-screen bg-gradient-to-br w-full select-none">
             <ToastContainer autoClose={3000} />
             <div className="question-header mt-12 relative">
                 <div className="text-center mb-12">

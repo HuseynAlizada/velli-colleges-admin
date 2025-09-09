@@ -53,7 +53,7 @@ export default function PracticeExam() {
   const categories = ['Listening', 'Reading', 'Grammar'];
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
+    <div className="min-h-screen select-none w-full bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
       <div className="flex  mb-8 space-x-4">
         {categories.map(category => (
           <button

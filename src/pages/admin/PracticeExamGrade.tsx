@@ -81,7 +81,6 @@ const PracticeExamGrade = () => {
     // No cleanup needed since this effect only runs once on mount
   }, []) 
 
- 
 
   const getScoreColor = (score: number) => {
     if (score >= 90) return "from-green-400 to-emerald-500"
