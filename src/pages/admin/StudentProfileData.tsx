@@ -4,7 +4,7 @@ import { Award, BookOpen, Loader2 } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { supabase } from "../../utils/supabase-client";
 import { ExamResult, examResults, StudentData } from "../../types";
-
+import './style.css'
 const StudentProfileData: React.FC = () => {
   const [student, setStudent] = useState<StudentData | undefined>(undefined);
   const [results, setResults] = useState<ExamResult[] | null>(null);
@@ -137,6 +137,8 @@ const StudentProfileData: React.FC = () => {
   };
 
   const getScoreLabel = (score: number, level: string) => {
+
+    console.log(level, "level", score);
     const lvl = level.toUpperCase();
 
     if (["A1", "A2", "B1"].includes(lvl)) {
@@ -368,17 +370,30 @@ const StudentProfileData: React.FC = () => {
                         </p>
 
                         {(() => {
-                          const { text, className } = getScoreLabel(
-                            result.student_score,
-                            result.student_level
-                          );
+                          if (
+                            typeof result.student_score === "number" &&
+                            typeof result.student_level === "string"
+                          ) {
+                            const { text, className } = getScoreLabel(
+                              result.student_score,
+                              result.student_level
+                            );
+                            return (
+                              <div className="flex items-center gap-2 text-sm">
+                                Result:
+                                <p
+                                  className={`text-right text-md  font-medium ${className}`}
+                                >
+                                  {text}
+                                </p>
+                              </div>
+                            );
+                          }
                           return (
                             <div className="flex items-center gap-2 text-sm">
                               Result:
-                              <p
-                                className={`text-right text-md  font-medium ${className}`}
-                              >
-                                {text}
+                              <p className="text-right text-md font-medium label-na">
+                                N/A
                               </p>
                             </div>
                           );
