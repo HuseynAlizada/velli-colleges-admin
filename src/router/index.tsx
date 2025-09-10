@@ -71,7 +71,7 @@ const router = createBrowserRouter([
             { path: "exam-details/:id", element: <ExamDetails /> },
             { path: "exam-requests", element: <ExamRequests /> },
             { path: "manage-exam", element: <ManageExam /> },
-            { path: "exam-grade", element: <ExamGrade /> },
+            // { path: "exam-grade", element: <ExamGrade /> },
             //end  level exam
 
             // start practice exam 

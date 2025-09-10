@@ -98,20 +98,20 @@ const adminMenu: AdminMenu[] = [
         link: "news"
 
     },
-    {
-        id: 6,
-        icon: <GradeIcon />,
-        title: "Exam Grade",
-        link: "exam-grade"
+    // {
+    //     id: 6,
+    //     icon: <GradeIcon />,
+    //     title: "Exam Grade",
+    //     link: "exam-grade"
 
-    },
-    {
-        id: 13,
-        icon: <GradeIcon />,
-        title: "Practice Exam Grade",
-        link: "practice-exam-grade"
+    // },
+    // {
+    //     id: 13,
+    //     icon: <GradeIcon />,
+    //     title: "Practice Exam Grade",
+    //     link: "practice-exam-grade"
 
-    },
+    // },
     {
         id: 14,
         icon: <GradeIcon />,
