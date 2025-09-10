@@ -18,14 +18,14 @@ import LockedExams from "../pages/user/LockedExams";
 import ExamRequests from "../pages/admin/ExamRequests";
 import ApprovedExams from "../pages/user/ApprovedExams";
 import PracticeExam from "../pages/user/PracticeExam";
-import ExamGrade from "../pages/admin/ExamGrade";
+// import ExamGrade from "../pages/admin/ExamGrade";
 import StudentGrade from "../pages/user/StudentGrade";
 import StudentsTargets from "../pages/admin/StudentsTargets";
 import ImportPracticeExam from "../pages/admin/ImportPracticeExam";
 import ManagePracticeExam from "../pages/admin/ManagePracticeExam";
 import PracticeExamQuestions from "../pages/user/PracticeExamQuestions";
 import PracticeExamDetails from "../pages/admin/PracticeExamDetails";
-import PracticeExamGrade from "../pages/admin/PracticeExamGrade";
+// import PracticeExamGrade from "../pages/admin/PracticeExamGrade";
 import ManagePlacementTest from "../pages/admin/ManagePlacementTest";
 import ImportPlacementTest from "../pages/admin/ImportPlacementTest";
 import PlacementTestDetails from "../pages/admin/PlacementTestDetails";
@@ -79,7 +79,7 @@ const router = createBrowserRouter([
             { path: "import-practice-exam/:id", element: <ImportPracticeExam /> },
             { path: "manage-practice-exam", element: <ManagePracticeExam /> },
             { path: "practice-exam-details/:id", element: <PracticeExamDetails /> },
-            { path: "practice-exam-grade", element: <PracticeExamGrade /> },
+            // { path: "practice-exam-grade", element: <PracticeExamGrade /> },
             // end practice exam
 
             // start placement test
