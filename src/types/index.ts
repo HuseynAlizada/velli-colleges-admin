@@ -212,7 +212,7 @@ export type examResults = {
     listening_count?: number,
     grammar_count?: number,
     vocabulary_count?: number,
-
+total_questions?: number
 }
 
 

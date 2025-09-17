@@ -161,11 +161,11 @@ export default function AdminDashboard() {
                   >
                     Delete
                   </button>
-                    <button
+                    <button 
                     className="flex-1 cursor-pointer px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg transition-all hover:scale-110"
                     onClick={() => navigate(`/admin/student-profile/${student.id}`)}
                   >
-                    Ətraflı
+                    Info
                   </button>
                   
                 </div>

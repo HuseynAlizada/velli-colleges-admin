@@ -4,7 +4,7 @@ import { Award, BookOpen, Loader2 } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { supabase } from "../../utils/supabase-client";
 import { ExamResult, examResults, StudentData } from "../../types";
-import './style.css'
+import "./style.css";
 const StudentProfileData: React.FC = () => {
   const [student, setStudent] = useState<StudentData | undefined>(undefined);
   const [results, setResults] = useState<ExamResult[] | null>(null);
@@ -17,6 +17,10 @@ const StudentProfileData: React.FC = () => {
 
   const { id: studentId } = useParams();
   console.log(studentId, "params data");
+
+  const countTrueQuestion = (totalQuestions: number, score: number | null) => {
+    return (score ? (score * totalQuestions) / 100 : 0).toFixed(0);
+  };
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -116,7 +120,7 @@ const StudentProfileData: React.FC = () => {
         );
 
         setPracticeResults(uniqueData);
-        console.log(data);
+        console.log(uniqueData, "uniqueData");
       } catch (err) {
         console.error("Error fetching exam results:", err);
       } finally {
@@ -137,7 +141,6 @@ const StudentProfileData: React.FC = () => {
   };
 
   const getScoreLabel = (score: number, level: string) => {
-
     console.log(level, "level", score);
     const lvl = level.toUpperCase();
 
@@ -470,6 +473,15 @@ const StudentProfileData: React.FC = () => {
                           <span className="font-bold text-gray-900">
                             {result.score?.toFixed(2)}%
                           </span>
+                          <div className="flex">
+                            ({result.total_questions}/
+                            <div>
+                              {countTrueQuestion(
+                                result?.total_questions ?? 0,
+                                result.score ?? 0
+                              )}
+                            </div>)
+                          </div>
                         </div>
                       </div>
 
