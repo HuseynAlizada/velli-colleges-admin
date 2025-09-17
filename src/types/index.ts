@@ -164,21 +164,21 @@ export type TakenExams = {
 }
 
 export interface ExamResult {
-  id: number
-  student_id: number
-  student_name: string
-  student_level: string
-  exam_name: string
-  student_score: number
-  grammar_count: number
-  grammar_score: number
-  vocabulary_count: number
-  vocabulary_score: number
-  listening_count: number
-  listening_score: number
-  reading_count: number
-  reading_score: number
-  created_at: string // ISO timestamp
+    id: number
+    student_id: number
+    student_name: string
+    student_level: string
+    exam_name: string
+    student_score: number
+    grammar_count: number
+    grammar_score: number
+    vocabulary_count: number
+    vocabulary_score: number
+    listening_count: number
+    listening_score: number
+    reading_count: number
+    reading_score: number
+    created_at: string // ISO timestamp
 }
 
 
@@ -212,7 +212,8 @@ export type examResults = {
     listening_count?: number,
     grammar_count?: number,
     vocabulary_count?: number,
-total_questions?: number
+    total_questions?: number,
+    unit?: string
 }
 
 

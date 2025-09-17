@@ -64,10 +64,11 @@ const PracticeExamCard = ({
   });
 
 
-  const handleStartClick = () => {
+  const handleStartClick = (unit:number) => {
     setIsModalOpen(true);
     setInputPassword("");
     setError("");
+    localStorage.setItem('practiceExamUnit', unit.toString());
   };
 
   const handleSubmitPassword = () => {
@@ -135,7 +136,7 @@ const PracticeExamCard = ({
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              onClick={handleStartClick}
+              onClick={() => handleStartClick(index + 1)}
               className={`mt-auto w-full py-3 px-4 rounded-xl text-white font-medium flex items-center justify-center gap-2 ${colors.button} transition-all duration-300`}
             >
               <BookOpen className="w-5 h-5" />

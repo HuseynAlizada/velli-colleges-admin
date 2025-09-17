@@ -170,13 +170,16 @@ export default function PracticeExamQuestions() {
             const studentLevel = studentData?.level || "Unknown";
             const studentName = studentData?.name || "Unknown";
 
+            const examUnit = localStorage.getItem('practiceExamUnit');
+
             const { error: resultError } = await supabase.from("student_practice_results").insert({
                 student_id: userId,
                 score: correctCount,
                 student_level: studentLevel,
                 exam_name: exam?.title || "Unnamed Exam",
                 name: studentName,
-                total_questions: totalQuestions, // Add total_questions to the database
+                total_questions: totalQuestions,
+                unit: examUnit // Add total_questions to the database
             });
 
             if (resultError) throw new Error("Failed to save exam results: " + resultError.message);

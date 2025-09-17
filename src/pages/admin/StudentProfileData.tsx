@@ -452,8 +452,8 @@ const StudentProfileData: React.FC = () => {
                         <h3 className="text-lg font-semibold text-gray-900 line-clamp-1">
                           {result.name}
                         </h3>
-                        <p className="text-gray-500 text-sm">
-                          Exam Name: {result.exam_name}
+                        <p className="text-gray-700 font-bold text-sm">
+                          Exam Name: {result.exam_name} {result.unit && `- Unit ${result.unit}`}
                         </p>
                       </div>
                       <div className="flex items-center gap-1 px-2.5 py-1 bg-gray-100 rounded-full">
@@ -463,7 +463,6 @@ const StudentProfileData: React.FC = () => {
                         </span>
                       </div>
                     </div>
-
                     {/* Score Display */}
                     <div className="mb-4">
                       <div className="flex justify-between items-center mb-2">
