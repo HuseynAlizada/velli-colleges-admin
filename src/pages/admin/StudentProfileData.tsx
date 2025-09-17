@@ -468,19 +468,22 @@ const StudentProfileData: React.FC = () => {
                     <div className="mb-4">
                       <div className="flex justify-between items-center mb-2">
                         <span className="text-sm text-gray-600">Score</span>
-                        <div className="flex items-center gap-1">
-                          <Award className="w-4 h-4 text-indigo-500" />
-                          <span className="font-bold text-gray-900">
-                            {result.score?.toFixed(2)}%
-                          </span>
-                          <div className="flex">
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center">
+                            <Award className="w-4 h-4 text-indigo-500" />
+                            <span className="font-bold text-gray-900">
+                              {result.score?.toFixed(2)}%
+                            </span>
+                          </div>
+                          <div className="flex font-bold text-gray-900">
                             ({result.total_questions}/
                             <div>
                               {countTrueQuestion(
                                 result?.total_questions ?? 0,
                                 result.score ?? 0
                               )}
-                            </div>)
+                            </div>
+                            )
                           </div>
                         </div>
                       </div>
