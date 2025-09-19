@@ -141,7 +141,6 @@ const StudentProfileData: React.FC = () => {
   };
 
   const getScoreLabel = (score: number, level: string) => {
-    console.log(level, "level", score);
     const lvl = level.toUpperCase();
 
     if (["A1", "A2", "B1"].includes(lvl)) {

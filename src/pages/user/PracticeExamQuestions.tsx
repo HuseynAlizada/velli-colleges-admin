@@ -263,6 +263,14 @@ export default function PracticeExamQuestions() {
         );
     }
 
+
+
+    const getScoreLabel=(totalScore:number, totalQuestions: number) => {
+
+        return (totalScore/totalQuestions);
+
+    }
+
     const totalQuestions = questions.length; // Define totalQuestions for use in UI
 
     return (
@@ -430,7 +438,15 @@ export default function PracticeExamQuestions() {
                             <div className="text-center">
                                 <h3 className="text-xl font-semibold text-gray-900">
                                     Total Score: {totalScore} / {totalQuestions}
+
+                                    {getScoreLabel(totalScore || 0, totalQuestions)}
                                 </h3>
+                                {/* {examScore !== null && (
+                                    <h3 className={getScoreLabel(examScore, studentLevelData).className}>
+                                        {getScoreLabel(examScore, studentLevelData).text}
+                                    </h3>
+                                )} */}
+                {/* )} */}
                             </div>
                         </div>
                         <div className="mt-8 flex justify-end gap-4">
