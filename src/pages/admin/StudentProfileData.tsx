@@ -486,7 +486,7 @@ const StudentProfileData: React.FC = () => {
                         <div className="flex items-center gap-2">
                           <div className="flex items-center">
                             <Award className="w-4 h-4 text-indigo-500" />
-                            <span className="font-bold text-gray-900">
+                            <span className="font-bold mr-1 text-gray-900">
                               {countTrueQuestion(
                                 result?.total_questions ?? 0,
                                 result.score ?? 0
@@ -494,14 +494,13 @@ const StudentProfileData: React.FC = () => {
                             </span>
                           </div>
                           <div className="flex font-bold text-gray-900">
-                            ({result.total_questions}/ {result.score}
+                            {result.score} / {result.total_questions}
                             <div>
                               {/* {countTrueQuestion(
                                 result?.total_questions ?? 0,
                                 result.score ?? 0
                               )} */}
                             </div>
-                            )
                           </div>
                         </div>
                       </div>
