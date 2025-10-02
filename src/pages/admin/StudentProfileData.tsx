@@ -132,6 +132,21 @@ const StudentProfileData: React.FC = () => {
     // No cleanup needed since this effect only runs once on mount
   }, []);
 
+  
+
+   const getScoreColorPractice = (totalQuestions: number, score: number | null) => {
+    const scorePercentage = +(
+      score ? (score * 100) / totalQuestions : 0
+    ).toFixed(0);
+
+
+
+    if (scorePercentage >= 90) return "from-green-400 to-emerald-500";
+    if (scorePercentage >= 75) return "from-blue-400 to-indigo-500";
+    if (scorePercentage >= 60) return "from-yellow-400 to-amber-500";
+    return "from-red-400 to-rose-500";
+  };
+
   const getScoreColor = (score: number) => {
     if (score >= 90) return "from-green-400 to-emerald-500";
     if (score >= 75) return "from-blue-400 to-indigo-500";
@@ -164,10 +179,13 @@ const StudentProfileData: React.FC = () => {
     return { text: "N/A", className: "label-na" };
   };
 
-  const getScoreLabel2 = (score: number) => {
-    if (score >= 90) return "Excellent";
-    if (score >= 75) return "Good";
-    if (score >= 60) return "Satisfactory";
+  const getScoreLabel2 = (totalQuestions: number, score: number) => {
+    const scorePercentage = +(
+      score ? (score * 100) / totalQuestions : 0
+    ).toFixed(0);
+    if (scorePercentage >= 90) return "Excellent";
+    if (scorePercentage >= 75) return "Good";
+    if (scorePercentage >= 60) return "Satisfactory";
     return "Needs Improvement";
   };
 
@@ -491,8 +509,9 @@ const StudentProfileData: React.FC = () => {
                       {/* Progress Bar */}
                       <div className="h-3 w-full bg-gray-100 rounded-full overflow-hidden">
                         <div
-                          className={`h-full rounded-full bg-gradient-to-r ${getScoreColor(
-                            result.student_score
+                          className={`h-full rounded-full bg-gradient-to-r ${getScoreColorPractice(
+                             result?.total_questions ?? 0,
+                                result.score ?? 0
                           )}`}
                           style={{ width: `${countTrueQuestion(result?.total_questions ?? 0, result.score ?? 0)}%` }}
                         />
@@ -500,7 +519,8 @@ const StudentProfileData: React.FC = () => {
 
                       {/* Score Label */}
                       <p className="text-right text-xs mt-1 font-medium text-gray-600">
-                        {getScoreLabel2(result.score ?? 0)}
+                        {getScoreLabel2(   result?.total_questions ?? 0,
+                                result.score ?? 0)}
                       </p>
                       <p className="text-left text-md mt-1 font-medium text-gray-600">
                         Date: {String(result?.created_at).split("T")[0]}
