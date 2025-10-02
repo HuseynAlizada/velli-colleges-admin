@@ -34,71 +34,80 @@ import PlacementTests from "../pages/user/PlacementTests";
 import PlacementTestQuestions from "../pages/user/PlacementTestQuestions";
 import AdminRegister from "../pages/admin/AdminRegister";
 import StudentProfileData from "../pages/admin/StudentProfileData";
+import ImportSatExam from "../pages/admin/ImportSatExam";
+import SatExamDetails from "../pages/admin/SatExamDetails";
+import ManageSatExam from "../pages/admin/ManageSatExam";
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <StudentLayout />,
-        children: [
-            { index: true, element: <Home /> },
-            { path: "news", element: <StudentNews /> },
-            { path: "locked-exams", element: <LockedExams /> },
-            { path: "approved-exams", element: <ApprovedExams /> },
-            { path: "approved-exams/:id", element: <ExamQuestions /> },
-            { path: "practice-exam/:id", element: <PracticeExamQuestions /> },
-            { path: "practice-exam", element: <PracticeExam /> },
-            { path: "placement-tests", element: <PlacementTests /> },
-            { path: "placement-tests/:id", element: <PlacementTestQuestions /> },
-            { path: "news", element: <StudentNews /> },
-            { path: "exam-grade", element: <StudentGrade /> },
-            { path: "student-profile", element: <StudentProfile /> },
-        ],
-    },
-    {
-        path: "/admin",
-        element: <RequireAuth />,
-        children: [
-            { index: true, element: <AdminDashboard /> },
-            { path: "dashboard", element: <AdminDashboard /> },
-            {path:"student-profile/:id", element:<StudentProfileData />},
-            { path: "levels", element: <Levels /> },
-            { path: "news", element: <News /> },
-            { path: "add-student", element: <AddStudent /> },
-            { path: "edit-student/:id", element: <AddStudent /> },
-            //start level exam
-            { path: "import-exam", element: <ImportExam /> },
-            { path: "import-exam/:id", element: <ImportExam /> },
-            { path: "exam-details/:id", element: <ExamDetails /> },
-            { path: "exam-requests", element: <ExamRequests /> },
-            { path: "manage-exam", element: <ManageExam /> },
-            // { path: "exam-grade", element: <ExamGrade /> },
-            //end  level exam
+  {
+    path: "/",
+    element: <StudentLayout />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "news", element: <StudentNews /> },
+      { path: "locked-exams", element: <LockedExams /> },
+      { path: "approved-exams", element: <ApprovedExams /> },
+      { path: "approved-exams/:id", element: <ExamQuestions /> },
+      { path: "practice-exam/:id", element: <PracticeExamQuestions /> },
+      { path: "practice-exam", element: <PracticeExam /> },
+      { path: "placement-tests", element: <PlacementTests /> },
+      { path: "placement-tests/:id", element: <PlacementTestQuestions /> },
+      { path: "news", element: <StudentNews /> },
+      { path: "exam-grade", element: <StudentGrade /> },
+      { path: "student-profile", element: <StudentProfile /> },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <RequireAuth />,
+    children: [
+      { index: true, element: <AdminDashboard /> },
+      { path: "dashboard", element: <AdminDashboard /> },
+      { path: "student-profile/:id", element: <StudentProfileData /> },
+      { path: "levels", element: <Levels /> },
+      { path: "news", element: <News /> },
+      { path: "add-student", element: <AddStudent /> },
+      { path: "edit-student/:id", element: <AddStudent /> },
+      //start level exam
+      { path: "import-exam", element: <ImportExam /> },
+      { path: "import-exam/:id", element: <ImportExam /> },
+      { path: "exam-details/:id", element: <ExamDetails /> },
+      { path: "exam-requests", element: <ExamRequests /> },
+      { path: "manage-exam", element: <ManageExam /> },
+      // { path: "exam-grade", element: <ExamGrade /> },
+      //end  level exam
 
-            // start practice exam 
-            { path: "import-practice-exam", element: <ImportPracticeExam /> },
-            { path: "import-practice-exam/:id", element: <ImportPracticeExam /> },
-            { path: "manage-practice-exam", element: <ManagePracticeExam /> },
-            { path: "practice-exam-details/:id", element: <PracticeExamDetails /> },
-            // { path: "practice-exam-grade", element: <PracticeExamGrade /> },
-            // end practice exam
+      //start sat exam
+      { path: "import-sat-exam", element: <ImportSatExam /> },
+      { path: "import-sat-exam/:id", element: <ImportSatExam /> },
+      { path: "sat-exam-details/:id", element: <SatExamDetails /> },
+    //   { path: "sat-exam-requests", element: <SatExamRequests /> },
+      { path: "manage-sat-exam", element: <ManageSatExam /> },
+      //end sat exam
 
-            // start placement test
-            { path: "import-placement-test", element: <ImportPlacementTest /> },
-            { path: "import-placement-test/:id", element: <ImportPlacementTest /> },
-            { path: "manage-placement-test", element: <ManagePlacementTest /> },
-            { path: "placement-test-details/:id", element: <PlacementTestDetails /> },
-            { path: "placement-test-grade", element: <PlacementTestGrade /> },
-            // end placement test
+      // start practice exam
+      { path: "import-practice-exam", element: <ImportPracticeExam /> },
+      { path: "import-practice-exam/:id", element: <ImportPracticeExam /> },
+      { path: "manage-practice-exam", element: <ManagePracticeExam /> },
+      { path: "practice-exam-details/:id", element: <PracticeExamDetails /> },
+      // { path: "practice-exam-grade", element: <PracticeExamGrade /> },
+      // end practice exam
 
-            { path: "students-targets", element: <StudentsTargets /> },
-        ],
-    },
-    { path: 'login', element: <UserLogin /> },
+      // start placement test
+      { path: "import-placement-test", element: <ImportPlacementTest /> },
+      { path: "import-placement-test/:id", element: <ImportPlacementTest /> },
+      { path: "manage-placement-test", element: <ManagePlacementTest /> },
+      { path: "placement-test-details/:id", element: <PlacementTestDetails /> },
+      { path: "placement-test-grade", element: <PlacementTestGrade /> },
+      // end placement test
 
-    { path: "/admin/login", element: <AdminLogin /> },
-    { path: "/admin/register", element: <AdminRegister /> },
+      { path: "students-targets", element: <StudentsTargets /> },
+    ],
+  },
+  { path: "login", element: <UserLogin /> },
 
-
+  { path: "/admin/login", element: <AdminLogin /> },
+  { path: "/admin/register", element: <AdminRegister /> },
 ]);
 
 export default router;

@@ -19,7 +19,7 @@ const StudentProfileData: React.FC = () => {
   console.log(studentId, "params data");
 
   const countTrueQuestion = (totalQuestions: number, score: number | null) => {
-    return (score ? (score * totalQuestions) / 100 : 0).toFixed(0);
+    return (score ? (score * 100) / totalQuestions : 0).toFixed(0);
   };
 
   useEffect(() => {
@@ -55,7 +55,6 @@ const StudentProfileData: React.FC = () => {
           .from("student_results")
           .select("*")
           .eq("student_id", studentId);
-        console.log(data, "result data");
 
         if (error) throw error;
 
@@ -77,7 +76,7 @@ const StudentProfileData: React.FC = () => {
           []
         );
 
-        setResults(data);
+        setResults(data.reverse());
 
         if (uniqueData.length > 0) {
           setResultScore(
@@ -117,7 +116,7 @@ const StudentProfileData: React.FC = () => {
             return acc;
           },
           []
-        );
+        ).reverse();
 
         setPracticeResults(uniqueData);
         console.log(uniqueData, "uniqueData");
@@ -470,16 +469,19 @@ const StudentProfileData: React.FC = () => {
                           <div className="flex items-center">
                             <Award className="w-4 h-4 text-indigo-500" />
                             <span className="font-bold text-gray-900">
-                              {result.score?.toFixed(2)}%
-                            </span>
-                          </div>
-                          <div className="flex font-bold text-gray-900">
-                            ({result.total_questions}/
-                            <div>
                               {countTrueQuestion(
                                 result?.total_questions ?? 0,
                                 result.score ?? 0
-                              )}
+                              )}%
+                            </span>
+                          </div>
+                          <div className="flex font-bold text-gray-900">
+                            ({result.total_questions}/ {result.score}
+                            <div>
+                              {/* {countTrueQuestion(
+                                result?.total_questions ?? 0,
+                                result.score ?? 0
+                              )} */}
                             </div>
                             )
                           </div>
@@ -492,7 +494,7 @@ const StudentProfileData: React.FC = () => {
                           className={`h-full rounded-full bg-gradient-to-r ${getScoreColor(
                             result.student_score
                           )}`}
-                          style={{ width: `${result.score}%` }}
+                          style={{ width: `${countTrueQuestion(result?.total_questions ?? 0, result.score ?? 0)}%` }}
                         />
                       </div>
 

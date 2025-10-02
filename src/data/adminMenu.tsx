@@ -45,6 +45,24 @@ const adminMenu: AdminMenu[] = [
             }
         ]
     },
+     {
+        id: 24,
+        icon: <LibraryBooksIcon />,
+        title: "SAT Exams",
+        subMenu: [
+            {
+                id: 27,
+                title: "Manage SAT Exam",
+                link: "manage-sat-exam"
+            },
+            {
+                id: 28,
+                title: "Import SAT Exam File",
+                link: "import-sat-exam"
+
+            }
+        ]
+    },
     {
         id: 12,
         icon: <LibraryBooksIcon />,
