@@ -103,6 +103,16 @@ const StudentSidebar = () => {
                         </div>
                     </Link>
 
+                     <Link to="/sat-placement-tests" onClick={() => handleMenuClick(12)}>
+                        <div
+                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${12 === activeMenu ? "bg-blue-600 text-white" : ""
+                                }`}
+                        >
+                            <LibraryBooksIcon />
+                            <span>SAT Placement Test</span>
+                        </div>
+                    </Link>
+
                     <Link to="/exam-grade" onClick={() => handleMenuClick(5)}>
                         <div
                             className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${5 === activeMenu ? "bg-blue-600 text-white" : ""

@@ -144,7 +144,9 @@ export type LevelColors = {
 
 export interface RequestedExams extends Exam {
     locked: boolean,
-    student_id: number
+    student_id: number,
+    sended?: boolean,
+    exam_type?: string
 }
 
 // End RequestedExams

@@ -12,7 +12,7 @@ interface ExamData {
     selectedFile: File | string | null;
     passScore: string;
     duration: string;
-    // examType?: string; // Uncomment if needed
+    examType?: string; // Uncomment if needed
 }
 
 export default function ImportSatExam() {
@@ -24,23 +24,19 @@ export default function ImportSatExam() {
     console.log(editedPathName);
 
     const [examData, setExamData] = useState<ExamData>({
-        selectedExam: "B1 U1",
+        selectedExam: "SAT Placement Test Medium",
         selectedFile: null,
         passScore: "",
         duration: "",
-        // examType: "",
+        examType: "",
     });
     const [uploading, setUploading] = useState(false);
     const [editExam] = useState<string | null>(id || null);
 
-    // const levels = [
-    //     { id: "a1", name: "A1" },
-    //     { id: "a2", name: "A2" },
-    //     { id: "b1", name: "B1" },
-    //     { id: "b1+", name: "B1+" },
-    //     { id: "b2", name: "B2" },
-    //     { id: "c1", name: "C1" },
-    // ];
+    const examTypes = [
+        { id: "verbal", name: "Verbal" },
+        { id: "math", name: "Math" },
+    ];
 
     useEffect(() => {
         const fetchExamData = async () => {
@@ -58,7 +54,7 @@ export default function ImportSatExam() {
                     selectedFile: data.file_url,
                     passScore: data.pass_score.toString(), // Convert if number
                     duration: data.duration.toString(), // Convert if number
-                    // examType: data.exam_type,
+                    examType: data.exam_type,
                 });
             } catch (err) {
                 console.error(err);
@@ -84,7 +80,7 @@ export default function ImportSatExam() {
             selectedFile: null,
             passScore: "",
             duration: "",
-            // examType: "",
+            examType: "",
         });
     };
 
@@ -129,7 +125,7 @@ export default function ImportSatExam() {
                     file_url: fileUrl,
                     pass_score: parseInt(examData.passScore),
                     duration: parseInt(examData.duration),
-                    // exam_type: examData.examType,
+                    exam_type: examData.examType,
                 }])
                 .eq("id", editExam)
             : supabase.from("sat_exams").insert([{
@@ -137,7 +133,7 @@ export default function ImportSatExam() {
                 file_url: fileUrl,
                 pass_score: parseInt(examData.passScore),
                 duration: parseInt(examData.duration),
-                // exam_type: examData.examType,
+                exam_type: examData.examType,
             }]);
 
         const { error: dbError } = await operation;
@@ -253,7 +249,7 @@ export default function ImportSatExam() {
                             </select>
                         </div> */}
                         {/* Uncomment if you want examType */}
-                        {/* <div className="space-y-2">
+                        <div className="space-y-2">
                             <label className="block text-sm font-medium text-gray-700">
                                 Exam Type
                             </label>
@@ -263,14 +259,13 @@ export default function ImportSatExam() {
                                 onChange={handleChange}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
                             >
-                                <option value="">Select Exam Type</option>
                                 {examTypes.map((type, index) => (
-                                    <option key={index} value={type}>
-                                        {type}
+                                    <option key={index} value={type.id}>
+                                        {type.name}
                                     </option>
                                 ))}
                             </select>
-                        </div> */}
+                        </div>
                         <div className="flex justify-end gap-3 pt-4">
                             <button
                                 type="button"

@@ -16,7 +16,6 @@ const StudentProfileData: React.FC = () => {
   const [studentLevel, setStudentLevel] = useState<string | null>("");
 
   const { id: studentId } = useParams();
-  console.log(studentId, "params data");
 
   const countTrueQuestion = (totalQuestions: number, score: number | null) => {
     return (score ? (score * 100) / totalQuestions : 0).toFixed(0);
@@ -34,7 +33,6 @@ const StudentProfileData: React.FC = () => {
       } else {
         setStudent(data);
         setStudentLevel(data.level);
-        console.log(data, "user data");
       }
     };
 
@@ -49,7 +47,6 @@ const StudentProfileData: React.FC = () => {
           return;
         }
 
-        console.log(studentId, "id");
 
         const { data, error } = await supabase
           .from("student_results")
@@ -63,7 +60,6 @@ const StudentProfileData: React.FC = () => {
           (result: ExamResult) => result.student_level === studentLevel
         );
 
-        console.log(filteredData, "filtered data");
 
         // ✅ Ensure uniqueness
         const uniqueData = filteredData.reduce(
@@ -98,7 +94,6 @@ const StudentProfileData: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("test");
 
       setIsLoading(true);
       try {
@@ -119,7 +114,6 @@ const StudentProfileData: React.FC = () => {
         ).reverse();
 
         setPracticeResults(uniqueData);
-        console.log(uniqueData, "uniqueData");
       } catch (err) {
         console.error("Error fetching exam results:", err);
       } finally {

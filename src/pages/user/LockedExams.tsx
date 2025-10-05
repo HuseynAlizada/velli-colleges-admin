@@ -18,7 +18,6 @@ export default function LockedExams() {
                     .eq('id', userId)
                     .single()
                 if (error) throw error
-                console.log(data, 'data test mock')
                 setUserData(data)
             }
             catch (err) {
@@ -35,12 +34,8 @@ export default function LockedExams() {
             const { data, error } = await supabase.from('exams').select("*")
             if (error) throw error
 
-            console.log(userData?.level.toUpperCase(), 'user')
             const filteredData = data.filter(item => item.level == userData?.level.toUpperCase())
             setExams(filteredData)
-            console.log(filteredData);
-            
-            // console.log(userData, 'data test')
         }
         catch (err) {
             console.log(err)

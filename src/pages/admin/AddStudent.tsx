@@ -1,6 +1,3 @@
-
-
-
 import type React from "react";
 import { useEffect, useState } from "react";
 import { PhoneInput } from "../../components/admin/PhoneInput";
@@ -17,12 +14,14 @@ const levels = [
   { id: "b1+", name: "B1+" },
   { id: "b2", name: "B2" },
   { id: "c1", name: "C1" },
+  { id: "sat-placement-test-medium", name: "SAT Placement Test Medium" },
+  { id: "sat-placement-test-hard", name: "SAT Placement Test Hard" },
 ];
 
 export default function AddStudent() {
   const { id } = useParams();
   const [edit] = useState<string | null>(id ? id : null);
-  const [submitting, setSubmitting] = useState(false)
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -70,8 +69,6 @@ export default function AddStudent() {
           throw error;
         }
 
-        
-
         setFormData({
           name: data.name || "",
           email: data.email || "",
@@ -96,8 +93,13 @@ export default function AddStudent() {
     setSubmitting(true);
 
     const phoneRegex = /^\+994 \d{3} \d{3} \d{2} \d{2}$/;
-    if (!phoneRegex.test(formData.phone) || !phoneRegex.test(formData.parentPhone)) {
-      toast.error("Please enter valid phone numbers in the format: +994 050 562 53 06");
+    if (
+      !phoneRegex.test(formData.phone) ||
+      !phoneRegex.test(formData.parentPhone)
+    ) {
+      toast.error(
+        "Please enter valid phone numbers in the format: +994 050 562 53 06"
+      );
       setSubmitting(false);
       return;
     }
@@ -116,7 +118,9 @@ export default function AddStudent() {
     }
 
     if (!formData.studentSchool || !formData.studentPurpose) {
-      toast.error("Please fill in all required fields (Student School and Purpose)");
+      toast.error(
+        "Please fill in all required fields (Student School and Purpose)"
+      );
       setSubmitting(false);
       return;
     }
@@ -134,41 +138,43 @@ export default function AddStudent() {
           throw new Error("Failed to upload image");
         }
 
-        imageUrl = supabase.storage.from("student-images").getPublicUrl(fileName).data.publicUrl;
+        imageUrl = supabase.storage
+          .from("student-images")
+          .getPublicUrl(fileName).data.publicUrl;
       }
 
       const action = edit ? "update" : "insert";
       const operation = edit
         ? supabase
-          .from("students")
-          .update({
-            name: formData.name,
-            email: formData.email,
-            level: formData.level,
-            phone: formData.phone,
-            parent_phone: formData.parentPhone,
-            parent_name: formData.parentName,
-            password: formData.password,
-            image_url: imageUrl,
-            student_school: formData.studentSchool,
-            student_purpose: formData.studentPurpose,
-          })
-          .eq("id", edit)
+            .from("students")
+            .update({
+              name: formData.name,
+              email: formData.email,
+              level: formData.level,
+              phone: formData.phone,
+              parent_phone: formData.parentPhone,
+              parent_name: formData.parentName,
+              password: formData.password,
+              image_url: imageUrl,
+              student_school: formData.studentSchool,
+              student_purpose: formData.studentPurpose,
+            })
+            .eq("id", edit)
         : supabase
-          .from("students")
-          .insert({
-            name: formData.name,
-            email: formData.email,
-            level: formData.level,
-            phone: formData.phone,
-            parent_phone: formData.parentPhone,
-            parent_name: formData.parentName,
-            password: formData.password,
-            image_url: imageUrl,
-            student_school: formData.studentSchool,
-            student_purpose: formData.studentPurpose,
-          })
-          .select();
+            .from("students")
+            .insert({
+              name: formData.name,
+              email: formData.email,
+              level: formData.level,
+              phone: formData.phone,
+              parent_phone: formData.parentPhone,
+              parent_name: formData.parentName,
+              password: formData.password,
+              image_url: imageUrl,
+              student_school: formData.studentSchool,
+              student_purpose: formData.studentPurpose,
+            })
+            .select();
 
       const { data, error } = await operation;
 
@@ -203,8 +209,9 @@ export default function AddStudent() {
     }
   };
 
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -229,7 +236,10 @@ export default function AddStudent() {
           {/* Left Column */}
           <div className="space-y-6">
             <div className="space-y-2">
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Name
               </label>
               <input
@@ -245,7 +255,10 @@ export default function AddStudent() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email
               </label>
               <input
@@ -261,7 +274,10 @@ export default function AddStudent() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="studentPurpose" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="studentPurpose"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Student Purpose
               </label>
               <input
@@ -277,7 +293,10 @@ export default function AddStudent() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Phone
               </label>
               <PhoneInput
@@ -290,7 +309,10 @@ export default function AddStudent() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="parentPhone" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="parentPhone"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Parent Phone
               </label>
               <PhoneInput
@@ -306,7 +328,10 @@ export default function AddStudent() {
           {/* Right Column */}
           <div className="space-y-6">
             <div className="space-y-2">
-              <label htmlFor="level" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="level"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Level
               </label>
               <select
@@ -319,7 +344,7 @@ export default function AddStudent() {
               >
                 <option value="">Choose Level</option>
                 {levels.map((level) => (
-                  <option key={level.id} value={level.id}>
+                  <option key={level.id} value={level.name}>
                     {level.name}
                   </option>
                 ))}
@@ -327,7 +352,10 @@ export default function AddStudent() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <PasswordInput
@@ -339,7 +367,10 @@ export default function AddStudent() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="studentSchool" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="studentSchool"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Student School
               </label>
               <input
@@ -355,7 +386,10 @@ export default function AddStudent() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="parentName" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="parentName"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Parent Name
               </label>
               <input
@@ -371,7 +405,10 @@ export default function AddStudent() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="image" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="image"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Student Image
               </label>
               {formData.imageUrl && !formData.image && (
@@ -407,12 +444,18 @@ export default function AddStudent() {
           <button
             disabled={submitting}
             type="submit"
-            className={`px-4 py-2 text-white rounded-md transition-colors ${submitting ? "bg-gray-400 cursor-not-allowed" : "bg-rose-500 hover:bg-rose-600"
-              }`}
+            className={`px-4 py-2 text-white rounded-md transition-colors ${
+              submitting
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-rose-500 hover:bg-rose-600"
+            }`}
           >
-            {submitting ? "Submitting..." : edit ? "Save Changes" : "Add Student"}
+            {submitting
+              ? "Submitting..."
+              : edit
+              ? "Save Changes"
+              : "Add Student"}
           </button>
-
         </div>
       </form>
     </div>

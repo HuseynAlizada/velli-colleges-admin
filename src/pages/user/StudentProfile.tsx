@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { supabase } from "../../utils/supabase-client";
 import { useNavigate } from "react-router-dom";
 
-const levels = ["A1", "A2", "B1", "B1+", "B2", "C1"];
+// const levels = ["A1", "A2", "B1", "B1+", "B2", "C1", "SAT Placement Test hard", "SAT Placement Test medium"];
 
 export default function StudentProfile() {
     const [formData, setFormData] = useState({
@@ -14,7 +14,7 @@ export default function StudentProfile() {
         email: "",
         phone: "",
         parentPhone: "",
-        level: "B1",
+        level: "",
         parentName: "",
         studentSchool: "",
         avatar: "",
@@ -43,13 +43,15 @@ export default function StudentProfile() {
                     email: data.email,
                     phone: data.phone,
                     parentPhone: data.parent_phone,
-                    level: data.level.toUpperCase(),
+                    level: data.level,
                     parentName: data.parent_name,
                     studentSchool: data.student_school,
                     student_purpose: data.student_purpose,
                     avatar: data.image_url,
                     password: data.password,
                 });
+
+
 
                 setAvatar(data.image_url);
             } catch (err) {
@@ -135,6 +137,9 @@ export default function StudentProfile() {
                     password: formData.password,
                 })
                 .eq("id", Number(userId));
+
+                console.log(formData, 'form data submit');
+
 
             if (error) throw error;
             console.log("Profile updated successfully");
@@ -268,20 +273,12 @@ export default function StudentProfile() {
                             {/* Right Column */}
                             <div className="space-y-2">
                                 <label className="block text-sm font-medium text-gray-700">Level</label>
-                                <select
+                                <input
                                     name="level"
                                     disabled
-
                                     value={formData.level}
-                                    onChange={handleInputChange}
                                     className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                                >
-                                    {levels.map((level) => (
-                                        <option key={level} value={level} disabled>
-                                            {level}
-                                        </option>
-                                    ))}
-                                </select>
+                                />
                             </div>
 
                             <div className="space-y-2">

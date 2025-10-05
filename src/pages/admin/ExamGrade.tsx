@@ -64,7 +64,6 @@ const ExamGrade = () => {
         })
     : [];
 
-  console.log(filteredResults, "filteredResults");
 
   useEffect(() => {
     const fetchData = async () => {

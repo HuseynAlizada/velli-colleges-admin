@@ -37,6 +37,8 @@ import StudentProfileData from "../pages/admin/StudentProfileData";
 import ImportSatExam from "../pages/admin/ImportSatExam";
 import SatExamDetails from "../pages/admin/SatExamDetails";
 import ManageSatExam from "../pages/admin/ManageSatExam";
+import SATPlacementTests from "../pages/user/SATPlacementTests";
+import SATPlacementTestQuestions from "../pages/user/SATPlacementTestQuestions";
 
 const router = createBrowserRouter([
   {
@@ -51,7 +53,9 @@ const router = createBrowserRouter([
       { path: "practice-exam/:id", element: <PracticeExamQuestions /> },
       { path: "practice-exam", element: <PracticeExam /> },
       { path: "placement-tests", element: <PlacementTests /> },
+      { path: "sat-placement-tests", element: <SATPlacementTests /> },
       { path: "placement-tests/:id", element: <PlacementTestQuestions /> },
+      { path: "sat-placement-tests/:id", element: <SATPlacementTestQuestions /> },
       { path: "news", element: <StudentNews /> },
       { path: "exam-grade", element: <StudentGrade /> },
       { path: "student-profile", element: <StudentProfile /> },
