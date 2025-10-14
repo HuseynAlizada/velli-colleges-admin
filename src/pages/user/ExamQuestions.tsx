@@ -224,6 +224,7 @@ export default function ExamQuestions() {
           reading_count: sectionTotals["Reading"],
           vocabulary_count: sectionTotals["Vocabulary"],
           grammar_count: sectionTotals["Grammar"],
+          finish_time: timeLeft
         });
 
       if (resultError) {

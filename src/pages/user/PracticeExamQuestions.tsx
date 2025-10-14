@@ -185,6 +185,7 @@ export default function PracticeExamQuestions() {
           name: studentName,
           total_questions: totalQuestions,
           unit: examUnit, // Add total_questions to the database
+          finish_time:timeLeft
         });
 
       if (resultError)

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { supabase } from "../../utils/supabase-client";
-import { Phone, Mail, User, UserCircle, Shield, Search } from 'lucide-react';
+import { Phone, Mail, User, UserCircle, Shield, Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 type Level = "beginner" | "intermediate" | "advanced";
@@ -27,12 +27,20 @@ export default function AdminDashboard() {
   }, []);
 
   const fetchStudents = async () => {
+    const branch = JSON.parse(localStorage.getItem("branch") || '""');
     const { data, error } = await supabase.from("students").select("*");
+    console.log(branch, "branch");
+
     if (error) {
       console.error("Error fetching students:", error);
     } else {
-      setStudents(data);
-      console.log(data, 'user data')
+      const studentsData =
+        branch == "Inqilab"
+          ? data.filter(
+              (student) => student.branch == "Inqilab" || student.branch == null
+            )
+          : data.filter((student) => student.branch == branch);
+      setStudents(studentsData);
     }
   };
 
@@ -161,13 +169,14 @@ export default function AdminDashboard() {
                   >
                     Delete
                   </button>
-                    <button 
+                  <button
                     className="flex-1 cursor-pointer px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg transition-all hover:scale-110"
-                    onClick={() => navigate(`/admin/student-profile/${student.id}`)}
+                    onClick={() =>
+                      navigate(`/admin/student-profile/${student.id}`)
+                    }
                   >
                     Info
                   </button>
-                  
                 </div>
               </div>
             </div>

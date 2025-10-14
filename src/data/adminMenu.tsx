@@ -138,6 +138,13 @@ const adminMenu: AdminMenu[] = [
 
     },
     {
+        id: 24,
+        icon: <GradeIcon />,
+        title: "SAT Placement Test Grade",
+        link: "sat-placement-test-grade"
+
+    },
+    {
         id: 7,
         icon: <LockIcon />,
         title: "Exam Requests",

@@ -28,8 +28,12 @@ const AdminLogin = () => {
     }, []);
 
     const handleLogin = () => {
-        if (userData && username === userData[0]?.email && password === userData[0]?.password) {
+            const user = userData?.find((u) => u.email === username && u.password === password);
+            console.log(userData, 'userData')
+        
+        if (user) {
             const token = btoa(`${username}:${password}`);
+            localStorage.setItem("branch", JSON.stringify(user.branch));
             Cookies.set("token", token, { expires: 1 / 24 });
             navigate("/admin/dashboard");
         } else {

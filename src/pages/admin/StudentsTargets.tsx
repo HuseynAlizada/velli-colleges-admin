@@ -1,19 +1,28 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { supabase } from "../../utils/supabase-client"
-import type { StudentData } from "../../types"
-import { Target, Search, Loader2, Users, Filter, ChevronDown } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useEffect, useState } from "react";
+import { supabase } from "../../utils/supabase-client";
+import type { StudentData } from "../../types";
+import {
+  Target,
+  Search,
+  Loader2,
+  Users,
+  Filter,
+  ChevronDown,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const StudentsTargets = () => {
-  const [students, setStudents] = useState<StudentData[] | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [filterLevel, setFilterLevel] = useState<string | null>(null)
+  const [students, setStudents] = useState<StudentData[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterLevel, setFilterLevel] = useState<string | null>(null);
 
   // Get unique levels for filter dropdown
-  const uniqueLevels = students ? [...new Set(students.map((student) => student.level))] : []
+  const uniqueLevels = students
+    ? [...new Set(students.map((student) => student.level))]
+    : [];
 
   // Filter students based on search term and level
   const filteredStudents = students
@@ -22,27 +31,35 @@ const StudentsTargets = () => {
           (filterLevel ? student.level === filterLevel : true) &&
           (searchTerm
             ? student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              (student.student_purpose && student.student_purpose.toLowerCase().includes(searchTerm.toLowerCase()))
-            : true),
+              (student.student_purpose &&
+                student.student_purpose
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase()))
+            : true)
       )
-    : []
+    : [];
 
   useEffect(() => {
     const fetchStudents = async () => {
-      setIsLoading(true)
+      const branch = JSON.parse(localStorage.getItem("branch") || '""');
+      setIsLoading(true);
       try {
-        const { data, error } = await supabase.from("students").select("*")
+        const { data, error } = await supabase.from("students").select("*");
 
-        if (error) throw error
-        setStudents(data)
+        if (error) throw error;
+
+        // setStudents(data)
+      const studentsData=branch=="Inqilab"? data.filter(student=>student.branch=="Inqilab" || student.branch==null):data.filter(student=>student.branch==branch)
+
+        setStudents(studentsData);
       } catch (err) {
-        console.error(err)
+        console.error(err);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
-    fetchStudents()
-  }, [])
+    };
+    fetchStudents();
+  }, []);
 
   // Function to get a color based on the first letter of the purpose
   const getPurposeColor = (purpose: string) => {
@@ -53,12 +70,12 @@ const StudentsTargets = () => {
       "bg-gradient-to-br from-rose-400 to-pink-500",
       "bg-gradient-to-br from-violet-400 to-purple-500",
       "bg-gradient-to-br from-cyan-400 to-blue-500",
-    ]
+    ];
 
-    const firstChar = purpose.charAt(0).toLowerCase()
-    const index = firstChar.charCodeAt(0) % colors.length
-    return colors[index]
-  }
+    const firstChar = purpose.charAt(0).toLowerCase();
+    const index = firstChar.charCodeAt(0) % colors.length;
+    return colors[index];
+  };
 
   return (
     <div className="w-full max-w-7xl mx-auto p-6">
@@ -122,32 +139,42 @@ const StudentsTargets = () => {
           <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
             <Users className="w-8 h-8 text-indigo-500" />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-1">No students found</h3>
-          <p className="text-gray-500 max-w-md text-center">There are no students in the database at the moment.</p>
+          <h3 className="text-lg font-medium text-gray-900 mb-1">
+            No students found
+          </h3>
+          <p className="text-gray-500 max-w-md text-center">
+            There are no students in the database at the moment.
+          </p>
         </div>
       )}
 
       {/* Filtered Results Empty State */}
-      {!isLoading && students && students.length > 0 && filteredStudents.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-12 bg-white rounded-xl shadow-sm">
-          <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4">
-            <Filter className="w-8 h-8 text-amber-500" />
+      {!isLoading &&
+        students &&
+        students.length > 0 &&
+        filteredStudents.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-12 bg-white rounded-xl shadow-sm">
+            <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4">
+              <Filter className="w-8 h-8 text-amber-500" />
+            </div>
+            <h3 className="text-lg font-medium text-gray-900 mb-1">
+              No matching students
+            </h3>
+            <p className="text-gray-500 max-w-md text-center">
+              No students match your current search or filter criteria. Try
+              adjusting your filters or search term.
+            </p>
+            <button
+              onClick={() => {
+                setSearchTerm("");
+                setFilterLevel(null);
+              }}
+              className="mt-4 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors"
+            >
+              Clear Filters
+            </button>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-1">No matching students</h3>
-          <p className="text-gray-500 max-w-md text-center">
-            No students match your current search or filter criteria. Try adjusting your filters or search term.
-          </p>
-          <button
-            onClick={() => {
-              setSearchTerm("")
-              setFilterLevel(null)
-            }}
-            className="mt-4 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors"
-          >
-            Clear Filters
-          </button>
-        </div>
-      )}
+        )}
 
       {/* Students Grid */}
       {!isLoading && filteredStudents.length > 0 && (
@@ -190,8 +217,12 @@ const StudentsTargets = () => {
 
                     {/* Student Name */}
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900">{student.name}</h3>
-                      <p className="text-sm text-gray-500">{student.student_school || "Student"}</p>
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {student.name}
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        {student.student_school || "Student"}
+                      </p>
                     </div>
                   </div>
 
@@ -200,10 +231,16 @@ const StudentsTargets = () => {
                     <div className="mt-4">
                       <div className="flex items-center gap-2 mb-2">
                         <Target className="w-4 h-4 text-indigo-500" />
-                        <h4 className="text-sm font-medium text-gray-700">Learning Purpose</h4>
+                        <h4 className="text-sm font-medium text-gray-700">
+                          Learning Purpose
+                        </h4>
                       </div>
 
-                      <div className={`p-4 rounded-lg ${getPurposeColor(student.student_purpose)} text-white`}>
+                      <div
+                        className={`p-4 rounded-lg ${getPurposeColor(
+                          student.student_purpose
+                        )} text-white`}
+                      >
                         <p className="font-medium">{student.student_purpose}</p>
                       </div>
                     </div>
@@ -219,8 +256,7 @@ const StudentsTargets = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default StudentsTargets
-
+export default StudentsTargets;

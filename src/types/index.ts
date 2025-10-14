@@ -110,7 +110,8 @@ export interface StudentData {
     phone: string,
     image_url?: string,
     student_school?: string,
-    student_purpose?: string
+    student_purpose?: string,
+    branch?: string
 }
 // Student End
 
@@ -180,7 +181,8 @@ export interface ExamResult {
     listening_score: number
     reading_count: number
     reading_score: number
-    created_at: string // ISO timestamp
+    created_at: string, // ISO timestamp
+    finish_time?: number
 }
 
 
@@ -215,7 +217,8 @@ export type examResults = {
     grammar_count?: number,
     vocabulary_count?: number,
     total_questions?: number,
-    unit?: string
+    unit?: string,
+    finish_time?: number
 }
 
 
@@ -229,7 +232,8 @@ export interface adminData {
     id: number,
     created_at: number,
     email: string,
-    password: string
+    password: string,
+    branch?: string
 }
 
 // END ADMIN DATA

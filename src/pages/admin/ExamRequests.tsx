@@ -4,13 +4,18 @@ import { RequestedExams } from "../../types";
 import ExamRequest from "./ExamRequest";
 
 const ExamRequests = () => {
-  const [requestedExams, setRequestedExams] = useState<RequestedExams[] | null>(null);
+  const [requestedExams, setRequestedExams] = useState<RequestedExams[] | null>(
+    null
+  );
 
   const fetchRequestExams = async () => {
+    const branch = JSON.parse(localStorage.getItem("branch") || '""');
     try {
       const { data, error } = await supabase.from("approved-exams").select("*");
       if (error) throw error;
-      setRequestedExams(data);
+      const studentsData = branch == "Inqilab" ? data.filter(student => student.branch == "Inqilab" || student.branch == null) : data.filter(student => student.branch == branch);
+
+      setRequestedExams(studentsData);
     } catch (error) {
       console.error("Error fetching exams:", error);
     }
@@ -29,7 +34,11 @@ const ExamRequests = () => {
       {requestedExams && requestedExams.length > 0 ? (
         <div className="max-w-7xl mx-auto grid grid-cols-4 gap-3">
           {requestedExams.map((exam) => (
-            <ExamRequest key={exam.id} exam={exam} onDataChange={handleDataChange} />
+            <ExamRequest
+              key={exam.id}
+              exam={exam}
+              onDataChange={handleDataChange}
+            />
           ))}
         </div>
       ) : (

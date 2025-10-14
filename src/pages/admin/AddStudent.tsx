@@ -18,6 +18,11 @@ const levels = [
   { id: "sat-placement-test-hard", name: "SAT Placement Test Hard" },
 ];
 
+const branches=[
+ {id:"hazi-aslanov", name:"Hazi Aslanov"},
+ {id:"inqilab", name:"Inqilab"}
+]
+
 export default function AddStudent() {
   const { id } = useParams();
   const [edit] = useState<string | null>(id ? id : null);
@@ -36,6 +41,7 @@ export default function AddStudent() {
     imageUrl: "",
     studentSchool: "",
     studentPurpose: "",
+    branch:""
   });
 
   const addStudentExamCounts = async (studentId: string) => {
@@ -81,6 +87,7 @@ export default function AddStudent() {
           imageUrl: data.image_url || "",
           studentSchool: data.student_school || "",
           studentPurpose: data.student_purpose || "",
+          branch: data.branch || ""
         });
       } catch (err) {
         console.log(err);
@@ -158,6 +165,7 @@ export default function AddStudent() {
               image_url: imageUrl,
               student_school: formData.studentSchool,
               student_purpose: formData.studentPurpose,
+              branch:formData.branch
             })
             .eq("id", edit)
         : supabase
@@ -173,6 +181,7 @@ export default function AddStudent() {
               image_url: imageUrl,
               student_school: formData.studentSchool,
               student_purpose: formData.studentPurpose,
+              branch:formData.branch
             })
             .select();
 
@@ -200,6 +209,7 @@ export default function AddStudent() {
         imageUrl: "",
         studentSchool: "",
         studentPurpose: "",
+        branch:""
       });
     } catch (err) {
       console.error("Error saving student data:", err);
@@ -430,7 +440,31 @@ export default function AddStudent() {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
               />
             </div>
+            
           </div>
+           <div className="space-y-2">
+              <label
+                htmlFor="level"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Branch
+              </label>
+              <select
+                id="branch"
+                name="branch"
+                value={formData.branch}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                required
+              >
+                <option value="">Choose Level</option>
+                {branches.map((level) => (
+                  <option key={level.id} value={level.name}>
+                    {level.name}
+                  </option>
+                ))}
+              </select>
+            </div>
         </div>
 
         {/* Action Buttons */}

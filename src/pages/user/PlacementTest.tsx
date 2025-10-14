@@ -1,28 +1,59 @@
-import { RequestedExams } from '../../types';
-import { Clock, Calendar, GraduationCap, Target, PlayCircle } from "lucide-react";
+import { RequestedExams, StudentData } from "../../types";
+import {
+  Clock,
+  Calendar,
+  GraduationCap,
+  Target,
+  PlayCircle,
+} from "lucide-react";
 import { format } from "date-fns";
-import { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
-import { supabase } from '../../utils/supabase-client';
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { supabase } from "../../utils/supabase-client";
 
 const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
   const [sendRequest, setSendRequest] = useState(false);
-  const [approvedExams, setApprovedExams] = useState<[number, string][] | null>(null);
+  const [approvedExams, setApprovedExams] = useState<[number, string][] | null>(
+    null
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [isRequestLoading, setIsRequestLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+    const [userData, setUserData] = useState<StudentData | null>(null);
+  
 
-  const userId = Cookies.get('studentID');
+  const userId = Cookies.get("studentID");
 
   // console.log(exam, 'exam')
+    useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("students")
+          .select("*")
+          .eq("id", userId)
+          .single();
+        if (error) throw error;
+        setUserData(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUser();
+  }, [userId]);
+
 
   useEffect(() => {
     const fetchApprovedExams = async () => {
       setIsLoading(true);
       try {
-        const { data, error } = await supabase.from('approved-exams').select('*');
+        const { data, error } = await supabase
+          .from("approved-exams")
+          .select("*");
         if (error) throw error;
-        const titles = data.map(item => [item.student_id, item.title] as [number, string]);
+        const titles = data.map(
+          (item) => [item.student_id, item.title] as [number, string]
+        );
         setApprovedExams(titles);
       } catch (err) {
         console.error("Error fetching approved exams:", err);
@@ -42,7 +73,7 @@ const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
 
     setIsRequestLoading(true);
     try {
-      const { error } = await supabase.from('approved-exams').insert({
+      const { error } = await supabase.from("approved-exams").insert({
         student_id: Number(userId),
         title: "Placement Test",
         level: null,
@@ -50,13 +81,17 @@ const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
         pass_score: exam.pass_score,
         created_at: exam.created_at,
         file_url: exam.exam_file,
-        locked: false
+        locked: false,
+        branch: userData?.branch,
       });
 
       if (error) throw error;
       // console.log("Exam request submitted successfully!");
       setSendRequest(true);
-      setApprovedExams(prev => [...(prev || []), [Number(userId), "Placement Test"]]);
+      setApprovedExams((prev) => [
+        ...(prev || []),
+        [Number(userId), "Placement Test"],
+      ]);
 
       // console.log(userId,exam.title, 'test data' )
     } catch (err) {
@@ -86,7 +121,11 @@ const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
     );
   }
 
-  const isExamApproved = approvedExams && approvedExams.some(item => item[0] === Number(userId) && item[1] === "Placement Test");
+  const isExamApproved =
+    approvedExams &&
+    approvedExams.some(
+      (item) => item[0] === Number(userId) && item[1] === "Placement Test"
+    );
 
   // If the exam is approved, return the "no tests" UI only once
   if (isExamApproved) {
@@ -94,8 +133,12 @@ const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
       <div className="w-full max-w-sm bg-white rounded-lg shadow-md p-6 border border-gray-200 flex items-center justify-center min-h-[300px]">
         <div className="text-center">
           <GraduationCap className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-800">No Placement Tests Available</h3>
-          <p className="text-gray-600 mt-2">You have already requested or completed this placement test.</p>
+          <h3 className="text-lg font-semibold text-gray-800">
+            No Placement Tests Available
+          </h3>
+          <p className="text-gray-600 mt-2">
+            You have already requested or completed this placement test.
+          </p>
         </div>
       </div>
     );
@@ -147,7 +190,7 @@ const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
         ) : (
           <>
             <PlayCircle className="w-5 h-5" />
-            {sendRequest ? 'Request Sent' : 'Request To Unlock'}
+            {sendRequest ? "Request Sent" : "Request To Unlock"}
           </>
         )}
       </button>
@@ -155,7 +198,12 @@ const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
       {/* Created At */}
       <div className="mt-4 flex items-center gap-1.5 text-sm text-gray-500">
         <Calendar className="w-4 h-4" />
-        <span>Created {exam.created_at ?format(new Date(exam.created_at), "MMM d, yyyy"):"Unknown date"}</span>
+        <span>
+          Created{" "}
+          {exam.created_at
+            ? format(new Date(exam.created_at), "MMM d, yyyy")
+            : "Unknown date"}
+        </span>
       </div>
     </div>
   );

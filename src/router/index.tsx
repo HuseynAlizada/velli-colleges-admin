@@ -39,6 +39,7 @@ import SatExamDetails from "../pages/admin/SatExamDetails";
 import ManageSatExam from "../pages/admin/ManageSatExam";
 import SATPlacementTests from "../pages/user/SATPlacementTests";
 import SATPlacementTestQuestions from "../pages/user/SATPlacementTestQuestions";
+import SatPlacementTestGrade from "../pages/admin/SatPlacementTestGrade";
 
 const router = createBrowserRouter([
   {
@@ -103,6 +104,7 @@ const router = createBrowserRouter([
       { path: "manage-placement-test", element: <ManagePlacementTest /> },
       { path: "placement-test-details/:id", element: <PlacementTestDetails /> },
       { path: "placement-test-grade", element: <PlacementTestGrade /> },
+      { path: "sat-placement-test-grade", element: <SatPlacementTestGrade /> },
       // end placement test
 
       { path: "students-targets", element: <StudentsTargets /> },

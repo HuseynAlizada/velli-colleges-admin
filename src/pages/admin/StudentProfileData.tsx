@@ -126,6 +126,13 @@ const StudentProfileData: React.FC = () => {
     // No cleanup needed since this effect only runs once on mount
   }, []);
 
+
+
+      const formatTime = (seconds: number) => {
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+    };
   
 
    const getScoreColorPractice = (totalQuestions: number, score: number | null) => {
@@ -364,6 +371,18 @@ const StudentProfileData: React.FC = () => {
                           </span>
                         </div>
                       </div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm text-gray-600">
+                          Finish Time
+                        </span>
+                        <div className="flex items-center gap-1">
+                          <span className="font-bold text-gray-900">
+                            {formatTime(result?.finish_time || 0)}
+                          </span>
+                        </div>
+                      </div>
+
+
 
                       {/* Progress Bar */}
                       <div className="h-3 w-full bg-gray-100 rounded-full overflow-hidden">

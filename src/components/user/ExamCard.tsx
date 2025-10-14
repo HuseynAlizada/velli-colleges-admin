@@ -40,6 +40,7 @@ export default function ExamCard({ exam }: { exam: Exam }) {
                 if (error) throw error
                 const titles = data.map(item => [item.student_id, item.title] as [number, string]);
                 setApprovedExams(titles)
+                
             }
             catch (err) {
                 console.log(err)
@@ -64,7 +65,8 @@ export default function ExamCard({ exam }: { exam: Exam }) {
                 pass_score: exam.pass_score,
                 created_at: exam.created_at,
                 file_url: exam.file_url,
-                locked: false
+                locked: false,
+                branch: userData?.branch
             })
 
             if (error) throw error

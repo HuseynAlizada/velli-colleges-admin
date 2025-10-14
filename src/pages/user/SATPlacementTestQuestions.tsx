@@ -22,7 +22,7 @@ interface Question {
   "Option C": string;
   "Option D"?: string;
   "Correct Option": string;
-  "Content"?: string;
+  Content?: string;
 }
 
 export default function SATPlacementTestQuestions() {
@@ -76,7 +76,6 @@ export default function SATPlacementTestQuestions() {
 
         if (error) throw error;
         setExam(data);
-        console.log(data, "exam data");
 
         if (data.file_url) {
           const response = await fetch(data.file_url);
@@ -100,7 +99,6 @@ export default function SATPlacementTestQuestions() {
           }));
 
           setQuestions(formattedData);
-
         }
       } catch (err) {
         console.error(err);
@@ -155,11 +153,13 @@ export default function SATPlacementTestQuestions() {
       const studentName = studentData?.name || "Unknown";
 
       const { error: resultError } = await supabase
-        .from("placement_test_results")
+        .from("sat_placement_test_results")
         .insert({
           student_id: userId,
           total_score: score,
           student_name: studentName,
+          branch: studentData?.branch || null,
+          finish_time: timeLeft,
         });
 
       if (resultError) throw new Error(resultError.message);
