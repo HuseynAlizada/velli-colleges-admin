@@ -537,6 +537,10 @@ const StudentProfileData: React.FC = () => {
                       <p className="text-left text-md mt-1 font-medium text-gray-600">
                         Date: {String(result?.created_at).split("T")[0]}
                       </p>
+
+                        <p className="text-left text-md mt-1 font-medium text-gray-600">
+                        Finish Time: {formatTime(result?.finish_time || 0)}
+                      </p>
                     </div>
 
                     {/* Additional Info */}
