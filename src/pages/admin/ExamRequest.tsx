@@ -72,7 +72,7 @@ const ExamRequest = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className={`relative w-full max-w-sm bg-gradient-to-b ${colors.bg} rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border ${colors.border}`}
+          className={`relative w-full max-w-sm bg-gradient-to-b ${colors?.bg} rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border ${colors.border}`}
         >
           {/* Header */}
           <div className="flex justify-between items-start mb-6">

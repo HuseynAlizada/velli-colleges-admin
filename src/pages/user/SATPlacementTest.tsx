@@ -76,8 +76,8 @@ const SATPlacementTest = ({ exam }: { exam: RequestedExams }) => {
     try {
       const { error } = await supabase.from("approved-exams").insert({
         student_id: Number(userId),
-        title: exam.title,
-        level: null,
+        title: exam.title,  
+        level: exam.exam_type,
         duration: exam.duration,
         pass_score: exam.pass_score,
         created_at: exam.created_at,
@@ -131,7 +131,7 @@ const SATPlacementTest = ({ exam }: { exam: RequestedExams }) => {
       <div className="flex justify-between items-start mb-4">
         <div className="space-y-1">
           <span className="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-blue-100 text-blue-800">
-            SAT Placement Exam {exam.exam_type}
+            SAT Placement Exam - {exam.exam_type?.toLocaleUpperCase()}
           </span>
           <h3 className="text-lg font-semibold text-gray-800">{exam.title}</h3>
         </div>

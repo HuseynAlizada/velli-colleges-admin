@@ -28,7 +28,7 @@ export default function ImportSatExam() {
         selectedFile: null,
         passScore: "",
         duration: "",
-        examType: "",
+        examType: "math",
     });
     const [uploading, setUploading] = useState(false);
     const [editExam] = useState<string | null>(id || null);

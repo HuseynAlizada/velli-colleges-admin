@@ -125,7 +125,7 @@ useEffect(() => {
       <div className="flex justify-between items-start mb-4">
         <div className="space-y-1">
           <span className="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-blue-100 text-blue-800">
-            SAT Placement Test
+            SAT Placement Test - {approvedExam.level?.toLocaleUpperCase()}
           </span>
           <h3 className="text-lg font-semibold text-gray-800">
             {approvedExam.title}
