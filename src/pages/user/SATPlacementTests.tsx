@@ -27,12 +27,10 @@ const SATPlacementTests = () => {
           .select("*")
           .eq("student_id", userId); // Filter by student_id
         if (error) throw error;
-        // console.log(data, 'data approved');
         const filteredData = data.filter(
           (item) => item.title === userData?.level 
         );
         setApprovedData(filteredData);
-        // console.log(filteredData.length, 'approved');
       } catch (err: unknown) {
         console.log(err);
       }

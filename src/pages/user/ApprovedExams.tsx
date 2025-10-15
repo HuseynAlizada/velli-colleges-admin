@@ -1,58 +1,3 @@
-
-// import { useEffect, useState } from "react"
-// import ExamCard from "../../components/user/ExamCard"
-// import { supabase } from "../../utils/supabase-client"
-// import { Exam } from "../../types"
-
-// // title, file_url, pass_score, duration, level
-
-
-// export default function ExamList() {
-//     const [exams, setExams] = useState<Exam[] | []>([])
-//     const fetchExams = async () => {
-//         try {
-//             const { data, error } = await supabase.from('exams').select("*")
-//             if (error) throw error
-//             console.log(data);
-//             setExams(data)
-
-//         }
-//         catch (err) {
-//             console.log(err);
-//         }
-//     }
-
-//     useEffect(() => {
-//         fetchExams()
-//     }, [])
-
-
-
-
-//     return (
-//         <div className="min-h-screen bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
-//             <div className="max-w-7xl mx-auto grid grid-cols-4 gap-3">
-//                 {/* {exams.map((exam) => (
-//                     <ExamCard key={exam.id} exam={exam} />
-//                 ))} */}
-
-//                 {exams.map((exam) => (
-//                     <ExamCard key={exam.id} exam={exam} />
-//                 ))}
-
-//                 {/* {exams.map((exam) => (
-//                     <ExamCard key={exam.id} exam={exam} />
-//                 ))}
-
-//                 {exams.map((exam) => (
-//                     <ExamCard key={exam.id} exam={exam} />
-//                 ))} */}
-//             </div>
-//         </div>
-//     )
-// }
-
-
 import { useEffect, useState } from "react"
 import { RequestedExams } from "../../types"
 import { supabase } from "../../utils/supabase-client"
@@ -73,7 +18,6 @@ const ApprovedExams = () => {
             if (error) throw error
             const approvedExams = data.filter(item => item.student_id == userId && item.locked && item.title!="Placement Test")
             setExams(approvedExams)
-            // console.log(approvedExams)
         }
         catch (err) {
             console.log(err);

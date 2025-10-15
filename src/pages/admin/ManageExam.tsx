@@ -20,11 +20,8 @@ export default function ManageExam() {
             console.error("Error fetching files:", error);
             return;
         }
-        // setExams(data.map(item => {
-        //     return { ...item, name: item.name.split('-')[1].split('.')[0] }
-        // }))
+
         setExams(data)
-        // console.log("Exam Files:", data[0].name.split('-')[1].split('.')[0]);
     };
 
     useEffect(() => {

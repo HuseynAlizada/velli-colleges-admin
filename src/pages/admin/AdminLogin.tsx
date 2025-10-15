@@ -29,7 +29,6 @@ const AdminLogin = () => {
 
     const handleLogin = () => {
             const user = userData?.find((u) => u.email === username && u.password === password);
-            console.log(userData, 'userData')
         
         if (user) {
             const token = btoa(`${username}:${password}`);

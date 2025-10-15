@@ -21,11 +21,9 @@ const SATPlacementTest = ({ exam }: { exam: RequestedExams }) => {
   const [error, setError] = useState<string | null>(null);
   const [userData, setUserData] = useState<StudentData | null>(null);
 
-  console.log(exam, "exam");
 
   const userId = Cookies.get("studentID");
 
-  // console.log(exam, 'exam')
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -87,14 +85,12 @@ const SATPlacementTest = ({ exam }: { exam: RequestedExams }) => {
       });
 
       if (error) throw error;
-      // console.log("Exam request submitted successfully!");
       setSendRequest(true);
       setApprovedExams((prev) => [
         ...(prev || []),
         [Number(userId), "Placement Test"],
       ]);
 
-      // console.log(userId,exam.title, 'test data' )
     } catch (err) {
       console.error("Error submitting exam request:", err);
       setError("Failed to request unlock. Please try again.");

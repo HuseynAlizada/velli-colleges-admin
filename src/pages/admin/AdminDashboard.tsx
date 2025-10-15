@@ -29,7 +29,6 @@ export default function AdminDashboard() {
   const fetchStudents = async () => {
     const branch = JSON.parse(localStorage.getItem("branch") || '""');
     const { data, error } = await supabase.from("students").select("*");
-    console.log(branch, "branch");
 
     if (error) {
       console.error("Error fetching students:", error);

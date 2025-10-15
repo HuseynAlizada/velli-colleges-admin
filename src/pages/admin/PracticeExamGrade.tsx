@@ -44,17 +44,13 @@ const PracticeExamGrade = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log('test');
       
       setIsLoading(true)
       try {
         const { data, error } = await supabase.from("student_practice_results").select("*")
         if (error) throw error
 
-        // Log the raw data to debug  
-        // console.log("Raw data from Supabase:", data)
 
-        // Ensure data is unique by ID (assuming each result has a unique 'id')
         const uniqueData = data.reduce((acc: examResults[], current: examResults) => {
           if (!acc.some((item) => item.id === current.id)) {
             acc.push(current)
@@ -62,12 +58,8 @@ const PracticeExamGrade = () => {
           return acc
         }, [])
 
-        // Log the deduplicated data
-        // console.log("Deduplicated data:", uniqueData)
 
-        // Set the deduplicated data to state
         setResults(uniqueData)
-        console.log(data);
         
       } catch (err) {
         console.error("Error fetching exam results:", err)

@@ -111,7 +111,6 @@ export default function StudentProfile() {
                     ...prev,
                     avatar: imageUrl,
                 }));
-                // console.log("Image uploaded successfully:", imageUrl);
             } catch (err) {
                 console.error("Error uploading image:", err);
             }
@@ -138,11 +137,8 @@ export default function StudentProfile() {
                 })
                 .eq("id", Number(userId));
 
-                console.log(formData, 'form data submit');
-
 
             if (error) throw error;
-            console.log("Profile updated successfully");
             setIsLoading(false);
             setIsDirty(false); // Reset dirty state after successful save
         } catch (err) {

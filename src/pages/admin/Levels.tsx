@@ -38,7 +38,6 @@ export default function Levels() {
 
 
   const handleEdit = (id: number) => {
-    // console.log("Edit level:", id)
     const levelToEdit = levels?.find(item => item.id == id)
     if (levelToEdit) {
       setEditLevelData(levelToEdit)

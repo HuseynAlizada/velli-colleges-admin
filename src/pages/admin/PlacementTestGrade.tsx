@@ -62,10 +62,7 @@ const PlacementTestGrade = () => {
           .select("*");
         if (error) throw error;
 
-        // Log the raw data to debug
-        // console.log("Raw data from Supabase:", data)
 
-        // Ensure data is unique by ID (assuming each result has a unique 'id')
         const uniqueData = data.reduce(
           (acc: examResults[], current: examResults) => {
             if (!acc.some((item) => item.id === current.id)) {
@@ -76,10 +73,7 @@ const PlacementTestGrade = () => {
           []
         );
 
-        // Log the deduplicated data
-        // console.log("Deduplicated data:", uniqueData)
 
-        // Set the deduplicated data to state
         const branch = JSON.parse(localStorage.getItem("branch") || '""');
 
         interface Student extends examResults {
