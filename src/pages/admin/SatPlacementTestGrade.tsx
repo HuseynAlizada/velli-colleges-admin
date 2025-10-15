@@ -82,13 +82,19 @@ const SatPlacementTestGrade = () => {
         // Set the deduplicated data to state
         const branch = JSON.parse(localStorage.getItem("branch") || '""');
 
-        const studentsData =
+        interface Student extends examResults {
+          branch?: string | null;
+        }
+
+        const studentsData: Student[] =
           branch == "Inqilab"
-            ? uniqueData.filter(
-                (student) =>
-                  student.branch == "Inqilab" || student.branch == null
+            ? (uniqueData as Student[]).filter(
+          (student: Student) =>
+            student.branch == "Inqilab" || student.branch == null
               )
-            : uniqueData.filter((student) => student.branch == branch);
+            : (uniqueData as Student[]).filter(
+          (student: Student) => student.branch == branch
+              );
         setResults(studentsData);
       } catch (err) {
         console.error("Error fetching exam results:", err);
