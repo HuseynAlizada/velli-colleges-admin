@@ -5,7 +5,7 @@ import { supabase } from "../../utils/supabase-client";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { examOptions } from "../../data/examData";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 
 interface ExamData {
     selectedExam: string;
@@ -19,8 +19,6 @@ interface ExamData {
 export default function ImportExam() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
-    const { pathname } = useLocation();
-    const editedPathName = pathname.split('/')[2];
 
 
     const [examData, setExamData] = useState<ExamData>({

@@ -15,7 +15,7 @@ interface Question {
   [key: string]: string | undefined; // Allow dynamic "Option A", "Option B", etc.
 }
 
-const ExamDetails = () => {
+const SatExamDetails = () => {
   const { id } = useParams<{ id: string }>(); // Explicitly type id as string
   const [questions, setQuestions] = useState<Question[]>([]);
   const [title, setTitle] = useState<string | null>(null);
@@ -360,4 +360,4 @@ const ExamDetails = () => {
   );
 };
 
-export default ExamDetails;
+export default SatExamDetails;

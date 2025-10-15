@@ -64,7 +64,7 @@ export default function LockedExams() {
                     ))}
                 </div>
             ) : (
-                <h1 className="text-center text-3xl mt-4 w-full">There are no approved exams</h1>
+                <h1 className="text-center text-3xl mt-4 w-full">There are no Locked exams</h1>
             )}
         </div>
     )

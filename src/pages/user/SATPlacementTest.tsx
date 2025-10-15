@@ -13,7 +13,7 @@ import { supabase } from "../../utils/supabase-client";
 
 const SATPlacementTest = ({ exam }: { exam: RequestedExams }) => {
   const [sendRequest, setSendRequest] = useState(false);
-  const [approvedExams, setApprovedExams] = useState<[number, string][] | null>(
+  const [, setApprovedExams] = useState<[number, string][] | null>(
     null
   );
   const [isLoading, setIsLoading] = useState(true);
