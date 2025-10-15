@@ -10,7 +10,7 @@ import {
   ArrowRight,
   Lock,
 } from "lucide-react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { supabase } from "../../utils/supabase-client";
 
@@ -26,6 +26,14 @@ interface PracticeExamCardProps {
   onStartExam?: (examId: number) => void;
 }
 
+interface dataPassword{
+branch:string,
+created_at:string,
+email:string,
+id:number,
+password:string
+}
+
 const PracticeExamCard = ({
   exam,
   index,
@@ -38,7 +46,7 @@ const PracticeExamCard = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputPassword, setInputPassword] = useState("");
   const [error, setError] = useState("");
-  const [correctPassword, setCorrectPassword] = useState<string | null>(null);
+  const [correctPassword, setCorrectPassword] = useState<dataPassword[] | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,8 +54,8 @@ const PracticeExamCard = ({
       try {
         const { data, error } = await supabase.from("admin_data").select("*");
         if (error) throw new Error();
-
-                setCorrectPassword(data[0].password)
+        console.log(data);
+        setCorrectPassword(data);
       } catch (err) {
         console.log(err);
       }
@@ -63,16 +71,23 @@ const PracticeExamCard = ({
     day: "numeric",
   });
 
-
-  const handleStartClick = (unit:number) => {
+  const handleStartClick = (unit: number) => {
     setIsModalOpen(true);
     setInputPassword("");
     setError("");
-    localStorage.setItem('practiceExamUnit', unit.toString());
+    localStorage.setItem("practiceExamUnit", unit.toString());
   };
 
   const handleSubmitPassword = () => {
-    if (inputPassword === correctPassword) {
+    const correct = correctPassword?.some((item) => item.password === inputPassword);
+console.log(correctPassword, 'correct',inputPassword);
+    if (correct) {
+      console.log("✅ Password is correct!");
+    } else {
+      console.log("❌ Incorrect password!");
+    }
+
+    if (correct) {
       navigate(`${id}`);
     } else {
       setError("Incorrect password. Please try again.");
