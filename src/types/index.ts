@@ -233,7 +233,8 @@ export interface adminData {
     created_at: number,
     email: string,
     password: string,
-    branch?: string
+    branch?: string,
+    approved?: boolean
 }
 
 // END ADMIN DATA

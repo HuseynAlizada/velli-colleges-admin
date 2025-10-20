@@ -28,7 +28,7 @@ const AdminLogin = () => {
     }, []);
 
     const handleLogin = () => {
-            const user = userData?.find((u) => u.email === username && u.password === password);
+            const user = userData?.find((u) => u.email === username && u.password === password && u.approved === true);
         
         if (user) {
             const token = btoa(`${username}:${password}`);
