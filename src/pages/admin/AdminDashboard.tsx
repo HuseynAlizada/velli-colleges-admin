@@ -57,7 +57,8 @@ export default function AdminDashboard() {
   };
 
   const handleDelete = async (id: string) => {
-    try {
+    if(confirm("Are you sure?")){
+     try {
       const { error } = await supabase.from("students").delete().eq("id", id);
       if (error) {
         console.log("Error deleting student", error);
@@ -69,6 +70,7 @@ export default function AdminDashboard() {
     } catch (err) {
       console.error("Unexpected error", err);
     }
+   }
   };
 
   const handleEdit = (id: string) => {

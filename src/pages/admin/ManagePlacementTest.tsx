@@ -33,7 +33,9 @@ export default function ManagePlacementTest() {
     }
 
     const handleDelete = async (id: number) => {
-        try {
+        
+       if(confirm('Are you sure?')){
+           try {
             const { error } = await supabase.from('placement_test').delete().eq('id', id)
             if (error) throw error
             setExams(exams.filter((level) => level.id !== id))
@@ -41,6 +43,7 @@ export default function ManagePlacementTest() {
         catch (err) {
             console.log(err);
         }
+       }
     }
     const openPopUp = () => {
         navigate('/admin/import-placement-test')
@@ -50,7 +53,7 @@ export default function ManagePlacementTest() {
 
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold text-gray-800">Placement Test</h2>
-                <button onClick={openPopUp} className="p-2 rounded-full bg-rose-500 text-white hover:bg-rose-600 transition-colors">
+                <button onClick={openPopUp} className="p-2 translate-x-[-80px] rounded-full bg-rose-500 text-white hover:bg-rose-600 transition-colors">
                     <AddIcon className="w-5 h-5" />
                 </button>
             </div>

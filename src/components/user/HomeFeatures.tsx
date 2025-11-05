@@ -7,6 +7,7 @@ const HomeFeatures = () => {
 
 
     const [isVisible, setIsVisible] = useState(false)
+    const data=localStorage.getItem("studentBranch")
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -163,13 +164,15 @@ const HomeFeatures = () => {
                         <div className="flex flex-col  justify-center items-center gap-2 mt-3 text-white">
 
                             <div>
-                                Number: +994 (55) 430 12 13
+                              
+                                Number: {data==="Inqilab"? "+994 (55) 430 12 13":"+994 (51) 430 12 13"}
+
                             </div>
                             {/* <div>
                                 Location: Hesen Eliyev 212A. Kovaa Plaza 3-cü mərtəbə, Bakı
                             </div> */}
                              <div>
-                                Location: Hesen Eliyev 212A 
+                                Location: {data==="Inqilab"? " Hesen Eliyev 212A":"Blue Center 3-cü mərtəbə, Bakı"}
                             </div>
                         </div>
                     </div>

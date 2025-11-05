@@ -4,16 +4,18 @@ import { RequestedExams } from "../../types";
 import ExamRequest from "./ExamRequest";
 
 const ExamRequests = () => {
-  const [requestedExams, setRequestedExams] = useState<RequestedExams[] | null>(
-    null
-  );
+  const [requestedExams, setRequestedExams] = useState<RequestedExams[] | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchRequestExams = async () => {
     const branch = JSON.parse(localStorage.getItem("branch") || '""');
     try {
       const { data, error } = await supabase.from("approved-exams").select("*");
       if (error) throw error;
-      const studentsData = branch == "Inqilab" ? data.filter(student => student.branch == "Inqilab" || student.branch == null) : data.filter(student => student.branch == branch);
+      const studentsData =
+        branch == "Inqilab"
+          ? data.filter((student) => student.branch == "Inqilab" || student.branch == null)
+          : data.filter((student) => student.branch == branch);
 
       setRequestedExams(studentsData);
     } catch (error) {
@@ -29,16 +31,28 @@ const ExamRequests = () => {
     fetchRequestExams();
   };
 
+  // Filter exams by title (case-insensitive)
+  const filteredExams = requestedExams?.filter((exam) =>
+    exam.title?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50/50 to-white p-8 py-20 flex flex-col items-center">
-      {requestedExams && requestedExams.length > 0 ? (
+      {/* 🔍 Search Bar */}
+      <div className="w-full max-w-3xl mb-8">
+        <input
+          type="text"
+          placeholder="Search exams by title..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+        />
+      </div>
+
+      {filteredExams && filteredExams.length > 0 ? (
         <div className="max-w-7xl mx-auto grid grid-cols-4 gap-3">
-          {requestedExams.map((exam) => (
-            <ExamRequest
-              key={exam.id}
-              exam={exam}
-              onDataChange={handleDataChange}
-            />
+          {filteredExams.map((exam) => (
+            <ExamRequest key={exam.id} exam={exam} onDataChange={handleDataChange} />
           ))}
         </div>
       ) : (
@@ -52,3 +66,4 @@ const ExamRequests = () => {
 };
 
 export default ExamRequests;
+  

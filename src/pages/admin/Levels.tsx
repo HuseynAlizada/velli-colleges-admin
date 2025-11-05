@@ -47,7 +47,8 @@ export default function Levels() {
   }
 
   const handleDelete = async (id: number) => {
-    try {
+   if(confirm('Are you sure?')){
+      try {
       const { error } = await supabase.from('levels').delete().eq('id', id)
       if (error) {
         console.log('Delete error', error);
@@ -58,6 +59,7 @@ export default function Levels() {
     catch (err) {
       console.log(err);
     }
+   }
   }
 
   const openPopUp = () => {
@@ -82,7 +84,7 @@ export default function Levels() {
       )}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold text-gray-800">Levels</h2>
-        <button onClick={openPopUp} className="p-2 rounded-full cursor-pointer inset-0 bg-gradient-to-r from-rose-500 to-pink-600  text-white hover:bg-rose-600 transition-colors">
+        <button onClick={openPopUp} className="p-2 translate-x-[-80px] rounded-full cursor-pointer inset-0 bg-gradient-to-r from-rose-500 to-pink-600  text-white hover:bg-rose-600 transition-colors">
           <AddIcon className="w-5 h-5" />
         </button>
       </div>

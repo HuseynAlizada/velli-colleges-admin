@@ -51,7 +51,7 @@ export default function ManageSatExam() {
 
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold text-gray-800">SAT Exams</h2>
-                <button onClick={openPopUp} className="p-2 rounded-full bg-rose-500 text-white hover:bg-rose-600 transition-colors">
+                <button onClick={openPopUp} className="p-2 translate-x-[-80px] rounded-full bg-rose-500 text-white hover:bg-rose-600 transition-colors">
                     <AddIcon className="w-5 h-5" />
                 </button>
             </div>

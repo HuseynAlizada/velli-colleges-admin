@@ -17,6 +17,7 @@ interface Student {
     id: string; // Adjust to number if your schema uses numeric IDs
     email: string;
     password: string;
+    branch?: string;
 }
 
 export default function UserLogin() {
@@ -80,7 +81,8 @@ export default function UserLogin() {
             }
 
             Cookies.set("studentID", user.id, { expires: 1, secure: true, sameSite: "Strict" });
-            navigate("/news", { replace: true });
+            localStorage.setItem("studentBranch", user.branch ?? "");
+            navigate("/", { replace: true });
         } catch (err) {
             console.error("Unexpected error:", err);
             alert(t("unexpectedError"));
