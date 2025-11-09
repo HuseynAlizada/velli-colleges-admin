@@ -24,14 +24,12 @@ const PlacementTestGrade = () => {
     ? results
         .filter(
           (result) =>
-            (filterLevel ? result.student_level === filterLevel : true) &&
+            (filterLevel ? result?.student_level === filterLevel : true) &&
             (searchTerm
-              ? result.student_name
-                  .toLowerCase()
-                  .includes(searchTerm.toLowerCase()) ||
-                result.exam_name
-                  .toLowerCase()
-                  .includes(searchTerm.toLowerCase())
+              ? result.student_name?.toLowerCase()
+                  .includes(searchTerm?.toLowerCase()) ||
+                result.exam_name?.toLowerCase()
+                  .includes(searchTerm?.toLowerCase())
               : true)
         )
         .sort((a, b) => {
