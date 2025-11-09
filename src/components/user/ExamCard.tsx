@@ -89,6 +89,7 @@ export default function ExamCard({ exam }: { exam: Exam }) {
       console.error("User ID not found.");
       return;
     }
+      setSendRequest(true);
 
     try {
       const { error } = await supabase.from("approved-exams").insert({
@@ -105,7 +106,6 @@ export default function ExamCard({ exam }: { exam: Exam }) {
 
       if (error) throw error;
       console.log("Exam request submitted successfully!");
-      setSendRequest(true);
       setData("salam");
     } catch (err) {
       console.error("Error submitting exam request:", err);
@@ -156,14 +156,19 @@ export default function ExamCard({ exam }: { exam: Exam }) {
             </div>
           </div>
 
-          <button
-            onClick={handleRequestUnlock}
-            disabled={sendRequest}
-            className={`w-full flex items-center justify-center gap-1 px-4 py-3 rounded-xl text-white font-medium ${colors.button} shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 mb-6`}
-          >
-            <PlayCircle className="w-5 h-5" />
-            {sendRequest ? "Request Sended" : "Request To Unlock"}
-          </button>
+    <button
+  onClick={handleRequestUnlock}
+  disabled={
+    sendRequest ||
+    approvedExams?.some(
+      (item) => item[0] === userData?.id && item[1] === exam.title
+    )
+  }
+  className={`w-full flex items-center justify-center gap-1 px-4 py-3 rounded-xl text-white font-medium ${colors.button} shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 mb-6 disabled:opacity-50`}
+>
+  <PlayCircle className="w-5 h-5" />
+  {sendRequest ? "Request Sent" : "Request To Unlock"}
+</button>
 
           {/* Active Users Stats */}
           <div className="pt-4 border-t border-gray-200">
