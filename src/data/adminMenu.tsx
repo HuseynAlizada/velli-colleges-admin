@@ -15,6 +15,12 @@ const adminMenu: AdminMenu[] = [
         title: "Dashboard",
         link: 'dashboard'
     },
+     {
+        id: 32,
+        icon: <DashboardIcon />,
+        title: "Stock Dashboard",
+        link: 'stock-dashboard'
+    },
     {
         id: 2,
         icon: <UpgradeIcon />,

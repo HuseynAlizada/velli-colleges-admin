@@ -28,7 +28,7 @@ const SATPlacementTests = () => {
           .eq("student_id", userId); // Filter by student_id
         if (error) throw error;
         const filteredData = data.filter(
-          (item) => item.title === userData?.level 
+          (item) => item.title === userData?.sat_level 
         );
         setApprovedData(filteredData);
       } catch (err: unknown) {
@@ -36,7 +36,7 @@ const SATPlacementTests = () => {
       }
     };
 
-    if (userData?.level) {
+    if (userData?.sat_level) {
       fetchApprovedTest();
     }
   }, [userData]);
@@ -65,7 +65,7 @@ useEffect(() => {
       if (error) throw error;
 
       const filteredData = data.filter(
-        (item) => item.title === userData?.level
+        (item) => item.title === userData?.sat_level
       );
 
       // ✅ Mark exams that exist in approvedData
@@ -83,7 +83,7 @@ useEffect(() => {
     }
   };
 
-  if (userData?.level) {
+  if (userData?.sat_level) {
     fetchExams();
   }
 }, [userData, approvedData]);

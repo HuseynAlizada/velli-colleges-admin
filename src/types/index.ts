@@ -111,7 +111,9 @@ export interface StudentData {
     image_url?: string,
     student_school?: string,
     student_purpose?: string,
-    branch?: string
+    branch?: string,
+    sat_level?: string,
+    stock?: boolean
 }
 // Student End
 

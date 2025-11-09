@@ -89,6 +89,7 @@ const SatPlacementTestGrade = () => {
             : (uniqueData as Student[]).filter(
           (student: Student) => student.branch == branch
               );
+
         setResults(studentsData);
       } catch (err) {
         console.error("Error fetching exam results:", err);

@@ -37,9 +37,8 @@ export default function ImportExam() {
         { id: "a2", name: "A2" },
         { id: "b1", name: "B1" },
         { id: "b1+", name: "B1+" },
-        { id: "b2", name: "B2" },
-        { id: "c1", name: "C1" },
-    ];
+        { id: "b2", name: "B2" }
+        ];
 
     useEffect(() => {
         const fetchExamData = async () => {

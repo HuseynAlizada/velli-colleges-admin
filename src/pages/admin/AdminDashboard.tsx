@@ -39,7 +39,7 @@ export default function AdminDashboard() {
               (student) => student.branch == "Inqilab" || student.branch == null
             )
           : data.filter((student) => student.branch == branch);
-      setStudents(studentsData);
+      setStudents(studentsData.filter(item=>!item.stock));
     }
   };
 
@@ -50,7 +50,7 @@ export default function AdminDashboard() {
       advanced: "bg-purple-50 text-purple-700 ring-purple-600/20",
     };
     return (
-      colors[level.toLowerCase() as Level] ||
+      colors[level?.toLowerCase() as Level] ||
       "bg-gray-50 text-gray-700 ring-gray-600/20"
     );
   };
@@ -123,7 +123,7 @@ export default function AdminDashboard() {
                     )}`}
                   >
                     <Shield className="w-3 h-3 mr-1" />
-                    {student.level.toUpperCase()}
+                    {student.level?.toUpperCase()}
                   </span>
                 </div>
                 <div className="space-y-4">

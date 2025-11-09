@@ -40,6 +40,7 @@ import ManageSatExam from "../pages/admin/ManageSatExam";
 import SATPlacementTests from "../pages/user/SATPlacementTests";
 import SATPlacementTestQuestions from "../pages/user/SATPlacementTestQuestions";
 import SatPlacementTestGrade from "../pages/admin/SatPlacementTestGrade";
+import AdminStockDashboard from "../pages/admin/AdminStockDashboard";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <AdminDashboard /> },
       { path: "dashboard", element: <AdminDashboard /> },
+      { path: "stock-dashboard", element: <AdminStockDashboard /> },
       { path: "student-profile/:id", element: <StudentProfileData /> },
       { path: "levels", element: <Levels /> },
       { path: "news", element: <News /> },

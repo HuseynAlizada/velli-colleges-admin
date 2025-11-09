@@ -5,10 +5,44 @@ import { Clock, Award, Calendar, GraduationCap, Target, PlayCircle } from "lucid
 import { format } from "date-fns"
 import { levelColors } from '../../data/studentMenu'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { supabase } from '../../utils/supabase-client'
+
+
+type Level = "beginner" | "intermediate" | "advanced";
+
+interface Student {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  level: Level;
+  parent_name: string;
+  parent_phone: string;
+  image_url: string;
+}
 
 const ApprovedExam = ({ exam }: { exam: RequestedExams }) => {
+
+          const [students, setStudents] = useState<Student[]>([]);
+    
     const colors = levelColors[exam.level ? exam?.level : "C1"]
 
+
+    
+         useEffect(() => {
+            fetchStudents();
+          }, []);
+        
+          const fetchStudents = async () => {
+            const { data, error } = await supabase.from("students").select("*");
+            if (error) {
+              console.error("Error fetching students:", error);
+            } else {
+    
+              setStudents(data.filter(item=>!item.stock));
+            }
+          };
     return (
         <div>
             <motion.div
@@ -65,7 +99,7 @@ const ApprovedExam = ({ exam }: { exam: RequestedExams }) => {
                     <div className="flex items-center gap-2 text-gray-600">
                         <Award className={`w-5 h-5 ${colors.icon}`} />
                         <p>
-                            <span className="font-medium text-gray-900">22 Students</span> are solving{" "}
+                            <span className="font-medium text-gray-900">{students.length} Students</span> are solving{" "}
                             per day
                         </p>
                     </div>

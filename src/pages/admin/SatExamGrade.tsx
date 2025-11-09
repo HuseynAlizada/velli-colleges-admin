@@ -87,6 +87,8 @@ const SatExamGrade = () => {
           []
         );
 
+        console.log("Fetched and deduplicated data:", uniqueData);
+
         // Log the deduplicated data
 
         // Set the deduplicated data to state

@@ -20,6 +20,7 @@ export default function StudentProfile() {
         avatar: "",
         password: "",
         student_purpose: "",
+        sat_level: "",
     });
     const [avatar, setAvatar] = useState<string | null>(formData.avatar || null);
     const [isLoading, setIsLoading] = useState(false);
@@ -49,6 +50,7 @@ export default function StudentProfile() {
                     student_purpose: data.student_purpose,
                     avatar: data.image_url,
                     password: data.password,
+                    sat_level: data.sat_level,
                 });
 
 
@@ -276,6 +278,19 @@ export default function StudentProfile() {
                                     className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                                 />
                             </div>
+
+{formData.sat_level && (
+  <div className="space-y-2">
+                                <label className="block text-sm font-medium text-gray-700">SAT Level</label>
+                                <input
+                                    name="sat_level"
+                                    disabled
+                                    value={formData.sat_level}
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                                />
+                            </div>
+)}
+                            
 
                             <div className="space-y-2">
                                 <label className="block text-sm font-medium text-gray-700">Parent Name</label>

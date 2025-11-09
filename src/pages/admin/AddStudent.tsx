@@ -12,11 +12,13 @@ const levels = [
   { id: "a2", name: "A2" },
   { id: "b1", name: "B1" },
   { id: "b1+", name: "B1+" },
-  { id: "b2", name: "B2" },
-  { id: "c1", name: "C1" },
+  { id: "b2", name: "B2" }
+];
+
+const satLevels=[
   { id: "sat-placement-test-medium", name: "SAT Placement Test Medium" },
   { id: "sat-placement-test-hard", name: "SAT Placement Test Hard" },
-];
+]
 
 const branches=[
  {id:"hazi-aslanov", name:"Hazi Aslanov"},
@@ -41,7 +43,9 @@ export default function AddStudent() {
     imageUrl: "",
     studentSchool: "",
     studentPurpose: "",
-    branch:""
+    branch:"",
+    sat_level:"",
+    stock:false
   });
 
   const addStudentExamCounts = async (studentId: string) => {
@@ -87,7 +91,9 @@ export default function AddStudent() {
           imageUrl: data.image_url || "",
           studentSchool: data.student_school || "",
           studentPurpose: data.student_purpose || "",
-          branch: data.branch || ""
+          branch: data.branch || "",
+          sat_level: data.sat_level || "",
+          stock:data.stock || false
         });
       } catch (err) {
         console.log(err);
@@ -165,7 +171,9 @@ export default function AddStudent() {
               image_url: imageUrl,
               student_school: formData.studentSchool,
               student_purpose: formData.studentPurpose,
-              branch:formData.branch
+              branch:formData.branch,
+              sat_level:formData.sat_level,
+              stock:formData.stock
             })
             .eq("id", edit)
         : supabase
@@ -181,7 +189,10 @@ export default function AddStudent() {
               image_url: imageUrl,
               student_school: formData.studentSchool,
               student_purpose: formData.studentPurpose,
-              branch:formData.branch
+              branch:formData.branch,
+              sat_level:formData.sat_level,
+              stock:formData.stock
+
             })
             .select();
 
@@ -195,7 +206,11 @@ export default function AddStudent() {
       }
 
       toast.success(`Student ${action === "update" ? "Updated" : "Added"}!`);
+      if(formData.stock) navigate("/admin/stock-dashboard");
+      else{
       navigate("/admin/dashboard");
+
+      }
 
       setFormData({
         name: "",
@@ -209,7 +224,9 @@ export default function AddStudent() {
         imageUrl: "",
         studentSchool: "",
         studentPurpose: "",
-        branch:""
+        branch:"",
+        sat_level:"",
+        stock:false
       });
     } catch (err) {
       console.error("Error saving student data:", err);
@@ -361,6 +378,30 @@ export default function AddStudent() {
               </select>
             </div>
 
+  <div className="space-y-2">
+              <label
+                htmlFor="level"
+                className="block text-sm font-medium text-gray-700"
+              >
+                SAT Level
+              </label>
+              <select
+                id="sat_level"
+                name="sat_level"
+                value={formData.sat_level}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                required
+              >
+                <option value="">Choose Level</option>
+                {satLevels.map((level) => (
+                  <option key={level.id} value={level.name}>
+                    {level.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div className="space-y-2">
               <label
                 htmlFor="password"
@@ -442,6 +483,13 @@ export default function AddStudent() {
             </div>
             
           </div>
+
+
+
+
+
+
+          
            <div className="space-y-2">
               <label
                 htmlFor="level"

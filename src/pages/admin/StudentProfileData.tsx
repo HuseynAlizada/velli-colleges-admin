@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Award, BookOpen, Loader2 } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../../utils/supabase-client";
 import { ExamResult, examResults, StudentData } from "../../types";
 import "./style.css";
@@ -16,6 +16,8 @@ const StudentProfileData: React.FC = () => {
   const [studentLevel, setStudentLevel] = useState<string | null>("");
 
   const { id: studentId } = useParams();
+  const navigate = useNavigate()
+
 
   const countTrueQuestion = (totalQuestions: number, score: number | null) => {
     return (score ? (score * 100) / totalQuestions : 0).toFixed(0);
@@ -47,7 +49,6 @@ const StudentProfileData: React.FC = () => {
           return;
         }
 
-
         const { data, error } = await supabase
           .from("student_results")
           .select("*")
@@ -59,7 +60,6 @@ const StudentProfileData: React.FC = () => {
         const filteredData = data.filter(
           (result: ExamResult) => result.student_level === studentLevel
         );
-
 
         // ✅ Ensure uniqueness
         const uniqueData = filteredData.reduce(
@@ -94,7 +94,6 @@ const StudentProfileData: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-
       setIsLoading(true);
       try {
         const { data, error } = await supabase
@@ -103,15 +102,14 @@ const StudentProfileData: React.FC = () => {
           .eq("student_id", studentId);
         if (error) throw error;
 
-        const uniqueData = data.reduce(
-          (acc: examResults[], current: examResults) => {
+        const uniqueData = data
+          .reduce((acc: examResults[], current: examResults) => {
             if (!acc.some((item) => item.id === current.id)) {
               acc.push(current);
             }
             return acc;
-          },
-          []
-        ).reverse();
+          }, [])
+          .reverse();
 
         setPracticeResults(uniqueData);
       } catch (err) {
@@ -126,21 +124,21 @@ const StudentProfileData: React.FC = () => {
     // No cleanup needed since this effect only runs once on mount
   }, []);
 
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
+  };
 
-
-      const formatTime = (seconds: number) => {
-        const minutes = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-    };
-  
-
-   const getScoreColorPractice = (totalQuestions: number, score: number | null) => {
+  const getScoreColorPractice = (
+    totalQuestions: number,
+    score: number | null
+  ) => {
     const scorePercentage = +(
       score ? (score * 100) / totalQuestions : 0
     ).toFixed(0);
-
-
 
     if (scorePercentage >= 90) return "from-green-400 to-emerald-500";
     if (scorePercentage >= 75) return "from-blue-400 to-indigo-500";
@@ -190,13 +188,56 @@ const StudentProfileData: React.FC = () => {
     return "Needs Improvement";
   };
 
+
+const addToStock = async (student: StudentData | undefined, stock_value: boolean) => {
+  if (!student) return;
+
+
+  const { data, error } = await supabase
+    .from("students")
+    .update({ stock: stock_value }) // ✅ only update 'stock' field
+    .eq("id", student.id); // or use your `edit` variable if that’s the student ID
+
+  if (error) {
+    console.error("Error updating stock:", error);
+  } else {
+    alert(`Student has been ${stock_value ? 'added to' : 'removed from'} stock successfully.`);
+    if(stock_value){
+      navigate('/admin/dashboard')
+    }
+    else{
+      navigate('/admin/stock-dashboard')
+    }
+    console.log("Stock updated successfully:", data);
+  }
+};
+
+
   return (
     <div className="max-w-6xl mx-auto p-6 bg-background">
       <div className="bg-card rounded-lg shadow-lg border border-border overflow-hidden">
         {/* Header */}
-        <div className="bg-primary text-primary-foreground px-6 py-4">
+       <div className="flex items-center gap-4">
+         <div className="bg-primary text-primary-foreground px-6 py-4">
           <h1 className="text-2xl font-bold">Student Profile</h1>
         </div>
+
+        {student?.stock ? (
+          <button
+            onClick={() => addToStock(student, false)}
+            className="ml-auto mr-6 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+          >
+            Remove from Stock
+          </button>
+        ) : (
+          <button
+            onClick={() => addToStock(student, true)}
+            className="ml-auto mr-6 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+          >
+            Add to Stock
+          </button>
+        )}
+       </div>
 
         <div className="p-6 space-y-8">
           {/* Personal Information */}
@@ -226,7 +267,8 @@ const StudentProfileData: React.FC = () => {
                   </span>
                   <span className="text-foreground">{student?.phone}</span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+               { student?.level && (
+                 <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                   <span className="font-medium text-muted-foreground min-w-20">
                     Level:
                   </span>
@@ -234,6 +276,7 @@ const StudentProfileData: React.FC = () => {
                     {student?.level}
                   </span>
                 </div>
+               )}
               </div>
             </div>
 
@@ -242,6 +285,16 @@ const StudentProfileData: React.FC = () => {
                 Parent/Guardian Information
               </h2>
               <div className="space-y-3">
+                {student?.sat_level && (
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                    <span className="font-medium text-muted-foreground min-w-28">
+                      SAT Level:
+                    </span>
+                    <span className="text-foreground font-medium">
+                      {student?.sat_level}
+                    </span>
+                  </div>
+                )}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                   <span className="font-medium text-muted-foreground min-w-28">
                     Parent Name:
@@ -382,8 +435,6 @@ const StudentProfileData: React.FC = () => {
                         </div>
                       </div>
 
-
-
                       {/* Progress Bar */}
                       <div className="h-3 w-full bg-gray-100 rounded-full overflow-hidden">
                         <div
@@ -482,7 +533,8 @@ const StudentProfileData: React.FC = () => {
                           {result.name}
                         </h3>
                         <p className="text-gray-700 font-bold text-sm">
-                          Exam Name: {result.exam_name} {result.unit && `- Unit ${result.unit}`}
+                          Exam Name: {result.exam_name}{" "}
+                          {result.unit && `- Unit ${result.unit}`}
                         </p>
                       </div>
                       <div className="flex items-center gap-1 px-2.5 py-1 bg-gray-100 rounded-full">
@@ -503,7 +555,8 @@ const StudentProfileData: React.FC = () => {
                               {countTrueQuestion(
                                 result?.total_questions ?? 0,
                                 result.score ?? 0
-                              )}%
+                              )}
+                              %
                             </span>
                           </div>
                           <div className="flex font-bold text-gray-900">
@@ -522,23 +575,30 @@ const StudentProfileData: React.FC = () => {
                       <div className="h-3 w-full bg-gray-100 rounded-full overflow-hidden">
                         <div
                           className={`h-full rounded-full bg-gradient-to-r ${getScoreColorPractice(
-                             result?.total_questions ?? 0,
-                                result.score ?? 0
+                            result?.total_questions ?? 0,
+                            result.score ?? 0
                           )}`}
-                          style={{ width: `${countTrueQuestion(result?.total_questions ?? 0, result.score ?? 0)}%` }}
+                          style={{
+                            width: `${countTrueQuestion(
+                              result?.total_questions ?? 0,
+                              result.score ?? 0
+                            )}%`,
+                          }}
                         />
                       </div>
 
                       {/* Score Label */}
                       <p className="text-right text-xs mt-1 font-medium text-gray-600">
-                        {getScoreLabel2(   result?.total_questions ?? 0,
-                                result.score ?? 0)}
+                        {getScoreLabel2(
+                          result?.total_questions ?? 0,
+                          result.score ?? 0
+                        )}
                       </p>
                       <p className="text-left text-md mt-1 font-medium text-gray-600">
                         Date: {String(result?.created_at).split("T")[0]}
                       </p>
 
-                        <p className="text-left text-md mt-1 font-medium text-gray-600">
+                      <p className="text-left text-md mt-1 font-medium text-gray-600">
                         Finish Time: {formatTime(result?.finish_time || 0)}
                       </p>
                     </div>
