@@ -14,7 +14,7 @@ const AdminLayout = () => {
             <div className=" xl:w-[80%] w-[90%] mx-auto">
                 <Outlet />
             </div>
-            <Link to='/admin/login' className="bg-red-500 h-[35px] leading-[35px] fixed top-0 right-0  px-4 text-white">Logout</Link>
+            <Link to='/admin/login' className="bg-red-500 h-[45px] leading-[45px] rounded-bl-3xl fixed top-0 right-0  px-8 text-white">Logout</Link>
 
         </div>
     )
