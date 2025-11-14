@@ -250,13 +250,13 @@ export default function PlacementTestQuestions() {
   const filteredQuestions = questions.filter(
     (question) => question.Section === examType
   );
-  const sectionContent = Array.from(
-    new Set(
-      filteredQuestions
-        .map((q) => q.content)
-        .filter((c) => c && c.trim() !== "")
-    )
-  );
+  // const sectionContent = Array.from(
+  //   new Set(
+  //     filteredQuestions
+  //       .map((q) => q.content)
+  //       .filter((c) => c && c.trim() !== "")
+  //   )
+  // );
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
