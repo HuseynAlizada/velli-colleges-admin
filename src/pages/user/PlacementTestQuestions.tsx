@@ -58,13 +58,13 @@ export default function PlacementTestQuestions() {
   const navigate = useNavigate();
 
   const getLevel = (score: number) => {
-  if (score <= 25) return "A1";
-  if (score <= 45) return "A2";
-  if (score <= 60) return "B1";
-  if (score <= 75) return "B1+";
-  if (score <= 100) return "B2";
-  return "";
-};
+    if (score <= 25) return "A1";
+    if (score <= 45) return "A2";
+    if (score <= 60) return "B1";
+    if (score <= 75) return "B1+";
+    if (score <= 100) return "B2";
+    return "";
+  };
 
   // Timer Logic
   useEffect(() => {
@@ -250,8 +250,13 @@ export default function PlacementTestQuestions() {
   const filteredQuestions = questions.filter(
     (question) => question.Section === examType
   );
-  const sectionContent =
-    filteredQuestions.length > 0 ? filteredQuestions[0].content : null;
+  const sectionContent = Array.from(
+    new Set(
+      filteredQuestions
+        .map((q) => q.content)
+        .filter((c) => c && c.trim() !== "")
+    )
+  );
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -346,34 +351,6 @@ export default function PlacementTestQuestions() {
           </div>
         ) : (
           <div className="space-y-12">
-            {sectionContent && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-2xl p-8 shadow-md mb-12"
-              >
-                {examType === "Reading" && (
-                  <div className="mb-6 text-gray-700">
-                    <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                      Reading Passage
-                    </h2>
-                    <p>{sectionContent}</p>
-                  </div>
-                )}
-                {examType === "Listening" && (
-                  <div className="mb-6">
-                    <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                      Listening Audio
-                    </h2>
-                    <audio controls className="w-full max-w-md mx-auto">
-                      <source src={sectionContent} type="audio/mpeg" />
-                      Your browser does not support the audio tag.
-                    </audio>
-                  </div>
-                )}
-              </motion.div>
-            )}
-
             {isSubmitted && totalScore !== null && (
               <div className="text-center mb-12">
                 <h2 className="text-2xl font-semibold text-gray-900">
@@ -390,45 +367,83 @@ export default function PlacementTestQuestions() {
                 (option) => question[`Option ${option}` as keyof Question]
               );
 
+              // 🔥 Content yalnız ilk dəfə görünsün
+              const showContent =
+                question.content &&
+                question.content.trim() !== "" &&
+                filteredQuestions.findIndex(
+                  (q) => q.content === question.content
+                ) === index;
+
               return (
-                <motion.div
-                  key={questionKey}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white rounded-2xl p-8 shadow-md"
-                >
-                  <h2 className="text-2xl font-semibold text-gray-900 mb-8">
-                    {index + 1}. {question.Question}
-                  </h2>
+                <div key={questionKey}>
+                  {/* 🔥 Content yalnız bir dəfə göstərilir */}
+                  {showContent && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="bg-white rounded-2xl p-8 shadow-md mb-8"
+                    >
+                      {examType === "Reading" && (
+                        <>
+                          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                            Reading Passage
+                          </h2>
+                          <p className="text-gray-700">{question.content}</p>
+                        </>
+                      )}
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {availableOptions.map((option) => {
-                      const isOptionSelected = selectedAnswer === option;
+                      {examType === "Listening" && (
+                        <>
+                          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                            Listening Audio
+                          </h2>
+                          <audio controls className="w-full max-w-md mx-auto">
+                            <source src={question.content} type="audio/mpeg" />
+                          </audio>
+                        </>
+                      )}
+                    </motion.div>
+                  )}
 
-                      return (
-                        <button
-                          key={option}
-                          onClick={() =>
-                            handleAnswerSelect(questionKey, option)
-                          }
-                          disabled={isSubmitted}
-                          className={`relative overflow-hidden px-6 py-4 rounded-full text-left transition-all duration-200 group hover:shadow-md
-                                                        ${
-                                                          isOptionSelected
-                                                            ? "bg-indigo-600 text-white"
-                                                            : "bg-gray-50 text-gray-900 hover:bg-gray-100"
-                                                        }`}
-                        >
-                          <span className="font-medium">
-                            {option}.{" "}
-                            {question[`Option ${option}` as keyof Question]}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </motion.div>
+                  {/* 🔥 Sual və variantlar hissəsi — olduğu kimi qalır */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-white rounded-2xl p-8 shadow-md mb-8"
+                  >
+                    <h2 className="text-2xl font-semibold text-gray-900 mb-8">
+                      {index + 1}. {question.Question}
+                    </h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {availableOptions.map((option) => {
+                        const isOptionSelected = selectedAnswer === option;
+                        return (
+                          <button
+                            key={option}
+                            onClick={() =>
+                              handleAnswerSelect(questionKey, option)
+                            }
+                            disabled={isSubmitted}
+                            className={`relative overflow-hidden px-6 py-4 rounded-full transition-all duration-200 group hover:shadow-md
+                  ${
+                    isOptionSelected
+                      ? "bg-indigo-600 text-white"
+                      : "bg-gray-50 text-gray-900 hover:bg-gray-100"
+                  }`}
+                          >
+                            <span className="font-medium">
+                              {option}.{" "}
+                              {question[`Option ${option}` as keyof Question]}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                </div>
               );
             })}
           </div>
@@ -493,10 +508,7 @@ export default function PlacementTestQuestions() {
                 </h3>
 
                 <h3 className="text-xl font-semibold text-gray-900">
-                  Your Level:{getLevel(totalScore??0)}
-                 
-
-
+                  Your Level:{getLevel(totalScore ?? 0)}
                 </h3>
               </div>
               <div className="space-y-2">

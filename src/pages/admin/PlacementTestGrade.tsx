@@ -16,6 +16,16 @@ const PlacementTestGrade = () => {
     direction: "ascending" | "descending";
   } | null>(null);
 
+
+  const getLevel = (score: number) => {
+    if (score <= 25) return "A1";
+    if (score <= 45) return "A2";
+    if (score <= 60) return "B1";
+    if (score <= 75) return "B1+";
+    if (score <= 100) return "B2";
+    return "";
+  };
+
   // Get unique levels for filter dropdown
   // const uniqueLevels = results ? [...new Set(results.map((result) => result.student_level))] : []
 
@@ -304,6 +314,9 @@ const PlacementTestGrade = () => {
                         </p>
                         <p className="text-left text-md mt-1 font-medium text-gray-600">
                           Finish Time: {formatTime(result?.finish_time || 0)}
+                        </p>
+                        <p className="text-left text-md mt-1 font-medium text-gray-600">
+                          Level: {getLevel(result.total_score ?? 0)}
                         </p>
                       </div>
 
