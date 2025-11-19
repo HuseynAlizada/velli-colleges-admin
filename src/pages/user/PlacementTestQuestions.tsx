@@ -938,18 +938,16 @@ export default function PlacementTestQuestions() {
                             controls
                             className="w-full max-w-md mx-auto"
                             onPlay={(e) => {
-                              const newCount = (listeningPlayCount[question.content] || 0) + 1;
-                              setListeningPlayCount(prev => ({ ...prev, [question.content]: newCount }));
+                              const key = String(questionKey);
+                              const newCount = (listeningPlayCount[key] || 0) + 1;
+                              setListeningPlayCount(prev => ({ ...prev, [key]: newCount }));
                               if (newCount > 2) e.currentTarget.pause();
                             }}
                           >
-                            {listeningPlayCount[question.content] >= 2 && (
-                              (e: any) => e.currentTarget.pause()
-                            )}
                             <source src={question.content} type="audio/mpeg" />
                           </audio>
 
-                          {(listeningPlayCount[question.content] || 0) >= 2 && (
+                          {(listeningPlayCount[String(questionKey)] || 0) >= 2 && (
                             <p className="text-red-600 text-center mt-2">
                               You cannot listen more than 2 times.
                             </p>
