@@ -249,7 +249,10 @@ export default function AddStudent() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "placement_test" ? (value === "true") : value,
+    } as any));
   };
 
   const handlePhoneChange = (name: string) => (value: string) => {
@@ -473,9 +476,6 @@ export default function AddStudent() {
                     {level.name}
                   </option>
                 ))}
-              </select>
-            </div>
-
             <div className="space-y-2">
               <label
                 htmlFor="level"
@@ -486,17 +486,19 @@ export default function AddStudent() {
               <select
                 id="placement_test"
                 name="placement_test"
-                value={formData.placement_test}
+                value={String(formData.placement_test)}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                 
               >
-                <option value={false}>Choose Level</option>
+                <option value="false">Choose Level</option>
                 {placementTest.map((level) => (
-                  <option key={level.name} value={level.id}>
+                  <option key={level.name} value={String(level.id)}>
                     {level.name}
                   </option>
                 ))}
+              </select>
+            </div>
               </select>
             </div>
 
