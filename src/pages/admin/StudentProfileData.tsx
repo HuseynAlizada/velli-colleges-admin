@@ -155,6 +155,16 @@ setResults(
     // No cleanup needed since this effect only runs once on mount
   }, []);
 
+
+    const getLevel = (score: number) => {
+    if (score <= 25) return "A1";
+    if (score <= 45) return "A2";
+    if (score <= 60) return "B1";
+    if (score <= 75) return "B1+";
+    if (score <= 100) return "B2";
+    return "";
+  };
+
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -412,6 +422,14 @@ const addToStock = async (student: StudentData | undefined, stock_value: boolean
                           <span className="font-bold text-gray-900">
                             {placementTestResults?.total_score?.toFixed(2)}%
                           </span>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm text-gray-600">Level</span>
+                        <div className="flex items-center gap-1">
+                          <Award className="w-4 h-4 text-indigo-500" />
+                          
+                          <span>{getLevel(placementTestResults?.total_score ?? 0)}</span>
                         </div>
                       </div>
 
