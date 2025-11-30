@@ -12,18 +12,24 @@ const levels = [
   { id: "a2", name: "A2" },
   { id: "b1", name: "B1" },
   { id: "b1+", name: "B1+" },
-  { id: "b2", name: "B2" }
+  { id: "b2", name: "B2" },
+  // { id: "placement-test", name: "Placement Test" },
+  // {id:"kids", name:"Kids" },
 ];
 
-const satLevels=[
+const placementTest = [{ id: true, name: "Placement Test" }];
+const kidsTest = [{ id: "kids-test", name: "Kids" }];
+const ieltsTofel = [{ id: "ielts", name: "IELTS" },{ id: "tofel", name: "TOFEL" }];
+
+const satLevels = [
   { id: "sat-placement-test-medium", name: "SAT Placement Test Medium" },
   { id: "sat-placement-test-hard", name: "SAT Placement Test Hard" },
-]
+];
 
-const branches=[
- {id:"hazi-aslanov", name:"Hazi Aslanov"},
- {id:"inqilab", name:"Inqilab"}
-]
+const branches = [
+  { id: "hazi-aslanov", name: "Hazi Aslanov" },
+  { id: "inqilab", name: "Inqilab" },
+];
 
 export default function AddStudent() {
   const { id } = useParams();
@@ -43,9 +49,10 @@ export default function AddStudent() {
     imageUrl: "",
     studentSchool: "",
     studentPurpose: "",
-    branch:"",
-    sat_level:"",
-    stock:false
+    branch: "",
+    sat_level: "",
+    placement_test:false,
+    stock: false,
   });
 
   const addStudentExamCounts = async (studentId: string) => {
@@ -93,7 +100,8 @@ export default function AddStudent() {
           studentPurpose: data.student_purpose || "",
           branch: data.branch || "",
           sat_level: data.sat_level || "",
-          stock:data.stock || false
+          placement_test: data.placement_test || false,
+          stock: data.stock || false,
         });
       } catch (err) {
         console.log(err);
@@ -171,9 +179,10 @@ export default function AddStudent() {
               image_url: imageUrl,
               student_school: formData.studentSchool,
               student_purpose: formData.studentPurpose,
-              branch:formData.branch,
-              sat_level:formData.sat_level,
-              stock:formData.stock
+              branch: formData.branch,
+              placement_test: formData.placement_test,
+              sat_level: formData.sat_level,
+              stock: formData.stock,
             })
             .eq("id", edit)
         : supabase
@@ -189,10 +198,10 @@ export default function AddStudent() {
               image_url: imageUrl,
               student_school: formData.studentSchool,
               student_purpose: formData.studentPurpose,
-              branch:formData.branch,
-              sat_level:formData.sat_level,
-              stock:formData.stock
-
+              placement_test: formData.placement_test,
+              branch: formData.branch,
+              sat_level: formData.sat_level,
+              stock: formData.stock,
             })
             .select();
 
@@ -206,10 +215,9 @@ export default function AddStudent() {
       }
 
       toast.success(`Student ${action === "update" ? "Updated" : "Added"}!`);
-      if(formData.stock) navigate("/admin/stock-dashboard");
-      else{
-      navigate("/admin/dashboard");
-
+      if (formData.stock) navigate("/admin/stock-dashboard");
+      else {
+        navigate("/admin/dashboard");
       }
 
       setFormData({
@@ -224,9 +232,10 @@ export default function AddStudent() {
         imageUrl: "",
         studentSchool: "",
         studentPurpose: "",
-        branch:"",
-        sat_level:"",
-        stock:false
+        branch: "",
+        sat_level: "",
+        placement_test:false,
+        stock: false,
       });
     } catch (err) {
       console.error("Error saving student data:", err);
@@ -350,74 +359,8 @@ export default function AddStudent() {
                 placeholder="+994 050 562 53 06"
               />
             </div>
-          </div>
 
-          {/* Right Column */}
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <label
-                htmlFor="level"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Level
-              </label>
-              <select
-                id="level"
-                name="level"
-                value={formData.level}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                required
-              >
-                <option value="">Choose Level</option>
-                {levels.map((level) => (
-                  <option key={level.id} value={level.name}>
-                    {level.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-  <div className="space-y-2">
-              <label
-                htmlFor="level"
-                className="block text-sm font-medium text-gray-700"
-              >
-                SAT Level
-              </label>
-              <select
-                id="sat_level"
-                name="sat_level"
-                value={formData.sat_level}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                required
-              >
-                <option value="">Choose Level</option>
-                {satLevels.map((level) => (
-                  <option key={level.id} value={level.name}>
-                    {level.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Password
-              </label>
-              <PasswordInput
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="space-y-2">
+              <div className="space-y-2">
               <label
                 htmlFor="studentSchool"
                 className="block text-sm font-medium text-gray-700"
@@ -481,38 +424,172 @@ export default function AddStudent() {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
               />
             </div>
-            
           </div>
 
-
-
-
-
-
-          
-           <div className="space-y-2">
+          {/* Right Column */}
+          <div className="space-y-6">
+            <div className="space-y-2">
               <label
                 htmlFor="level"
                 className="block text-sm font-medium text-gray-700"
               >
-                Branch
+                Level
               </label>
               <select
-                id="branch"
-                name="branch"
-                value={formData.branch}
+                id="level"
+                name="level"
+                value={formData.level}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                required
+                
               >
                 <option value="">Choose Level</option>
-                {branches.map((level) => (
+                {levels.map((level) => (
                   <option key={level.id} value={level.name}>
                     {level.name}
                   </option>
                 ))}
               </select>
             </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="level"
+                className="block text-sm font-medium text-gray-700"
+              >
+                SAT Level
+              </label>
+              <select
+                id="sat_level"
+                name="sat_level"
+                value={formData.sat_level}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                
+              >
+                <option value="">Choose Level</option>
+                {satLevels.map((level) => (
+                  <option key={level.id} value={level.name}>
+                    {level.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="level"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Placement test
+              </label>
+              <select
+                id="placement_test"
+                name="placement_test"
+                value={formData.placement_test}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                
+              >
+                <option value={false}>Choose Level</option>
+                {placementTest.map((level) => (
+                  <option key={level.name} value={level.id}>
+                    {level.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+  <div className="space-y-2">
+              <label
+                htmlFor="level"
+                className="block text-sm font-medium text-gray-700"
+              >
+                IELTS TOFEL test
+              </label>
+              <select
+                id="level"
+                name="level"
+                value={formData.level}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                
+              >
+                <option value="">Choose Level</option>
+                {ieltsTofel.map((level) => (
+                  <option key={level.id} value={level.name}>
+                    {level.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+
+            <div className="space-y-2">
+              <label
+                htmlFor="level"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Kids test
+              </label>
+              <select
+                id="level"
+                name="level"
+                value={formData.level}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                
+              >
+                <option value="">Choose Level</option>
+                {kidsTest.map((level) => (
+                  <option key={level.id} value={level.name}>
+                    {level.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+              <PasswordInput
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </div>
+
+          
+          </div>
+
+          <div className="space-y-2">
+            <label
+              htmlFor="level"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Branch
+            </label>
+            <select
+              id="branch"
+              name="branch"
+              value={formData.branch}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+              required
+            >
+              <option value="">Choose Level</option>
+              {branches.map((level) => (
+                <option key={level.id} value={level.name}>
+                  {level.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Action Buttons */}

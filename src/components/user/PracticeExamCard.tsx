@@ -53,9 +53,12 @@ const PracticeExamCard = ({
     (async () => {
       try {
         const { data, error } = await supabase.from("admin_data").select("*");
+    const dataLocale=localStorage.getItem("studentBranch")
+    const examPassword=data?.filter((item)=>item.branch===dataLocale)
+    console.log(examPassword, 'examPassword')
+
         if (error) throw new Error();
-        console.log(data);
-        setCorrectPassword(data);
+        setCorrectPassword(examPassword || null);
       } catch (err) {
         console.log(err);
       }

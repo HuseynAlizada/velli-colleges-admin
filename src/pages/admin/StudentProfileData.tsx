@@ -8,6 +8,7 @@ import "./style.css";
 const StudentProfileData: React.FC = () => {
   const [student, setStudent] = useState<StudentData | undefined>(undefined);
   const [results, setResults] = useState<ExamResult[] | null>(null);
+  const [placementTestResults, setPlacementTestResults] = useState<examResults | null>(null);
   const [practiceResults, setPracticeResults] = useState<examResults[] | null>(
     null
   );
@@ -41,6 +42,27 @@ const StudentProfileData: React.FC = () => {
     fetchStudents();
   }, []);
 
+
+
+   useEffect(() => {
+    const fetchPlacementTest = async () => {
+      const { data, error } = await supabase
+        .from("placement_test_results")
+        .select("*")
+        .eq("id", studentId)
+        .single();
+      if (error) {
+        console.error("Error fetching students:", error);
+      } else {
+        console.log(data, "placement test data");
+        setPlacementTestResults(data);
+      }
+    };
+
+    fetchPlacementTest();
+  }, []);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -71,8 +93,17 @@ const StudentProfileData: React.FC = () => {
           },
           []
         );
+console.log(data, 'data item ')
+ // Sort by created_at DESC (newest first)
+setResults(
+  data
+    .slice()
+    .sort(
+      (a: ExamResult, b: ExamResult) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    )
+);
 
-        setResults(data.reverse());
 
         if (uniqueData.length > 0) {
           setResultScore(
@@ -331,6 +362,157 @@ const addToStock = async (student: StudentData | undefined, stock_value: boolean
             </div>
           </div>
 
+          {/* Placement Test */}
+
+            <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-foreground border-b border-border pb-2">
+              Recent Placement Test Results
+            </h2>
+            {isLoading && (
+              <div className="flex flex-col items-center justify-center py-12 bg-white rounded-xl shadow-sm">
+                <Loader2 className="w-10 h-10 text-indigo-500 animate-spin mb-4" />
+                <p className="text-gray-600">Loading exam results...</p>
+              </div>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              
+              <div>{placementTestResults &&
+                   <motion.div
+             
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                 
+                  className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 line-clamp-1">
+                          {placementTestResults?.student_name}
+                        </h3>
+                        <p className="text-gray-500 text-sm">
+                          Exam Name: Plcament Test
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1 px-2.5 py-1 bg-gray-100 rounded-full">
+                        <BookOpen className="w-4.5 h-4.5 text-gray-600" />
+                        <span className="text-xl font-medium text-gray-700">
+                          {/* {result.student_level.toUpperCase()} */}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Score Display */}
+                    <div className="mb-4">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm text-gray-600">Score</span>
+                        <div className="flex items-center gap-1">
+                          <Award className="w-4 h-4 text-indigo-500" />
+                          <span className="font-bold text-gray-900">
+                            {placementTestResults?.total_score?.toFixed(2)}%
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm text-gray-600">Reading</span>
+                        <div className="flex items-center gap-1">
+                          <Award className="w-4 h-4 text-indigo-500" />
+                          <span className="font-bold text-gray-900">
+                            {placementTestResults?.reading} / {placementTestResults?.reading_count}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm text-gray-600">Listening</span>
+                        <div className="flex items-center gap-1">
+                          <Award className="w-4 h-4 text-indigo-500" />
+                          <span className="font-bold text-gray-900">
+                            {placementTestResults?.listening} / {placementTestResults?.listening_count}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm text-gray-600">Grammar</span>
+                        <div className="flex items-center gap-1">
+                          <Award className="w-4 h-4 text-indigo-500" />
+                          <span className="font-bold text-gray-900">
+                            {placementTestResults?.grammar} / {placementTestResults?.grammar_count}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm text-gray-600">
+                          Vocabulary
+                        </span>
+                        <div className="flex items-center gap-1">
+                          <Award className="w-4 h-4 text-indigo-500" />
+                          <span className="font-bold text-gray-900">
+                            {placementTestResults?.vocabulary} /{" "}
+                            {placementTestResults?.vocabulary_count}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm text-gray-600">
+                          Finish Time
+                        </span>
+                        <div className="flex items-center gap-1">
+                          <span className="font-bold text-gray-900">
+                            {formatTime(placementTestResults?.finish_time || 0)}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Progress Bar */}
+                      <div className="h-3 w-full bg-gray-100 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full bg-gradient-to-r ${getScoreColor(
+                            placementTestResults?.total_score ?? 0
+                          )}`}
+                          style={{ width: `${placementTestResults?.total_score ?? 0}%` }}
+                        />
+                      </div>
+
+                      {/* Score Label */}
+
+                      <div className="flex justify-between items-center mt-4">
+                        <p className="text-left text-sm  font-medium text-gray-600">
+                          Date: {String(placementTestResults?.created_at).split("T")[0]}
+                        </p>
+
+                       
+                      </div>
+                    </div>
+
+                    {/* Additional Info */}
+                    {/* <div className="pt-4 border-t border-gray-100">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-500">ID: {result.id}</span>
+                          <span className="text-gray-500">Rank: {index + 1}</span>
+                        </div>
+                      </div> */}
+                  </div>
+                </motion.div>
+                }</div>
+
+             
+          
+            </div>
+
+            {results?.length === 0 && !isLoading && (
+              <div className="flex flex-col items-center justify-center py-20">
+                <p className="text-gray-700 text-lg font-semibold">
+                  ❌ Level exam results not found
+                </p>
+              </div>
+            )}
+          </div>
+
           {/* Exam Results */}
           <div className="space-y-4">
             <h2 className="text-xl font-semibold text-foreground border-b border-border pb-2">
@@ -377,7 +559,7 @@ const addToStock = async (student: StudentData | undefined, stock_value: boolean
                         <div className="flex items-center gap-1">
                           <Award className="w-4 h-4 text-indigo-500" />
                           <span className="font-bold text-gray-900">
-                            {result.student_score.toFixed(2)}%
+                            {Math.round(result.student_score)}%
                           </span>
                         </div>
                       </div>

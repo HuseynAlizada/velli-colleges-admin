@@ -113,7 +113,8 @@ export interface StudentData {
     student_purpose?: string,
     branch?: string,
     sat_level?: string,
-    stock?: boolean
+    stock?: boolean,
+    placement_test?: boolean
 }
 // Student End
 
@@ -220,8 +221,11 @@ export type examResults = {
     vocabulary_count?: number,
     total_questions?: number,
     unit?: string,
-    finish_time?: number
+    finish_time?: number,
 }
+
+
+
 
 
 // RESULTS END

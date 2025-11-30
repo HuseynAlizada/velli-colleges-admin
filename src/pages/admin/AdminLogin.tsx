@@ -29,7 +29,7 @@ const AdminLogin = () => {
 
     const handleLogin = () => {
             const user = userData?.find((u) => u.email === username && u.password === password && u.approved === true);
-        
+        console.log(user, 'kecdi');
         if (user) {
             const token = btoa(`${username}:${password}`);
             localStorage.setItem("branch", JSON.stringify(user.branch));
