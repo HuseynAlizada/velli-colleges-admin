@@ -19,7 +19,10 @@ const levels = [
 
 const placementTest = [{ id: true, name: "Placement Test" }];
 const kidsTest = [{ id: "kids-test", name: "Kids" }];
-const ieltsTofel = [{ id: "ielts", name: "IELTS" },{ id: "tofel", name: "TOFEL" }];
+const ieltsTofel = [
+  { id: "ielts", name: "IELTS" },
+  { id: "tofel", name: "TOFEL" },
+];
 
 const satLevels = [
   { id: "sat-placement-test-medium", name: "SAT Placement Test Medium" },
@@ -51,7 +54,7 @@ export default function AddStudent() {
     studentPurpose: "",
     branch: "",
     sat_level: "",
-    placement_test:false,
+    placement_test: false,
     stock: false,
   });
 
@@ -234,7 +237,7 @@ export default function AddStudent() {
         studentPurpose: "",
         branch: "",
         sat_level: "",
-        placement_test:false,
+        placement_test: false,
         stock: false,
       });
     } catch (err) {
@@ -249,10 +252,13 @@ export default function AddStudent() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: name === "placement_test" ? (value === "true") : value,
-    } as any));
+    setFormData(
+      (prev) =>
+        ({
+          ...prev,
+          [name]: name === "placement_test" ? value === "true" : value,
+        } as any)
+    );
   };
 
   const handlePhoneChange = (name: string) => (value: string) => {
@@ -363,7 +369,7 @@ export default function AddStudent() {
               />
             </div>
 
-              <div className="space-y-2">
+            <div className="space-y-2">
               <label
                 htmlFor="studentSchool"
                 className="block text-sm font-medium text-gray-700"
@@ -444,7 +450,6 @@ export default function AddStudent() {
                 value={formData.level}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                
               >
                 <option value="">Choose Level</option>
                 {levels.map((level) => (
@@ -468,7 +473,6 @@ export default function AddStudent() {
                 value={formData.sat_level}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                
               >
                 <option value="">Choose Level</option>
                 {satLevels.map((level) => (
@@ -476,33 +480,33 @@ export default function AddStudent() {
                     {level.name}
                   </option>
                 ))}
-            <div className="space-y-2">
-              <label
-                htmlFor="level"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Placement test
-              </label>
-              <select
-                id="placement_test"
-                name="placement_test"
-                value={String(formData.placement_test)}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                
-              >
-                <option value="false">Choose Level</option>
-                {placementTest.map((level) => (
-                  <option key={level.name} value={String(level.id)}>
-                    {level.name}
-                  </option>
-                ))}
+              
               </select>
             </div>
-              </select>
-            </div>
+              <div className="space-y-2">
+                  <label
+                    htmlFor="placement_test"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Placement test
+                  </label>
+                  <select
+                    id="placement_test"
+                    name="placement_test"
+                    value={String(formData.placement_test)}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                  >
+                    <option value="false">Choose Level</option>
+                    {placementTest.map((level) => (
+                      <option key={level.name} value={String(level.id)}>
+                        {level.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-  <div className="space-y-2">
+            <div className="space-y-2">
               <label
                 htmlFor="level"
                 className="block text-sm font-medium text-gray-700"
@@ -515,7 +519,6 @@ export default function AddStudent() {
                 value={formData.level}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                
               >
                 <option value="">Choose Level</option>
                 {ieltsTofel.map((level) => (
@@ -525,7 +528,6 @@ export default function AddStudent() {
                 ))}
               </select>
             </div>
-            
 
             <div className="space-y-2">
               <label
@@ -540,7 +542,6 @@ export default function AddStudent() {
                 // value={formData.level}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                
               >
                 <option value="">Choose Level</option>
                 {kidsTest.map((level) => (
@@ -565,8 +566,6 @@ export default function AddStudent() {
                 onChange={handleChange}
               />
             </div>
-
-          
           </div>
 
           <div className="space-y-2">
