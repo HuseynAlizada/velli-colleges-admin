@@ -442,7 +442,7 @@ export default function AddStudent() {
                 htmlFor="level"
                 className="block text-sm font-medium text-gray-700"
               >
-                Level
+                General English
               </label>
               <select
                 id="level"
@@ -465,7 +465,7 @@ export default function AddStudent() {
                 htmlFor="level"
                 className="block text-sm font-medium text-gray-700"
               >
-                SAT Level
+               SAT Level Test
               </label>
               <select
                 id="sat_level"
@@ -511,7 +511,7 @@ export default function AddStudent() {
                 htmlFor="level"
                 className="block text-sm font-medium text-gray-700"
               >
-                IELTS TOFEL test
+               IELTS TOEFL Program
               </label>
               <select
                 id="level"
@@ -534,7 +534,7 @@ export default function AddStudent() {
                 htmlFor="level"
                 className="block text-sm font-medium text-gray-700"
               >
-                Kids test
+                Kids Program
               </label>
               <select
                 id="level"
