@@ -150,7 +150,8 @@ export interface RequestedExams extends Exam {
     locked: boolean,
     student_id: number,
     sended?: boolean,
-    exam_type?: string
+    exam_type?: string,
+    student_name?: string,
 }
 
 // End RequestedExams

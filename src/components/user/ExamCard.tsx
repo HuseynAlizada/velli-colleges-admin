@@ -59,6 +59,7 @@ export default function ExamCard({ exam }: { exam: Exam }) {
           .single();
         if (error) throw error;
         setUserData(data);
+        console.log(data, "userData");
       } catch (err) {
         console.log(err);
       }
@@ -102,6 +103,7 @@ export default function ExamCard({ exam }: { exam: Exam }) {
         file_url: exam.file_url,
         locked: false,
         branch: userData?.branch,
+        student_name: userData?.name,
       });
 
       if (error) throw error;

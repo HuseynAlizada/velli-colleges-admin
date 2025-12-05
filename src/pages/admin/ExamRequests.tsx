@@ -32,9 +32,21 @@ const ExamRequests = () => {
   };
 
   // Filter exams by title (case-insensitive)
-  const filteredExams = requestedExams?.filter((exam) =>
-    exam.title?.toLowerCase().includes(searchTerm.toLowerCase())
+  // const filteredExams = requestedExams?.filter((exam) =>
+  //   exam?.student_name?.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
+const filteredExams = requestedExams?.filter((exam) => {
+  const term = searchTerm?.toLowerCase() || "";
+
+
+  return (
+    (exam?.title?.toLowerCase() || "").includes(term) ||
+    (exam?.student_name?.toLowerCase() || "").includes(term) ||
+    (exam?.level?.toLowerCase() || "").includes(term)
   );
+});
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50/50 to-white p-8 py-20 flex flex-col items-center">

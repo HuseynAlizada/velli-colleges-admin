@@ -13,9 +13,9 @@ const ExamRequest = ({
   onDataChange: () => void; // Callback to notify parent of data change
 }) => {
   const [approveExam, setApproveExam] = useState<boolean>(false);
-  const [userData, setUserData] = useState<StudentData  | null>(null); // Define type for userData if possible
+  const [userData, setUserData] = useState<StudentData | null>(null); // Define type for userData if possible
 
-  const colors = levelColors[ exam?.level || 'C1'];
+  const colors = levelColors[exam?.level || "C1"];
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -39,7 +39,7 @@ const ExamRequest = ({
 
   const ApproveExam = async () => {
     try {
-      const {  error } = await supabase
+      const { error } = await supabase
         .from("approved-exams")
         .update({
           student_id: exam?.student_id,
@@ -65,6 +65,19 @@ const ExamRequest = ({
     }
   };
 
+  const deleteRequst = async () => {
+    try {
+      const { error } = await supabase
+        .from("approved-exams")
+        .delete()
+        .eq("id", exam?.id);
+ApproveExam()
+      if (error) throw error;
+    } catch (error) {
+      console.error("Error deleting exam request:", error);
+    }
+  };
+
   return (
     <>
       {exam && !exam.locked && (
@@ -77,12 +90,19 @@ const ExamRequest = ({
           {/* Header */}
           <div className="flex justify-between items-start mb-6">
             <div className="space-y-1.5">
-              <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-md font-medium ${colors.badge}`}>
+              <div
+                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-md font-medium ${colors.badge}`}
+              >
                 Level: {exam.level}
               </div>
-              <h3 className="text-xl font-semibold text-gray-900">{exam.title}</h3>
+              <h3 className="text-xl font-semibold text-gray-900">
+                {exam.title}
+              </h3>
             </div>
-            <motion.div whileHover={{ rotate: 15, scale: 1.1 }} transition={{ type: "spring", stiffness: 300 }}>
+            <motion.div
+              whileHover={{ rotate: 15, scale: 1.1 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               <GraduationCap className={`w-6 h-6 ${colors.icon}`} />
             </motion.div>
           </div>
@@ -120,16 +140,26 @@ const ExamRequest = ({
           <div className="pt-4 border-t border-gray-200">
             <div className="flex items-center gap-2 text-gray-600">
               <p>
-                <span className="font-medium text-gray-900">Student Name:</span> {userData?.name || "Loading..."}
+                <span className="font-medium text-gray-900">Student Name:</span>{" "}
+                {userData?.name || "Loading..."}
               </p>
             </div>
           </div>
           <div className="pt-4 border-t border-gray-200">
-            <div className="flex items-center gap-2 text-gray-600">
+            <div className="flex items-center justify-between gap-2 text-gray-600">
               <p>
-                <span className="font-medium text-gray-900">Student Level:</span>{" "}
+                <span className="font-medium text-gray-900">
+                  Student Level:
+                </span>{" "}
                 {userData?.level?.toUpperCase() || "Loading..."}
               </p>
+
+              <button
+                onClick={deleteRequst}
+                className="bg-red-600 cursor-pointer rounded-lg px-3 py-1 text-white text-sm"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </motion.div>
