@@ -3,7 +3,7 @@ import { supabase } from "../../utils/supabase-client";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 import { PracticeExamOptions } from "../../data/examData";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface ExamData {
   selectedExam: string;
@@ -11,12 +11,12 @@ interface ExamData {
   passScore: string;
   duration: string;
   level: string;
+  unit?: string;
 }
 
 export default function ImportPracticeExam() {
   const { id } = useParams();
   const navigate = useNavigate();
-
 
   const [examData, setExamData] = useState<ExamData>({
     selectedExam: "Reading",
@@ -24,6 +24,7 @@ export default function ImportPracticeExam() {
     passScore: "",
     duration: "",
     level: "",
+    unit:""
   });
   const [uploading, setUploading] = useState(false);
   const [editExam] = useState(id || null);
@@ -33,10 +34,23 @@ export default function ImportPracticeExam() {
     { id: "a2", name: "A2" },
     { id: "b1", name: "B1" },
     { id: "b1+", name: "B1+" },
-    { id: "b2", name: "B2" }
-    ];
+    { id: "b2", name: "B2" },
+  ];
 
-
+  const units = [
+    { id: "unit1", name: "Unit 1" },
+    { id: "unit2", name: "Unit 2" },
+    { id: "unit3", name: "Unit 3" },
+    { id: "unit4", name: "Unit 4" },
+    { id: "unit5", name: "Unit 5" },
+    { id: "unit6", name: "Unit 6" },
+    { id: "unit7", name: "Unit 7" },
+    { id: "unit8", name: "Unit 8" },
+    { id: "unit9", name: "Unit 9" },
+    { id: "unit10", name: "Unit 10" },
+    { id: "unit11", name: "Unit 11" },
+    { id: "unit12", name: "Unit 12" },
+  ];
   useEffect(() => {
     const fetchExamData = async () => {
       if (!editExam) return;
@@ -54,6 +68,7 @@ export default function ImportPracticeExam() {
           passScore: data.pass_score,
           duration: data.duration,
           level: data.level,
+          unit: data.unit,
         });
       } catch (err) {
         console.error(err);
@@ -62,17 +77,21 @@ export default function ImportPracticeExam() {
     fetchExamData();
   }, [editExam]);
 
-  const handleChange = (e:React.ChangeEvent<HTMLInputElement>| React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setExamData((prev) => ({ ...prev, [name]: value }));
   };
 
-const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null; // File | null
     setExamData((prev) => ({ ...prev, selectedFile: file })); // TypeScript now accepts this
   };
   const onClose = () => {
-    navigate(-1)
+    navigate(-1);
     setExamData({
       selectedExam: "Reading",
       selectedFile: null,
@@ -82,14 +101,15 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     });
   };
 
-  const handleSubmit = async (e:React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (
       !examData.selectedExam ||
       !examData.selectedFile ||
       !examData.passScore ||
       !examData.duration ||
-      !examData.level
+      !examData.level ||
+      !examData.unit
     ) {
       toast.error("Please fill in all required fields.");
       return;
@@ -100,7 +120,9 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
     // If a new file is selected, upload it
     if (examData.selectedFile && typeof examData.selectedFile !== "string") {
-      const fileName = `exams/${Date.now()}-${(examData.selectedFile as File).name}`;
+      const fileName = `exams/${Date.now()}-${
+        (examData.selectedFile as File).name
+      }`;
       const { error: fileError } = await supabase.storage
         .from("uploads")
         .upload(fileName, examData.selectedFile);
@@ -112,27 +134,35 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         return;
       }
 
-      fileUrl = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/uploads/${fileName}`;
+      fileUrl = `${
+        import.meta.env.VITE_SUPABASE_URL
+      }/storage/v1/object/public/uploads/${fileName}`;
     }
 
     const operation = editExam
       ? supabase
-        .from("practice_exam")
-        .update([{
-          title: examData.selectedExam,
-          exam_file: fileUrl,
-          pass_score: parseInt(examData.passScore),
-          duration: parseInt(examData.duration),
-          level: examData.level,
-        }])
-        .eq("id", editExam)
-      : supabase.from("practice_exam").insert([{
-        title: examData.selectedExam,
-        exam_file: fileUrl,
-        pass_score: parseInt(examData.passScore),
-        duration: parseInt(examData.duration),
-        level: examData.level,
-      }]);
+          .from("practice_exam")
+          .update([
+            {
+              title: examData.selectedExam,
+              exam_file: fileUrl,
+              pass_score: parseInt(examData.passScore),
+              duration: parseInt(examData.duration),
+              level: examData.level,
+              unit: examData.unit,
+            },
+          ])
+          .eq("id", editExam)
+      : supabase.from("practice_exam").insert([
+          {
+            title: examData.selectedExam,
+            exam_file: fileUrl,
+            pass_score: parseInt(examData.passScore),
+            duration: parseInt(examData.duration),
+            level: examData.level,
+            unit: examData.unit,
+          },
+        ]);
 
     const { error: dbError } = await operation;
 
@@ -140,7 +170,9 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       console.error("Database insert/update error:", dbError);
       toast.error("Failed to save exam info!");
     } else {
-      toast.success(editExam ? "Exam updated successfully!" : "Exam added successfully!");
+      toast.success(
+        editExam ? "Exam updated successfully!" : "Exam added successfully!"
+      );
       navigate("/admin/manage-practice-exam");
       // onClose();
     }
@@ -187,7 +219,8 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
               <label className="block text-sm font-medium text-gray-700">
                 Upload Exam File
               </label>
-              {examData.selectedFile && typeof examData.selectedFile === "string" ? (
+              {examData.selectedFile &&
+              typeof examData.selectedFile === "string" ? (
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-gray-600 text-sm">Current File:</span>
                   <a
@@ -259,6 +292,24 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
               </select>
             </div>
 
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Unit
+              </label>
+              <select
+                name="unit"
+                value={examData.unit}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
+              >
+                <option value="">Select Unit</option>
+                {units.map((item) => (
+                  <option key={item.id} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             {/* Buttons */}
             <div className="flex justify-end gap-3 pt-4">
@@ -272,16 +323,17 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
               <button
                 type="submit"
                 disabled={uploading}
-                className={`px-5 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition duration-200 ${uploading ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
+                className={`px-5 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition duration-200 ${
+                  uploading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
                 {editExam
                   ? uploading
                     ? "Updating..."
                     : "Update Exam"
                   : uploading
-                    ? "Uploading..."
-                    : "Upload Exam"}
+                  ? "Uploading..."
+                  : "Upload Exam"}
               </button>
             </div>
           </form>

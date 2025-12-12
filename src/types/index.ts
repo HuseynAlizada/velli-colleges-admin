@@ -55,7 +55,8 @@ export interface Exam {
     total_score: number,
     duration: number,
     level?: string,
-    exam_file?: string
+    exam_file?: string,
+    unit?: string,
 }
 
 
