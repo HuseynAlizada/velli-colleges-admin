@@ -47,7 +47,7 @@ const StudentProfileData: React.FC = () => {
       const { data, error } = await supabase
         .from("placement_test_results")
         .select("*")
-        .eq("id", studentId)
+        .eq("student_id", studentId)
         .single();
       if (error) {
         console.error("Error fetching students:", error);
