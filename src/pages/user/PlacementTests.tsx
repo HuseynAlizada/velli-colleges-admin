@@ -49,7 +49,6 @@ const PlacementTests = () => {
           .eq("id", userId)
           .single();
         if (error) throw error;
-        console.log(data, "data");
         setUserData(data);
       } catch (err) {
         console.log(err);
@@ -61,7 +60,6 @@ const PlacementTests = () => {
   const fetchExams = async () => {
     try {
       const { data, error } = await supabase.from("placement_test").select("*");
-      console.log(userData?.placement_test, "userData");
       if (error) throw error;
       if (userData?.placement_test) {
         setExams(data);

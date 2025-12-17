@@ -54,7 +54,6 @@ const StudentProfileData: React.FC = () => {
       if (error) {
         console.error("Error fetching students:", error);
       } else {
-        console.log(data, "placement test data");
         setPlacementTestResults(data);
       }
     };
@@ -93,7 +92,6 @@ const StudentProfileData: React.FC = () => {
           },
           []
         );
-console.log(data, 'data item ')
  // Sort by created_at DESC (newest first)
 setResults(
   data
@@ -249,7 +247,6 @@ const addToStock = async (student: StudentData | undefined, stock_value: boolean
     else{
       navigate('/admin/stock-dashboard')
     }
-    console.log("Stock updated successfully:", data);
   }
 };
 

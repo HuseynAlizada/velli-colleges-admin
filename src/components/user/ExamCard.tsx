@@ -59,7 +59,6 @@ export default function ExamCard({ exam }: { exam: Exam }) {
           .single();
         if (error) throw error;
         setUserData(data);
-        console.log(data, "userData");
       } catch (err) {
         console.log(err);
       }
@@ -107,7 +106,6 @@ export default function ExamCard({ exam }: { exam: Exam }) {
       });
 
       if (error) throw error;
-      console.log("Exam request submitted successfully!");
       setData("salam");
     } catch (err) {
       console.error("Error submitting exam request:", err);

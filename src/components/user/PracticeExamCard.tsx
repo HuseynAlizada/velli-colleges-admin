@@ -26,14 +26,6 @@ interface PracticeExamCardProps {
   onStartExam?: (examId: number) => void;
 }
 
-interface dataPassword{
-branch:string,
-created_at:string,
-email:string,
-id:number,
-password:string
-}
-
 const PracticeExamCard = ({
   exam,
   index,
@@ -46,19 +38,20 @@ const PracticeExamCard = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputPassword, setInputPassword] = useState("");
   const [error, setError] = useState("");
-  const [correctPassword, setCorrectPassword] = useState<dataPassword[] | null>(null);
+  const [correctPassword, setCorrectPassword] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
       try {
         const { data, error } = await supabase.from("admin_data").select("*");
-    const dataLocale=localStorage.getItem("studentBranch")
-    const examPassword=data?.filter((item)=>item.branch===dataLocale)
-    console.log(examPassword, 'examPassword')
+        const dataLocale = localStorage.getItem("studentBranch");
+        const examPassword = data?.filter(
+          (item) => item.branch === dataLocale
+        )[0]?.password;
 
         if (error) throw new Error();
-        setCorrectPassword(examPassword || null);
+        setCorrectPassword(examPassword || "Family135!");
       } catch (err) {
         console.log(err);
       }
@@ -82,8 +75,7 @@ const PracticeExamCard = ({
   };
 
   const handleSubmitPassword = () => {
-    const correct = correctPassword?.some((item) => item.password === inputPassword);
-console.log(correctPassword, 'correct',inputPassword);
+    const correct = correctPassword === inputPassword;
     if (correct) {
       console.log("✅ Password is correct!");
     } else {
