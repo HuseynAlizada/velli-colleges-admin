@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../../utils/supabase-client";
 import * as XLSX from "xlsx";
-import { Loader2 } from "lucide-react";
+import { Loader2, Rows } from "lucide-react";
 import { motion } from "framer-motion";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
@@ -85,22 +85,37 @@ export default function PracticeExamQuestions() {
           const firstSheetName = workbook.SheetNames[0];
           const worksheet = workbook.Sheets[firstSheetName];
           const jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+          const normalizeRow = (row: any) => {
+            const newRow: any = {};
+            Object.keys(row).forEach((key) => {
+              newRow[key.trim()] = row[key];
+            });
+            return newRow;
+          };
+          const formattedData = jsonData.map((rawRow: any, index: number) => {
+            const row = normalizeRow(rawRow);
 
-          const formattedData = jsonData.map((row: any, index: number) => ({
-            "Question No":
-              row["Question No"] ||
-              row["question_no"] ||
-              row["QuestionNo"] ||
-              index,
-            Question: row["Question"],
-            "Option A": row["Option A"],
-            "Option B": row["Option B"],
-            "Option C": row["Option C"],
-            "Option D": row["Option D"] || undefined,
-            "Correct Option": row["Correct Option"],
-            Section: row["Section"],
-            content: row["content"] || "",
-          }));
+            return {
+              "Question No":
+                row["Question No"] ||
+                row["question_no"] ||
+                row["QuestionNo"] ||
+                index,
+
+              Question: row["Question"],
+
+              "Option A": row["Option A"],
+              "Option B": row["Option B"],
+              "Option C": row["Option C"],
+              "Option D": row["Option D"] || undefined,
+
+              "Correct Option": row["Correct Option"],
+              Section: row["Section"],
+              content: row["content"] || "",
+            };
+          });
+
+          console.log(jsonData, formattedData, "formatted data questions");
           setQuestions(formattedData);
         }
       } catch (err) {
@@ -167,7 +182,7 @@ export default function PracticeExamQuestions() {
 
       if (studentError)
         throw new Error(
-          "Failed to fetch student level: " + studentError.message
+          "Failed to fetch student level: " + studentError.message,
         );
 
       const studentLevel = studentData?.level || "Unknown";
@@ -185,7 +200,7 @@ export default function PracticeExamQuestions() {
           name: studentName,
           total_questions: totalQuestions,
           unit: examUnit, // Add total_questions to the database
-          finish_time:timeLeft
+          finish_time: timeLeft,
         });
 
       if (resultError)
@@ -199,7 +214,7 @@ export default function PracticeExamQuestions() {
 
       if (fetchError)
         throw new Error(
-          "Failed to fetch current exam count: " + fetchError.message
+          "Failed to fetch current exam count: " + fetchError.message,
         );
 
       const currentExamCount = takenExamsData?.practice_count || 0;
@@ -236,14 +251,17 @@ export default function PracticeExamQuestions() {
   };
 
   // Group questions by content or section
-  const groupedQuestions = questions.reduce((acc, question) => {
-    const key = question.content || question.Section || "default"; // Use content or Section as the grouping key
-    if (!acc[key]) {
-      acc[key] = [];
-    }
-    acc[key].push(question);
-    return acc;
-  }, {} as { [key: string]: Question[] });
+  const groupedQuestions = questions.reduce(
+    (acc, question) => {
+      const key = question.content || question.Section || "default"; // Use content or Section as the grouping key
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(question);
+      return acc;
+    },
+    {} as { [key: string]: Question[] },
+  );
 
   if (loading) {
     return (
@@ -277,7 +295,7 @@ export default function PracticeExamQuestions() {
   }
 
   const getScoreLabel = (totalScore: number, totalQuestions: number) => {
-    return (totalScore / totalQuestions)*100 +"%";
+    return (totalScore / totalQuestions) * 100 + "%";
   };
 
   const totalQuestions = questions.length; // Define totalQuestions for use in UI
@@ -324,7 +342,7 @@ export default function PracticeExamQuestions() {
               ([groupKey, groupQuestions]) => {
                 const firstQuestion = groupQuestions[0];
                 const contentType = inferContentType(
-                  firstQuestion.content || ""
+                  firstQuestion.content || "",
                 );
 
                 return (
@@ -379,7 +397,7 @@ export default function PracticeExamQuestions() {
                       const selectedAnswer = selectedAnswers[questionKey];
                       const availableOptions = ["A", "B", "C", "D"].filter(
                         (option) =>
-                          question[`Option ${option}` as keyof Question]
+                          question[`Option ${option}` as keyof Question],
                       );
 
                       return (
@@ -431,7 +449,7 @@ export default function PracticeExamQuestions() {
                     })}
                   </div>
                 );
-              }
+              },
             )}
           </div>
         )}
@@ -471,7 +489,10 @@ export default function PracticeExamQuestions() {
               <div className="text-center">
                 <h3 className="text-xl font-semibold text-gray-900">
                   Total Score: {totalScore} / {totalQuestions}
-                  <div> Percentage: {getScoreLabel(totalScore || 0, totalQuestions)}</div>
+                  <div>
+                    {" "}
+                    Percentage: {getScoreLabel(totalScore || 0, totalQuestions)}
+                  </div>
                 </h3>
                 {/* {examScore !== null && (
                                     <h3 className={getScoreLabel(examScore, studentLevelData).className}>

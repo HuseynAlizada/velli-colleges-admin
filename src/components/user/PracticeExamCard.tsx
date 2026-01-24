@@ -33,7 +33,8 @@ const PracticeExamCard = ({
   exam: PracticeExamCardProps;
   index: number;
 }) => {
-  const { title, level, duration, pass_score, created_at, id } = exam;
+  const { title, level, duration, pass_score, created_at, id, unit } = exam;
+  console.log(exam, "exam props");
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputPassword, setInputPassword] = useState("");
@@ -114,6 +115,7 @@ const PracticeExamCard = ({
         <div className="p-6">
           <div className="flex flex-col h-full">
             <h3 className="text-xl font-bold text-gray-900 mb-3">
+              {/* {title} -  {unit ? unit : `Unit ${index + 1}`} */}
               {title} - Unit {index + 1}
             </h3>
 
