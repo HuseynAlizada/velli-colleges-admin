@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../../utils/supabase-client";
 import * as XLSX from "xlsx";
-import { Loader2, Rows } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";

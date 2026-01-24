@@ -33,7 +33,7 @@ const PracticeExamCard = ({
   exam: PracticeExamCardProps;
   index: number;
 }) => {
-  const { title, level, duration, pass_score, created_at, id, unit } = exam;
+  const { title, level, duration, pass_score, created_at, id } = exam;
   console.log(exam, "exam props");
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
