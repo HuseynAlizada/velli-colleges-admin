@@ -282,6 +282,7 @@ export default function ExamQuestions() {
   const filteredQuestions = questions.filter(
     (question) => question.Section === examType
   );
+  console.log(filteredQuestions, 'filtered');
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -590,7 +591,7 @@ export default function ExamQuestions() {
                   Total Answer: {totalScore} / {questions.length}
                 </h3>
                 <h3 className="text-xl font-semibold text-gray-900">
-                  Total Score: {examScore} %
+                  Total Score: {examScore?.toFixed(2)} %
                 </h3>
                 {examScore !== null && (
                   <h3 className={getScoreLabel(examScore, studentLevelData).className}>

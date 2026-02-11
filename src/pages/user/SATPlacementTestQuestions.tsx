@@ -335,7 +335,7 @@ export default function SATPlacementTestQuestions() {
                 Total Answers: {totalScore} / {questions.length}
               </h3>
               <h3 className="text-xl font-semibold text-gray-900">
-                Total Score: {examScore} %
+                Total Score: {examScore?.toFixed(2)} %
               </h3>
             </div>
             <div className="flex justify-end">

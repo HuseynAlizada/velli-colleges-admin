@@ -26,7 +26,8 @@ export const examOptions = [
     "B1+ Video PT6", "B1+ Video PT7", "B1+ Video PT8", "B1+ Video PT9", "B1+ Video PT10",
     "B1+ Video PT11", "B1+ Video PT12", "B1+ Video PT13",
     "B2 U1", "B2 U2", "B2 U3", "B2 U4", "B2 U5", "B2 U6", "B2 U7", "B2 U8",
-    "B2 U9", "B2 U10", "B2 Midterm", "B2 Final",
+    "B2 U9", "B2 U10", "B2 Midterm", "B2 Final","C1 U1", "C1 U2", "C1 U3", "C1 U4", "C1 U5", "C1 U6", "C1 U7", "C1 U8",
+    "C1 U9", "C1 U10", "C1 Midterm", "C1 Final",
     "Placement"
 ];
 

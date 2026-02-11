@@ -438,7 +438,7 @@ export default function PlacementTestQuestions() {
 
             <div className="text-center space-y-2">
               <p className="text-xl font-semibold">
-                Total Correct (After 3 Wrong Rule): {totalScore} / {questions.length}
+                Total Correct (After 3 Wrong Rule): {totalScore?.toFixed(2)} / {questions.length}
               </p>
               <p className="text-xl font-semibold">Total Score: {examScore}%</p>
               <p className="text-xl font-semibold">Your Level: {getLevel(totalScore ?? 0)}</p>
