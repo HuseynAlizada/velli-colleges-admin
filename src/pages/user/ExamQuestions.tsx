@@ -282,7 +282,6 @@ export default function ExamQuestions() {
   const filteredQuestions = questions.filter(
     (question) => question.Section === examType
   );
-  console.log(filteredQuestions, 'filtered');
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);

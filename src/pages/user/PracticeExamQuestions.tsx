@@ -115,7 +115,6 @@ export default function PracticeExamQuestions() {
             };
           });
 
-          console.log(jsonData, formattedData, "formatted data questions");
           setQuestions(formattedData);
         }
       } catch (err) {
