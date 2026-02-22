@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../utils/supabase-client";
 
@@ -6,6 +6,7 @@ const AdminRegister = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [branch, setBranch] = useState("");
+  const [ready, setReady] = useState(false);
   const navigate = useNavigate();
 
   const branches = [
@@ -13,105 +14,92 @@ const AdminRegister = () => {
     { id: "inqilab", name: "Inqilab" },
   ];
 
+  // Mail linkindən gələndə session yoxla, emaili avtomatik doldur
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session?.user?.email) {
+        setEmail(data.session.user.email);
+      }
+      setReady(true);
+    });
+  }, []);
+
   const handleRegister = async () => {
-    // Basic validation
-    if (!email || !password) {
-      alert("Please fill in both email and password!");
+    if (!password || !branch) {
+      alert("Bütün sahələri doldurun!");
       return;
     }
-
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      alert("Please enter a valid email address!");
-      return;
-    }
-
     if (password.length < 6) {
-      alert("Password must be at least 6 characters long!");
+      alert("Parol ən az 6 simvol olmalıdır!");
       return;
     }
-
-    if(!branch){
-      alert("Please select a branch!");
-        return;
-    }
-
-    // Simulate registration by storing credentials in a cookie
-    // const token = btoa(`${email}:${password}`); // Encode as a mock JWT
-    // Cookies.set("registeredAdmin", token, { expires: 7 }); // Set cookie for 7 days
-    alert("Registration successful! Please log in.");
-    navigate("/admin/login"); // Redirect to login page
 
     try {
-      const { error } = await supabase.from("admin_data").insert({
-        email,
-        password,
-        branch
+      // 1. Parolu təyin et
+      const { error: updateError } = await supabase.auth.updateUser({
+        password: password,
       });
-      if (error) throw error;
-      alert("Registration successful! Please log in.");
-      navigate("/admin/login"); // Redirect to login page
-    } catch (err) {
-      console.log(err);
+      if (updateError) throw updateError;
+
+      // 2. admin_data-ya email və branch əlavə et
+      const { error: dbError } = await supabase.from("admin_data").insert({
+        email,
+        branch,
+        approved: false,
+      });
+      if (dbError) throw dbError;
+
+      alert("Qeydiyyat uğurlu! Admin təsdiqindən sonra daxil ola bilərsiniz.");
+      navigate("/admin/login");
+    } catch (err: any) {
+      alert("Xəta: " + err.message);
     }
   };
 
+  if (!ready) return <div className="flex items-center justify-center h-screen">Yüklənir...</div>;
+
   return (
     <div className="bg-gray-300 w-full h-screen flex items-center justify-center">
-      <div className="bg-white flex flex-col px-4 pt-6 pb-8 lg:w-[40%] sm:w-[60%] w-[90%] rounded-2xl ">
+      <div className="bg-white flex flex-col px-4 pt-6 pb-8 lg:w-[40%] sm:w-[60%] w-[90%] rounded-2xl">
         <div className="flex items-center ml-6">
-          <img
-            src="/images/main-logo.png"
-            className="w-auto h-[100px]"
-            alt="Logo"
-          />
+          <img src="/images/main-logo.png" className="w-auto h-[100px]" alt="Logo" />
         </div>
         <div className="flex flex-col w-[80%] mx-auto">
-          <h1 className="text-[32px] mb-10 text-center font-bold my-4 ">
+          <h1 className="text-[32px] mb-10 text-center font-bold my-4">
             Register a new admin account
           </h1>
-          <label htmlFor="email">Email Address</label>
+          <label>Email Address</label>
           <input
             type="email"
-            id="email"
             value={email}
-            required
-            onChange={(e) => setEmail(e.target.value)}
-            className="h-10 mb-3 border-2 border-gray-300 rounded-sm mt-2 pl-2"
-            placeholder="Enter your email"
+            disabled
+            className="h-10 mb-3 border-2 border-gray-200 bg-gray-100 rounded-sm mt-2 pl-2 cursor-not-allowed"
           />
-          <label htmlFor="password">Password</label>
+          <label>Password</label>
           <input
-            type="password" // Changed to password type for security
-            id="password"
+            type="password"
             value={password}
             required
             onChange={(e) => setPassword(e.target.value)}
             className="h-10 border-2 border-gray-300 rounded-sm mt-2 pl-2"
-            placeholder="Enter your password"
+            placeholder="Yeni parol daxil edin"
           />
-
-            <label
-              htmlFor="level"
-              className="block mt-4 mb-2 text-sm font-medium text-gray-700"
-            >
-              Branch
-            </label>
-            <select
-              id="branch"
-              name="branch"
-              value={branch}
-              onChange={(e) => setBranch(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-              required
-            >
-              <option value="">Choose Branch</option>
-              {branches.map((branch) => (
-                <option key={branch.id} value={branch.name}>
-                  {branch.name}
-                </option>
-              ))}
-            </select>
-
+          <label className="block mt-4 mb-2 text-sm font-medium text-gray-700">
+            Branch
+          </label>
+          <select
+            value={branch}
+            onChange={(e) => setBranch(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500"
+            required
+          >
+            <option value="">Choose Branch</option>
+            {branches.map((b) => (
+              <option key={b.id} value={b.name}>
+                {b.name}
+              </option>
+            ))}
+          </select>
           <button
             onClick={handleRegister}
             className="w-full h-[40px] bg-[#D33D5A] mt-5 text-white rounded-sm"
