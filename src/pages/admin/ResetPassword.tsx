@@ -1,12 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../utils/supabase-client";
 
 const ResetPassword = () => {
     const [newPassword, setNewPassword] = useState("");
+    const [ready, setReady] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        supabase.auth.getSession().then(({ data }) => {
+            if (!data.session) {
+                alert("Keçərsiz link!");
+                navigate("/admin/login");
+            } else {
+                setReady(true);
+            }
+        });
+    }, []);
+
     const handleReset = async () => {
+        if (newPassword.length < 6) {
+            alert("Parol ən az 6 simvol olmalıdır!");
+            return;
+        }
+
         const { error } = await supabase.auth.updateUser({
             password: newPassword,
         });
@@ -16,9 +33,11 @@ const ResetPassword = () => {
             return;
         }
 
-        alert("Parol uğurla təyin edildi!");
+        alert("Parol uğurla dəyişdirildi!");
         navigate("/admin/login");
     };
+
+    if (!ready) return <div className="flex items-center justify-center h-screen">Yüklənir...</div>;
 
     return (
         <div className="flex items-center justify-center h-screen bg-gray-300">
