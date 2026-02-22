@@ -41,6 +41,7 @@ import SATPlacementTests from "../pages/user/SATPlacementTests";
 import SATPlacementTestQuestions from "../pages/user/SATPlacementTestQuestions";
 import SatPlacementTestGrade from "../pages/admin/SatPlacementTestGrade";
 import AdminStockDashboard from "../pages/admin/AdminStockDashboard";
+import ResetPassword from "../pages/admin/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -115,6 +116,7 @@ const router = createBrowserRouter([
   { path: "login", element: <UserLogin /> },
 
   { path: "/admin/login", element: <AdminLogin /> },
+  { path: "/admin/reset-password", element: <ResetPassword /> },
   { path: "/admin/register", element: <AdminRegister /> },
 ]);
 

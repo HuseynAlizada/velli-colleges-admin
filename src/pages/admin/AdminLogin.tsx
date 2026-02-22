@@ -1,69 +1,53 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { supabase } from "../../utils/supabase-client";
-import { adminData } from "../../types";
 
 const AdminLogin = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [userData, setUserData] = useState<adminData[] | null>(null);
     const [showResetModal, setShowResetModal] = useState(false);
     const [newPassword, setNewPassword] = useState("");
     const [resetEmail, setResetEmail] = useState("");
     const navigate = useNavigate();
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const { data, error } = await supabase
-                    .from("admin_data")
-                    .select("*");
-                if (error) throw new Error;
-                setUserData(data);
-            } catch (err) {
-                console.log(err);
-            }
-        })();
-    }, []);
 
-    const handleLogin = () => {
-            const user = userData?.find((u) => u.email === username && u.password === password && u.approved === true);
-        if (user) {
-            const token = btoa(`${username}:${password}`);
-            localStorage.setItem("branch", JSON.stringify(user.branch));
-            Cookies.set("token", token, { expires: 1 / 24 });
-            navigate("/admin/dashboard");
-        } else {
-            alert("Invalid credentials!");
-        }
-    };
 
-    const handleResetPassword = async () => {
-        try {
-            if (!resetEmail || !newPassword) {
-                alert("Please fill in all fields");
-                return;
-            }
+const handleLogin = async () => {
+    const { data: authData, error } = await supabase.auth.signInWithPassword({
+        email: username,
+        password: password,
+    });
 
-            const {  error } = await supabase
-                .from("admin_data")
-                .update({ password: newPassword })
-                .eq("email", resetEmail);
+    console.log("authData:", authData);
+    console.log("error:", error);
 
-            if (error) throw error;
+    if (error) {
+        alert("Invalid credentials!");
+        return;
+    }
 
-            alert("Password updated successfully!");
-            window.location.reload();
+    const { data: adminInfo } = await supabase
+        .from("admin_data")
+        .select("branch, approved")
+        .eq("email", username)
+        .single();
 
-            setShowResetModal(false);
-            setNewPassword("");
-            setResetEmail("");
-        } catch (err) {
-            console.log(err);
-            alert("Error resetting password.");
-        }
-    };
+    if (!adminInfo?.approved) {
+        alert("Account not approved!");
+        await supabase.auth.signOut();
+        return;
+    }
+
+    localStorage.setItem("branch", JSON.stringify(adminInfo.branch));
+    const { data: session } = await supabase.auth.getSession();
+console.log("Session after login:", session);
+navigate("/admin/dashboard");
+};
+   const handleResetPassword = async () => {
+    await supabase.auth.resetPasswordForEmail(resetEmail);
+    alert("Email göndərildi, yoxla!");
+    setShowResetModal(false);
+};
 
     return (
         <div className="bg-gray-300 w-full h-screen flex items-center justify-center">
