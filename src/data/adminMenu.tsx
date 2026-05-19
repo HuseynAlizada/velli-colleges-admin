@@ -155,6 +155,12 @@ const adminMenu: AdminMenu[] = [
         icon: <LockIcon />,
         title: "Exam Requests",
         link: "exam-requests"
+    },
+    {
+        id: 33,
+        icon: <GradeIcon />,
+        title: "Recent Exams",
+        link: "recent-exams"
     }
 ]
 

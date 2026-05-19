@@ -42,6 +42,7 @@ import SATPlacementTestQuestions from "../pages/user/SATPlacementTestQuestions";
 import SatPlacementTestGrade from "../pages/admin/SatPlacementTestGrade";
 import AdminStockDashboard from "../pages/admin/AdminStockDashboard";
 import ResetPassword from "../pages/admin/ResetPassword";
+import RecentExams from "../pages/admin/RecentExams";
 
 const router = createBrowserRouter([
   {
@@ -111,6 +112,7 @@ const router = createBrowserRouter([
       // end placement test
 
       { path: "students-targets", element: <StudentsTargets /> },
+      { path: "recent-exams", element: <RecentExams /> },
     ],
   },
   { path: "login", element: <UserLogin /> },
