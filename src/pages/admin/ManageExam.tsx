@@ -9,6 +9,26 @@ import { Exam } from "../../types";
 import { Link, useNavigate } from "react-router-dom";
 
 
+const LEVEL_ORDER: Record<string, number> = {
+    a1: 0, a2: 1, b1: 2, "b1+": 3, b2: 4, c1: 5,
+};
+
+const getUnitOrder = (exam: Exam): number => {
+    const source = (exam.unit || exam.title || "").toLowerCase();
+    if (source.includes("final")) return 9999;
+    if (source.includes("midterm")) return 9998;
+    const match = source.match(/(?:unit\s*|u)(\d+)/);
+    return match ? parseInt(match[1], 10) : 9997;
+};
+
+const sortExams = (data: Exam[]): Exam[] =>
+    [...data].sort((a, b) => {
+        const levelA = LEVEL_ORDER[a.level?.toLowerCase() ?? ""] ?? 99;
+        const levelB = LEVEL_ORDER[b.level?.toLowerCase() ?? ""] ?? 99;
+        if (levelA !== levelB) return levelA - levelB;
+        return getUnitOrder(a) - getUnitOrder(b);
+    });
+
 export default function ManageExam() {
     const [exams, setExams] = useState<Exam[] | []>([])
     const navigate = useNavigate()
@@ -21,7 +41,7 @@ export default function ManageExam() {
             return;
         }
 
-        setExams(data)
+        setExams(sortExams(data))
     };
 
     useEffect(() => {

@@ -1,6 +1,5 @@
 import {
   Clock,
-  Award,
   Calendar,
   GraduationCap,
   Target,
@@ -12,18 +11,6 @@ import { levelColors } from "../../data/studentMenu";
 import { useEffect, useState } from "react";
 import { supabase } from "../../utils/supabase-client";
 import Cookies from "js-cookie";
-type Level = "beginner" | "intermediate" | "advanced";
-
-interface Student {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  level: Level;
-  parent_name: string;
-  parent_phone: string;
-  image_url: string;
-}
 
 export default function ExamCard({ exam }: { exam: Exam }) {
   const colors = levelColors[exam.level || "C1"];
@@ -31,23 +18,9 @@ export default function ExamCard({ exam }: { exam: Exam }) {
   const [userData, setUserData] = useState<StudentData | null>(null);
   const [sendRequest, setSendRequest] = useState(false);
   const [approvedExams, setApprovedExams] = useState<[number, string][] | null>(
-    null
+    null,
   );
   const [data, setData] = useState<string | null>(null);
-  const [students, setStudents] = useState<Student[]>([]);
-
-  useEffect(() => {
-    fetchStudents();
-  }, []);
-
-  const fetchStudents = async () => {
-    const { data, error } = await supabase.from("students").select("*");
-    if (error) {
-      console.error("Error fetching students:", error);
-    } else {
-      setStudents(data.filter((item) => !item.stock));
-    }
-  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -74,7 +47,7 @@ export default function ExamCard({ exam }: { exam: Exam }) {
           .select("*");
         if (error) throw error;
         const titles = data.map(
-          (item) => [item.student_id, item.title] as [number, string]
+          (item) => [item.student_id, item.title] as [number, string],
         );
         setApprovedExams(titles);
       } catch (err) {
@@ -89,7 +62,7 @@ export default function ExamCard({ exam }: { exam: Exam }) {
       console.error("User ID not found.");
       return;
     }
-      setSendRequest(true);
+    setSendRequest(true);
 
     try {
       const { error } = await supabase.from("approved-exams").insert({
@@ -116,7 +89,7 @@ export default function ExamCard({ exam }: { exam: Exam }) {
     <>
       {(!approvedExams ||
         !approvedExams.some(
-          (item) => item[0] === userData?.id && item[1] === exam.title
+          (item) => item[0] === userData?.id && item[1] === exam.title,
         )) && (
         <div
           className={`relative w-full max-w-sm bg-gradient-to-b ${colors.bg} rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border ${colors.border}`}
@@ -156,32 +129,20 @@ export default function ExamCard({ exam }: { exam: Exam }) {
             </div>
           </div>
 
-    <button
-  onClick={handleRequestUnlock}
-  disabled={
-    sendRequest ||
-    approvedExams?.some(
-      (item) => item[0] === userData?.id && item[1] === exam.title
-    )
-  }
-  className={`w-full flex items-center justify-center gap-1 px-4 py-3 rounded-xl text-white font-medium ${colors.button} shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 mb-6 disabled:opacity-50`}
->
-  <PlayCircle className="w-5 h-5" />
-  {sendRequest ? "Request Sent" : "Request To Unlock"}
-</button>
+          <button
+            onClick={handleRequestUnlock}
+            disabled={
+              sendRequest ||
+              approvedExams?.some(
+                (item) => item[0] === userData?.id && item[1] === exam.title,
+              )
+            }
+            className={`w-full flex items-center justify-center gap-1 px-4 py-3 rounded-xl text-white font-medium ${colors.button} shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 mb-6 disabled:opacity-50`}
+          >
+            <PlayCircle className="w-5 h-5" />
+            {sendRequest ? "Request Sent" : "Request To Unlock"}
+          </button>
 
-          {/* Active Users Stats */}
-          <div className="pt-4 border-t border-gray-200">
-            <div className="flex items-center gap-2 text-gray-600">
-              <Award className={`w-5 h-5 ${colors.icon}`} />
-              <p>
-                <span className="font-medium text-gray-900">
-                  {students.length} Students
-                </span>{" "}
-                are solving per day
-              </p>
-            </div>
-          </div>
           {/* Created At */}
           <div className="mt-4 flex items-center gap-1.5 text-sm text-gray-500">
             <Calendar className="w-4 h-4" />

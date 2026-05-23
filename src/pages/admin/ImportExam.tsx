@@ -130,7 +130,7 @@ export default function ImportExam() {
                     title: examData.selectedExam,
                     file_url: fileUrl,
                     pass_score: parseInt(examData.passScore),
-                    duration: parseInt(examData.duration),
+                    duration: parseFloat(examData.duration),
                     level: examData.level,
                     // exam_type: examData.examType,
                 }])
@@ -139,7 +139,7 @@ export default function ImportExam() {
                 title: examData.selectedExam,
                 file_url: fileUrl,
                 pass_score: parseInt(examData.passScore),
-                duration: parseInt(examData.duration),
+                duration: parseFloat(examData.duration),
                 level: examData.level,
                 // exam_type: examData.examType,
             }]);
@@ -232,6 +232,7 @@ export default function ImportExam() {
                                     name="duration"
                                     placeholder="Duration (hours)"
                                     max="100"
+                                    step="0.5"
                                     value={examData.duration}
                                     onChange={handleChange}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"

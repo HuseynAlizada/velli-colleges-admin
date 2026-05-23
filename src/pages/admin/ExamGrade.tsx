@@ -133,9 +133,9 @@ const ExamGrade = () => {
 
     // B1+ – B2
     if (["B1+", "B2"].includes(lvl)) {
-      if (score < 60) return { text: "Fail", className: "label-fail" };
-      if (score < 70) return { text: "Pass", className: "label-pass" };
-      if (score < 80) return { text: "Credit", className: "label-credit" };
+      if (score < 65) return { text: "Fail", className: "label-fail" };
+      if (score < 75) return { text: "Pass", className: "label-pass" };
+      if (score < 85) return { text: "Credit", className: "label-credit" };
       if (score < 95)
         return { text: "Distinction", className: "label-distinction" };
       return { text: "High Distinction", className: "label-high" };
