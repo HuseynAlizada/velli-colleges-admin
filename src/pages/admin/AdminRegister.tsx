@@ -12,13 +12,14 @@ const AdminRegister = () => {
   const branches = [
     { id: "hazi-aslanov", name: "Hazi Aslanov" },
     { id: "inqilab", name: "Inqilab" },
+    { id: "naxchivan", name: "Naxchivan" },
   ];
 
   // Mail linkindən gələndə session yoxla, emaili avtomatik doldur
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       if (data.session?.user?.email) {
-        setEmail(data.session.user.email);
+        // setEmail(data.session.user.email);
       }
       setReady(true);
     });
@@ -55,14 +56,23 @@ const AdminRegister = () => {
       alert("Xəta: " + err.message);
     }
   };
-
-  if (!ready) return <div className="flex items-center justify-center h-screen">Yüklənir...</div>;
+// James Pate
+  if (!ready)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        Yüklənir...
+      </div>
+    );
 
   return (
     <div className="bg-gray-300 w-full h-screen flex items-center justify-center">
       <div className="bg-white flex flex-col px-4 pt-6 pb-8 lg:w-[40%] sm:w-[60%] w-[90%] rounded-2xl">
         <div className="flex items-center ml-6">
-          <img src="/images/main-logo.png" className="w-auto h-[100px]" alt="Logo" />
+          <img
+            src="/images/main-logo.png"
+            className="w-auto h-[100px]"
+            alt="Logo"
+          />
         </div>
         <div className="flex flex-col w-[80%] mx-auto">
           <h1 className="text-[32px] mb-10 text-center font-bold my-4">
@@ -72,8 +82,9 @@ const AdminRegister = () => {
           <input
             type="email"
             value={email}
-            disabled
-            className="h-10 mb-3 border-2 border-gray-200 bg-gray-100 rounded-sm mt-2 pl-2 cursor-not-allowed"
+            onChange={(e) => setEmail(e.target.value)}
+            // disabled
+            className="h-10 mb-3 border-2 border-gray-200 bg-gray-100 rounded-sm mt-2 pl-2"
           />
           <label>Password</label>
           <input

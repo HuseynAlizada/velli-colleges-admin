@@ -36,6 +36,7 @@ const satLevels = [
 const branches = [
   { id: "hazi-aslanov", name: "Hazi Aslanov" },
   { id: "inqilab", name: "Inqilab" },
+  { id: "naxchivan", name: "Naxchivan" },
 ];
 
 export default function AddStudent() {

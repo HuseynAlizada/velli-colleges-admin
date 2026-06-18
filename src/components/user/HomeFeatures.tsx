@@ -164,15 +164,10 @@ const HomeFeatures = () => {
                         <div className="flex flex-col  justify-center items-center gap-2 mt-3 text-white">
 
                             <div>
-                              
-                                Number: {data==="Inqilab"? "+994 (55) 430 12 13":"+994 (51) 430 12 13"}
-
+                                Number: {data==="Inqilab"? "+994 (55) 430 12 13": data==="Naxchivan"? "+994 (10) 430 12 13":"+994 (51) 430 12 13"}
                             </div>
-                            {/* <div>
-                                Location: Hesen Eliyev 212A. Kovaa Plaza 3-cü mərtəbə, Bakı
-                            </div> */}
                              <div>
-                                Location: {data==="Inqilab"? " Hesen Eliyev 212A":"Blue Center 3-cü mərtəbə, Bakı"}
+                                Location: {data==="Inqilab"? " Hesen Eliyev 212A": data==="Naxchivan"? "Naxcivan şəhəri, Xətai məhəlləsi, döngə 4/57":"Blue Center 3-cü mərtəbə, Bakı"}
                             </div>
                         </div>
                     </div>

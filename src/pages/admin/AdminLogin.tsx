@@ -1,59 +1,72 @@
 import { useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "../../utils/supabase-client";
 
 const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showResetModal, setShowResetModal] = useState(false);
-  const [newPassword, setNewPassword] = useState("");
   const [resetEmail, setResetEmail] = useState("");
+  const [isSendingReset, setIsSendingReset] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: username,
+    const email = username.trim();
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
       password: password,
     });
 
     if (error) {
+      console.log("Login error:", error);
       alert("Invalid credentials!");
       return;
     }
 
+    const metadataBranch = data.user?.user_metadata?.branch;
+    const branchFromMetadata =
+      typeof metadataBranch === "string" ? metadataBranch : "";
+
     const { data: adminInfo } = await supabase
       .from("admin_data")
-      .select("branch, approved")
-      .eq("email", username)
-      .single();
+      .select("branch")
+      .eq("email", email)
+      .maybeSingle();
 
-    if (!adminInfo?.approved) {
-      alert("Account not approved!");
-      await supabase.auth.signOut();
-      return;
-    }
-
-    localStorage.setItem("branch", JSON.stringify(adminInfo.branch));
+    localStorage.setItem(
+      "branch",
+      JSON.stringify(adminInfo?.branch || branchFromMetadata || "Inqilab")
+    );
     // const { data: session } = await supabase.auth.getSession();
     navigate("/admin/dashboard");
   };
   const handleResetPassword = async () => {
-    if (!resetEmail) {
+    const email = resetEmail.trim();
+
+    if (!email) {
       alert("Email daxil edin!");
       return;
     }
 
-    const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-      redirectTo: "https://sənin-saytın.com/reset-password",
-    });
+    setIsSendingReset(true);
 
-    if (error) {
-      alert("Xəta: " + error.message);
-      return;
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/admin/reset-password`,
+      });
+
+      if (error) {
+        alert("Xəta: " + error.message);
+        return;
+      }
+
+      alert("Reset linki emailə göndərildi. Linkə keçib yeni parolu təyin edin.");
+      setShowResetModal(false);
+      setResetEmail("");
+    } finally {
+      setIsSendingReset(false);
     }
-
-    alert("Email göndərildi, yoxla!");
-    setShowResetModal(false);
   };
 
   return (
@@ -102,7 +115,10 @@ const AdminLogin = () => {
                         Register
                     </Link> */}
           <button
-            onClick={() => setShowResetModal(true)}
+            onClick={() => {
+              setResetEmail(username.trim());
+              setShowResetModal(true);
+            }}
             className="w-full h-[40px] bg-yellow-500 mt-5 text-white rounded-sm"
           >
             Reset Password
@@ -121,25 +137,22 @@ const AdminLogin = () => {
                 onChange={(e) => setResetEmail(e.target.value)}
                 className="w-full border-2 border-gray-300 rounded-sm mt-2 mb-3 pl-2 h-10"
               />
-              <label>New Password</label>
-              <input
-                type="password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full border-2 border-gray-300 rounded-sm mt-2 mb-3 pl-2 h-10"
-              />
               <div className="flex justify-end gap-2">
                 <button
-                  onClick={() => setShowResetModal(false)}
+                  onClick={() => {
+                    setShowResetModal(false);
+                    setResetEmail("");
+                  }}
                   className="px-4 py-2 bg-gray-400 rounded text-white"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleResetPassword}
+                  disabled={isSendingReset}
                   className="px-4 py-2 bg-green-600 rounded text-white"
                 >
-                  Reset
+                  {isSendingReset ? "Sending..." : "Send Link"}
                 </button>
               </div>
             </div>
