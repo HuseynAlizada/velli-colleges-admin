@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../../utils/supabase-client";
 import * as XLSX from "xlsx";
@@ -26,6 +26,8 @@ interface Question {
   content?: string;
 }
 
+type ExcelRow = Record<string, string | number | undefined>;
+
 export default function ExamQuestions() {
   const params = useParams();
   const { pathname } = useLocation();
@@ -43,6 +45,7 @@ export default function ExamQuestions() {
   }>({});
   const [examType, setExamType] = useState<string>("Listening");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [sectionScores, setSectionScores] = useState<{ [key: string]: number }>(
     {}
   );
@@ -59,6 +62,7 @@ export default function ExamQuestions() {
   );
 
   const navigate = useNavigate();
+  const isSubmittingRef = useRef(false);
 
   useEffect(() => {
     if (timeLeft > 0 && !isSubmitted) {
@@ -102,22 +106,23 @@ export default function ExamQuestions() {
           const workbook = XLSX.read(arrayBuffer, { type: "array" });
           const firstSheetName = workbook.SheetNames[0];
           const worksheet = workbook.Sheets[firstSheetName];
-          const jsonData = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+          const jsonData = XLSX.utils.sheet_to_json<ExcelRow>(worksheet, {
+            raw: false,
+          });
 
-          const formattedData = jsonData.map((row: any, index: number) => ({
+          const formattedData = jsonData.map((row, index) => ({
             "Question No":
-              row["Question No"] ||
-              row["question_no"] ||
-              row["QuestionNo"] ||
-              index,
-            Question: row["Question"],
-            "Option A": row["Option A"],
-            "Option B": row["Option B"],
-            "Option C": row["Option C"],
-            "Option D": row["Option D"] || undefined,
-            "Correct Option": row["Correct Option"],
-            Section: row["Section"],
-            content: row["content"] || "",
+              Number(
+                row["Question No"] || row["question_no"] || row["QuestionNo"]
+              ) || index + 1,
+            Question: String(row["Question"] || ""),
+            "Option A": String(row["Option A"] || ""),
+            "Option B": String(row["Option B"] || ""),
+            "Option C": String(row["Option C"] || ""),
+            "Option D": row["Option D"] ? String(row["Option D"]) : undefined,
+            "Correct Option": String(row["Correct Option"] || ""),
+            Section: String(row["Section"] || "").trim(),
+            content: String(row["content"] || ""),
           }));
 
           setQuestions(formattedData);
@@ -161,15 +166,30 @@ export default function ExamQuestions() {
   };
 
   const handleSubmit = async () => {
-    if (!userId) {
+    if (isSubmittingRef.current || isSubmitted) {
+      return;
+    }
+
+    const studentId = Number(userId);
+
+    if (!userId || !Number.isFinite(studentId)) {
       toast.error("User ID not found. Please log in again.");
       return;
     }
 
+    if (questions.length === 0) {
+      toast.error("Questions were not loaded. Please refresh and try again.");
+      return;
+    }
+
+    isSubmittingRef.current = true;
+    setIsSubmitting(true);
     setIsSubmitted(true);
+
     let totalCorrectCount = 0;
     let totalExamScore = 0;
     const newSectionScores: { [key: string]: number } = {};
+    const newSectionTotals: { [key: string]: number } = {};
 
     examSections.forEach((section) => {
       const filteredQuestions = questions.filter((q) => q.Section === section);
@@ -186,6 +206,7 @@ export default function ExamQuestions() {
       });
 
       newSectionScores[section] = correctCount;
+      newSectionTotals[section] = filteredQuestions.length;
       totalCorrectCount += correctCount;
       totalExamScore = (totalCorrectCount * 100) / questions.length;
       setExamScore(totalExamScore);
@@ -198,7 +219,7 @@ export default function ExamQuestions() {
       const { data: studentData, error: studentError } = await supabase
         .from("students")
         .select("*")
-        .eq("id", userId)
+        .eq("id", studentId)
         .single();
 
       if (studentError) {
@@ -212,7 +233,7 @@ export default function ExamQuestions() {
       const { error: resultError } = await supabase
         .from("student_results")
         .insert({
-          student_id: userId,
+          student_id: studentId,
           student_score: totalExamScore,
           student_level: studentLevel,
           exam_name: exam?.title || "İsimsiz Sınav",
@@ -221,11 +242,11 @@ export default function ExamQuestions() {
           reading_score: newSectionScores["Reading"],
           grammar_score: newSectionScores["Grammar"],
           vocabulary_score: newSectionScores["Vocabulary"],
-          listening_count: sectionTotals["Listening"],
-          reading_count: sectionTotals["Reading"],
-          vocabulary_count: sectionTotals["Vocabulary"],
-          grammar_count: sectionTotals["Grammar"],
-          finish_time: timeLeft
+          listening_count: newSectionTotals["Listening"],
+          reading_count: newSectionTotals["Reading"],
+          vocabulary_count: newSectionTotals["Vocabulary"],
+          grammar_count: newSectionTotals["Grammar"],
+          finish_time: timeLeft,
         });
 
       if (resultError) {
@@ -237,46 +258,60 @@ export default function ExamQuestions() {
       const { data: takenExamsData, error: fetchError } = await supabase
         .from("taken-exams")
         .select("exam_count")
-        .eq("student_id", userId)
-        .single();
+        .eq("student_id", studentId)
+        .maybeSingle();
 
       if (fetchError) {
-        throw new Error(
-          "Unable to take the available number of exams: " + fetchError.message
+        console.error(
+          "Unable to fetch taken exam count:",
+          fetchError.message
         );
-      }
+      } else if (takenExamsData) {
+        const currentExamCount = takenExamsData.exam_count || 0;
+        const { error: updateError } = await supabase
+          .from("taken-exams")
+          .update({ exam_count: currentExamCount + 1 })
+          .eq("student_id", studentId);
 
-      const currentExamCount = takenExamsData?.exam_count || 0;
+        if (updateError) {
+          console.error("Failed to update exam count:", updateError.message);
+        }
+      } else {
+        const { error: insertCountError } = await supabase
+          .from("taken-exams")
+          .insert({
+            student_id: studentId,
+            exam_count: 1,
+            practice_count: 0,
+          });
 
-      const { error: updateError } = await supabase
-        .from("taken-exams")
-        .update({ exam_count: currentExamCount + 1 })
-        .eq("student_id", userId);
-
-      if (updateError) {
-        throw new Error(
-          "Failed to update the number of exams: " + updateError.message
-        );
+        if (insertCountError) {
+          console.error("Failed to create exam count:", insertCountError.message);
+        }
       }
 
       toast.success("The exam was successfully submitted!");
       setSubmited(true);
       setIsModalOpen(true);
 
-      try {
+      if (pathNameUrl[1] === "approved-exams") {
         const { error } = await supabase
           .from("approved-exams")
           .delete()
           .eq("id", exam?.id);
 
-        if (error) throw error;
-      } catch (err) {
-        console.log(err);
+        if (error) {
+          console.error("Approved exam cleanup failed:", error.message);
+        }
       }
     } catch (err) {
       console.error(err);
       toast.error("The exam results could not be sent. Please try again.");
-      setIsModalOpen(true);
+      setIsSubmitted(false);
+      setSubmited(false);
+    } finally {
+      isSubmittingRef.current = false;
+      setIsSubmitting(false);
     }
   };
 
@@ -540,9 +575,10 @@ export default function ExamQuestions() {
             (examType === "Vocabulary" ? (
               <button
                 onClick={handleSubmit}
+                disabled={isSubmitting}
                 className="px-8 py-3 bg-indigo-600 text-white rounded-full font-medium hover:bg-indigo-700 transition-colors"
               >
-                Send Answers
+                {isSubmitting ? "Sending..." : "Send Answers"}
               </button>
             ) : (
               <div className="flex justify-between max-w-lg mx-auto">

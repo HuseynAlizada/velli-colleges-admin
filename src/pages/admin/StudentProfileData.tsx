@@ -39,6 +39,7 @@ const StudentProfileData: React.FC = () => {
         console.error("Error fetching students:", error);
       } else {
         setStudent(data);
+        console.log("Fetched student data:", data);
         setStudentLevel(data.level);
       }
     };
