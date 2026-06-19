@@ -53,6 +53,7 @@ export default function ExamQuestions() {
   const [examScore, setExamScore] = useState<number | null>(null);
   const [submited, setSubmited] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(0);
   const [studentLevelData, setStudentLevelData] = useState<string>("");
   const examSections = ["Listening", "Reading", "Grammar", "Vocabulary"];
@@ -306,7 +307,9 @@ export default function ExamQuestions() {
       }
     } catch (err) {
       console.error(err);
-      toast.error("The exam results could not be sent. Please try again.");
+      const message = err instanceof Error ? err.message : "Unknown error occurred.";
+      setSubmitError(message);
+      setIsModalOpen(true);
       setIsSubmitted(false);
       setSubmited(false);
     } finally {
@@ -329,7 +332,8 @@ export default function ExamQuestions() {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    navigate("/locked-exams");
+    setSubmitError(null);
+    if (!submitError) navigate("/locked-exams");
   };
 
   // İçerik türünü belirleyen yardımcı fonksiyon
@@ -612,41 +616,57 @@ export default function ExamQuestions() {
             exit={{ opacity: 0, scale: 0.8 }}
             className="bg-white rounded-lg p-8 max-w-lg w-full mx-4 shadow-lg"
           >
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              {" "}
-              Examination Results
-            </h2>
-            <p className="text-gray-600 mb-6">
-              {timeLeft === 0
-                ? "Time's up! Here are your results:"
-                : "Congratulations on completing the exam! Here are your results:"}
-            </p>
-            <div className="space-y-4">
-              <div className="text-center">
-                <h3 className="text-xl font-semibold text-gray-900">
-                  Total Answer: {totalScore} / {questions.length}
-                </h3>
-                <h3 className="text-xl font-semibold text-gray-900">
-                  Total Score: {examScore?.toFixed(2)} %
-                </h3>
-                {examScore !== null && (
-                  <h3 className={getScoreLabel(examScore, studentLevelData).className}>
-                    {getScoreLabel(examScore, studentLevelData).text}
-                  </h3>
-                )}
-              </div>
-              <div className="space-y-2">
-                <h4 className="text-lg font-semibold text-gray-900">
-                  Section Scores and Totals:
-                </h4>
-                {examSections.map((section) => (
-                  <p key={section} className="text-gray-700">
-                    {section}: {sectionScores[section] || 0} /{" "}
-                    {sectionTotals[section] || 0}
-                  </p>
-                ))}
-              </div>
-            </div>
+            {submitError ? (
+              <>
+                <h2 className="text-2xl font-bold text-red-600 mb-4">
+                  Submission Failed
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  Your exam could not be saved. Please try again or contact support.
+                </p>
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                  <p className="text-red-700 text-sm font-mono break-words">{submitError}</p>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                  {" "}
+                  Examination Results
+                </h2>
+                <p className="text-gray-600 mb-6">
+                  {timeLeft === 0
+                    ? "Time's up! Here are your results:"
+                    : "Congratulations on completing the exam! Here are your results:"}
+                </p>
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold text-gray-900">
+                      Total Answer: {totalScore} / {questions.length}
+                    </h3>
+                    <h3 className="text-xl font-semibold text-gray-900">
+                      Total Score: {examScore?.toFixed(2)} %
+                    </h3>
+                    {examScore !== null && (
+                      <h3 className={getScoreLabel(examScore, studentLevelData).className}>
+                        {getScoreLabel(examScore, studentLevelData).text}
+                      </h3>
+                    )}
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-lg font-semibold text-gray-900">
+                      Section Scores and Totals:
+                    </h4>
+                    {examSections.map((section) => (
+                      <p key={section} className="text-gray-700">
+                        {section}: {sectionScores[section] || 0} /{" "}
+                        {sectionTotals[section] || 0}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
             <div className="mt-8 flex justify-end gap-4">
               <button
                 onClick={closeModal}
