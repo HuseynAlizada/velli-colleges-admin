@@ -155,9 +155,8 @@ const ResetPassword = () => {
 
         const { data: sessionData, error: sessionError } =
             await supabase.auth.getSession();
-        const email = sessionData.session?.user.email;
 
-        if (sessionError || !email) {
+        if (sessionError || !sessionData.session) {
             setIsSubmitting(false);
             alert("Reset sessiyası tapılmadı. Linki yenidən açın.");
             return;
@@ -170,20 +169,6 @@ const ResetPassword = () => {
         if (error) {
             setIsSubmitting(false);
             alert("Xəta: " + error.message);
-            return;
-        }
-
-        const { error: adminUpdateError } = await supabase
-            .from("admin_data")
-            .update({ password: newPassword })
-            .eq("email", email);
-
-        if (adminUpdateError) {
-            setIsSubmitting(false);
-            alert(
-                "Parol Auth-da dəyişdi, amma admin_data update olmadı: " +
-                    adminUpdateError.message
-            );
             return;
         }
 
