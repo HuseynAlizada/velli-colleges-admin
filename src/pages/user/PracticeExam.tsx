@@ -53,13 +53,13 @@ export default function PracticeExam() {
   const categories = ['Listening', 'Reading', 'Grammar'];
 
   return (
-    <div className="min-h-screen select-none w-full bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
+    <div className="min-h-screen select-none w-full bg-gradient-to-b from-[#84A3F9]/10 to-white p-8 py-20">
       <div className="flex  mb-8 space-x-4">
         {categories.map(category => (
           <button
             key={category}
             onClick={() => setSelectedCategory(category)}
-            className={`px-4 py-2 rounded-[10px] border ${selectedCategory === category ? 'bg-blue-700 text-white' : 'bg-white text-gray-700'} shadow-sm hover:bg-blue-700 hover:text-white hover:border-1 hover:border-blue-700 transition`}
+            className={`px-4 py-2 rounded-[10px] border ${selectedCategory === category ? 'bg-[#11184F] text-white' : 'bg-white text-gray-700'} shadow-sm hover:bg-[#487ACB] hover:text-white hover:border-1 hover:border-[#11184F] transition`}
           >
             {category}
           </button>

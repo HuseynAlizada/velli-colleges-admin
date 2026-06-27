@@ -23,7 +23,7 @@ const ExamDetails = () => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editedQuestion, setEditedQuestion] = useState<Question | null>(null);
   const [loading, setLoading] = useState(false);
-//   const [maxOptions, setMaxOptions] = useState(0); 
+//   const [maxOptions, setMaxOptions] = useState(0);
   const [optionLabels, setOptionLabels] = useState<string[]>([]);
 
   useEffect(() => {
@@ -338,7 +338,7 @@ const ExamDetails = () => {
                     ) : (
                       <button
                         onClick={() => handleEdit(index)}
-                        className="inline-flex items-center px-3 py-1.5 bg-amber-500 text-white text-sm font-medium rounded-md hover:bg-amber-600 disabled:bg-amber-300"
+                        className="inline-flex items-center px-3 py-1.5 bg-[#487ACB] text-white text-sm font-medium rounded-md hover:bg-[#487ACB] disabled:bg-[#84A3F9]"
                         disabled={loading}
                       >
                         <Pencil className="w-4 h-4 mr-1" />
@@ -347,7 +347,7 @@ const ExamDetails = () => {
                     )}
                     <button
                       onClick={() => handleDelete(index)}
-                      className="inline-flex items-center px-3 py-1.5 bg-rose-500 text-white text-sm font-medium rounded-md hover:bg-rose-600 disabled:bg-rose-300"
+                      className="inline-flex items-center px-3 py-1.5 bg-[#11184F] text-white text-sm font-medium rounded-md hover:bg-[#487ACB] disabled:bg-[#84A3F9]"
                       disabled={loading}
                     >
                       <Trash2 className="w-4 h-4 mr-1" />

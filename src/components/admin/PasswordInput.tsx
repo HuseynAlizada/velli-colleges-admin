@@ -32,8 +32,8 @@ export function PasswordInput({ value, onChange, name, id }: PasswordInputProps)
           value={value}
           onChange={onChange}
           onFocus={() => setShowRequirements(true)}
-          className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent ${
-            value && !allRequirementsMet ? "border-rose-500" : "border-gray-300"
+          className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:border-transparent ${
+            value && !allRequirementsMet ? "border-red-500" : "border-gray-300"
           }`}
           placeholder="Enter Password"
           required
@@ -48,9 +48,9 @@ export function PasswordInput({ value, onChange, name, id }: PasswordInputProps)
               {requirements.uppercase ? (
                 <CheckIcon className="w-4 h-4 text-green-500" />
               ) : (
-                <CloseIcon className="w-4 h-4 text-rose-500" />
+                <CloseIcon className="w-4 h-4 text-red-500" />
               )}
-              <span className={requirements.uppercase ? "text-green-700" : "text-rose-700"}>
+              <span className={requirements.uppercase ? "text-green-700" : "text-red-700"}>
                 At least one uppercase letter
               </span>
             </li>
@@ -58,17 +58,17 @@ export function PasswordInput({ value, onChange, name, id }: PasswordInputProps)
               {requirements.number ? (
                 <CheckIcon className="w-4 h-4 text-green-500" />
               ) : (
-                <CloseIcon className="w-4 h-4 text-rose-500" />
+                <CloseIcon className="w-4 h-4 text-red-500" />
               )}
-              <span className={requirements.number ? "text-green-700" : "text-rose-700"}>At least one number</span>
+              <span className={requirements.number ? "text-green-700" : "text-red-700"}>At least one number</span>
             </li>
             <li className="flex items-center gap-2">
               {requirements.symbol ? (
                 <CheckIcon className="w-4 h-4 text-green-500" />
               ) : (
-                <CloseIcon className="w-4 h-4 text-rose-500" />
+                <CloseIcon className="w-4 h-4 text-red-500" />
               )}
-              <span className={requirements.symbol ? "text-green-700" : "text-rose-700"}>
+              <span className={requirements.symbol ? "text-green-700" : "text-red-700"}>
                 At least one symbol (!@#$%^&*(),.?":{}|&lt;&gt;)
               </span>
             </li>
@@ -76,9 +76,9 @@ export function PasswordInput({ value, onChange, name, id }: PasswordInputProps)
               {requirements.minLength ? (
                 <CheckIcon className="w-4 h-4 text-green-500" />
               ) : (
-                <CloseIcon className="w-4 h-4 text-rose-500" />
+                <CloseIcon className="w-4 h-4 text-red-500" />
               )}
-              <span className={requirements.minLength ? "text-green-700" : "text-rose-700"}>Minimum 8 characters</span>
+              <span className={requirements.minLength ? "text-green-700" : "text-red-700"}>Minimum 8 characters</span>
             </li>
           </ul>
         </div>

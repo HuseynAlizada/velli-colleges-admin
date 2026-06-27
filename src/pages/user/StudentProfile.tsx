@@ -6,8 +6,6 @@ import Cookies from "js-cookie";
 import { supabase } from "../../utils/supabase-client";
 import { useNavigate } from "react-router-dom";
 
-// const levels = ["A1", "A2", "B1", "B1+", "B2", "C1", "SAT Placement Test hard", "SAT Placement Test medium"];
-
 export default function StudentProfile() {
     const [formData, setFormData] = useState({
         name: "",
@@ -20,7 +18,6 @@ export default function StudentProfile() {
         avatar: "",
         password: "",
         student_purpose: "",
-        sat_level: "",
     });
     const [avatar, setAvatar] = useState<string | null>(formData.avatar || null);
     const [isLoading, setIsLoading] = useState(false);
@@ -50,7 +47,6 @@ export default function StudentProfile() {
                     student_purpose: data.student_purpose,
                     avatar: data.image_url,
                     password: data.password,
-                    sat_level: data.sat_level,
                 });
 
 
@@ -152,7 +148,7 @@ export default function StudentProfile() {
     return (
         <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl mt-5 w-full mx-auto p-8 border border-gray-100">
             <h2 className="text-2xl font-semibold text-gray-900 mb-8 flex items-center gap-2">
-                <User className="w-6 h-6 text-indigo-600" />
+                <User className="w-6 h-6 text-[#11184F]" />
                 Student Profile Information
             </h2>
 
@@ -166,7 +162,7 @@ export default function StudentProfile() {
                             whileHover={{ scale: 1.05 }}
                             transition={{ type: "spring", stiffness: 300 }}
                         >
-                            <div className="w-40 h-40 rounded-full overflow-hidden bg-gradient-to-br from-indigo-50 to-white border-4 border-white shadow-xl">
+                            <div className="w-40 h-40 rounded-full overflow-hidden bg-gradient-to-br from-[#84A3F9]/15 to-white border-4 border-white shadow-xl">
                                 {avatar ? (
                                     <img
                                         src={avatar || "/placeholder.svg"}
@@ -176,12 +172,12 @@ export default function StudentProfile() {
                                         className="w-full h-full object-cover"
                                     />
                                 ) : (
-                                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-50 to-white">
-                                        <Camera className="w-8 h-8 text-indigo-400" />
+                                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#84A3F9]/15 to-white">
+                                        <Camera className="w-8 h-8 text-[#84A3F9]" />
                                     </div>
                                 )}
                             </div>
-                            <div className="absolute inset-0 rounded-full bg-indigo-600/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <div className="absolute inset-0 rounded-full bg-[#487ACB]/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                 <Upload className="w-8 h-8 text-white" />
                             </div>
                         </motion.div>
@@ -209,7 +205,7 @@ export default function StudentProfile() {
                                         disabled
                                         value={formData.name}
                                         onChange={handleInputChange}
-                                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#487ACB] focus:border-transparent transition-all"
                                         placeholder="Enter your name"
                                     />
                                 </div>
@@ -226,7 +222,7 @@ export default function StudentProfile() {
 
                                         value={formData.email}
                                         onChange={handleInputChange}
-                                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#487ACB] focus:border-transparent transition-all"
                                         placeholder="Enter your email"
                                     />
                                 </div>
@@ -243,7 +239,7 @@ export default function StudentProfile() {
 
                                         value={formData.phone}
                                         onChange={handleInputChange}
-                                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#487ACB] focus:border-transparent transition-all"
                                         placeholder="Enter your phone number"
                                     />
                                 </div>
@@ -260,7 +256,7 @@ export default function StudentProfile() {
 
                                         value={formData.parentPhone}
                                         onChange={handleInputChange}
-                                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#487ACB] focus:border-transparent transition-all"
                                         placeholder="Enter parent's phone number"
                                     />
                                 </div>
@@ -275,22 +271,9 @@ export default function StudentProfile() {
                                     name="level"
                                     disabled
                                     value={formData.level}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#487ACB] focus:border-transparent transition-all"
                                 />
                             </div>
-
-{formData.sat_level && (
-  <div className="space-y-2">
-                                <label className="block text-sm font-medium text-gray-700">SAT Level</label>
-                                <input
-                                    name="sat_level"
-                                    disabled
-                                    value={formData.sat_level}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                                />
-                            </div>
-)}
-                            
 
                             <div className="space-y-2">
                                 <label className="block text-sm font-medium text-gray-700">Parent Name</label>
@@ -303,7 +286,7 @@ export default function StudentProfile() {
                                         name="parentName"
                                         value={formData.parentName}
                                         onChange={handleInputChange}
-                                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#487ACB] focus:border-transparent transition-all"
                                         placeholder="Enter parent's name"
                                     />
                                 </div>
@@ -319,7 +302,7 @@ export default function StudentProfile() {
                                         name="studentSchool"
                                         value={formData.studentSchool}
                                         onChange={handleInputChange}
-                                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#487ACB] focus:border-transparent transition-all"
                                         placeholder="Enter your school name"
                                     />
                                 </div>
@@ -346,7 +329,7 @@ export default function StudentProfile() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className={`px-6 py-2 rounded-lg text-white flex items-center gap-2 cursor-pointer
-              ${isDirty && !isLoading ? "bg-indigo-600 hover:bg-indigo-700" : "bg-gray-400 cursor-not-allowed"} transition-colors`}
+              ${isDirty && !isLoading ? "bg-[#11184F] hover:bg-[#487ACB]" : "bg-gray-400 cursor-not-allowed"} transition-colors`}
                     >
                         {isLoading ? (
                             <>

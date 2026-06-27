@@ -2,7 +2,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import UpgradeIcon from '@mui/icons-material/Upgrade';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import SchoolIcon from '@mui/icons-material/School';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
 import GradeIcon from '@mui/icons-material/Grade';
 import { AdminMenu } from '../types';
 import { LockIcon } from 'lucide-react';
@@ -47,24 +46,6 @@ const adminMenu: AdminMenu[] = [
                 id: 8,
                 title: "Import Exam File",
                 link: "import-exam"
-
-            }
-        ]
-    },
-     {
-        id: 24,
-        icon: <LibraryBooksIcon />,
-        title: "SAT Exams",
-        subMenu: [
-            {
-                id: 27,
-                title: "Manage SAT Exam",
-                link: "manage-sat-exam"
-            },
-            {
-                id: 28,
-                title: "Import SAT Exam File",
-                link: "import-sat-exam"
 
             }
         ]
@@ -115,13 +96,6 @@ const adminMenu: AdminMenu[] = [
             }
         ]
     },
-    {
-        id: 5,
-        icon: <NewspaperIcon />,
-        title: "News & Articles",
-        link: "news"
-
-    },
     // {
     //     id: 6,
     //     icon: <GradeIcon />,
@@ -141,13 +115,6 @@ const adminMenu: AdminMenu[] = [
         icon: <GradeIcon />,
         title: "Placement Test Grade",
         link: "placement-test-grade"
-
-    },
-    {
-        id: 24,
-        icon: <GradeIcon />,
-        title: "SAT Placement Test Grade",
-        link: "sat-placement-test-grade"
 
     },
     {

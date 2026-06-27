@@ -1,18 +1,18 @@
 # Family School 📚🎮
 
-Family School is an interactive educational platform built with React, TypeScript, Tailwind CSS, and Supabase. It allows students to take exams, follow news, play educational games, and track their rankings.
+Family School is an interactive educational platform built with React, TypeScript, Tailwind CSS, and Supabase. It allows students to take exams, complete placement tests, play educational games, and track their rankings.
 
 ## Features
 
 ### Students
 - Take and submit exams
-- Stay updated with the latest news
+- Complete placement tests
 - Play interactive educational games
 - View and compare rankings
 
 ### Admins
 - Create and manage exams
-- Publish news and announcements
+- Manage placement tests
 - Add and update games
 - Manage student rankings
 
@@ -36,5 +36,5 @@ npm run dev
 Create a `.env` file and configure it with your Supabase credentials:
 ```plaintext
 VITE_SUPABASE_URL=your_supabase_url  
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key  
+VITE_SUPABASE_KEY=your_supabase_anon_key
 ```

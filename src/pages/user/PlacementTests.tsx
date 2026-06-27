@@ -74,12 +74,8 @@ const PlacementTests = () => {
   }, [userId, userData]);
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
-      {userData?.level == "SAT Placement Test medium" ||
-      userData?.level == "SAT Placement Test hard" ? (
-        <div className="text-center text-2xl mt-5">Empty</div>
-      ) : (
-        <div>
+    <div className="min-h-screen w-full bg-gradient-to-b from-[#84A3F9]/10 to-white p-8 py-20">
+      <div>
           {exams.length > 0 ? (
             <div className="max-w-7xl mx-auto grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-3">
               {exams.map((exam) => (
@@ -125,7 +121,7 @@ const PlacementTests = () => {
                 >
                   <div className="flex justify-between items-start mb-4">
                     <div className="space-y-1">
-                      <span className="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-blue-100 text-blue-800">
+                      <span className="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-[#84A3F9]/20 text-[#11184F]">
                         Placement Exam
                       </span>
                       <h3 className="text-lg font-semibold text-gray-800">
@@ -155,7 +151,7 @@ const PlacementTests = () => {
                     </div>
                   </div>
                   <Link to={`/placement-tests/${approvedExam.id}`}>
-                    <button className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50">
+                    <button className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-[#11184F] text-white rounded-md hover:bg-[#487ACB] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:ring-offset-2 disabled:opacity-50">
                       <PlayCircle className="w-5 h-5" />
                       Start Placement Test
                     </button>
@@ -202,8 +198,7 @@ const PlacementTests = () => {
               </div>
             </div>
           )}
-        </div>
-      )}
+      </div>
     </div>
   );
 };

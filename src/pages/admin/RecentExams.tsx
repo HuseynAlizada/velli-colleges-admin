@@ -4,16 +4,10 @@ import { Award, BookOpen, Loader2, Search } from "lucide-react";
 import { supabase } from "../../utils/supabase-client";
 import { ExamResult } from "../../types";
 
-interface ExamResultWithBranch extends ExamResult {
-  branch: string;
-}
-
 const RecentExams: React.FC = () => {
-  const [results, setResults] = useState<ExamResultWithBranch[]>([]);
+  const [results, setResults] = useState<ExamResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState("");
-
-  const adminBranch: string = JSON.parse(localStorage.getItem("branch") || '""');
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -25,9 +19,9 @@ const RecentExams: React.FC = () => {
 
   const getScoreColor = (score: number) => {
     if (score >= 90) return "from-green-400 to-emerald-500";
-    if (score >= 75) return "from-blue-400 to-indigo-500";
-    if (score >= 65) return "from-yellow-400 to-amber-500";
-    return "from-red-400 to-rose-500";
+    if (score >= 75) return "from-[#487ACB] to-[#11184F]";
+    if (score >= 65) return "from-[#84A3F9] to-[#487ACB]";
+    return "from-red-400 to-red-500";
   };
 
   const getScoreLabel = (score: number, level: string) => {
@@ -35,14 +29,14 @@ const RecentExams: React.FC = () => {
     if (score < 65) return { text: "Fail", color: "bg-red-100 text-red-600" };
     if (["B1+", "B2", "C1"].includes(lvl)) {
       if (score < 75) return { text: "Pass", color: "bg-green-100 text-green-600" };
-      if (score < 85) return { text: "Credit", color: "bg-blue-100 text-blue-600" };
-      if (score < 95) return { text: "Distinction", color: "bg-purple-100 text-purple-600" };
-      return { text: "High Distinction", color: "bg-indigo-100 text-indigo-600" };
+      if (score < 85) return { text: "Credit", color: "bg-[#84A3F9]/20 text-[#11184F]" };
+      if (score < 95) return { text: "Distinction", color: "bg-[#84A3F9]/20 text-[#487ACB]" };
+      return { text: "High Distinction", color: "bg-[#84A3F9]/20 text-[#11184F]" };
     }
     if (score < 75) return { text: "Pass", color: "bg-green-100 text-green-600" };
-    if (score < 85) return { text: "Credit", color: "bg-blue-100 text-blue-600" };
-    if (score < 95) return { text: "Distinction", color: "bg-purple-100 text-purple-600" };
-    return { text: "High Distinction", color: "bg-indigo-100 text-indigo-600" };
+    if (score < 85) return { text: "Credit", color: "bg-[#84A3F9]/20 text-[#11184F]" };
+    if (score < 95) return { text: "Distinction", color: "bg-[#84A3F9]/20 text-[#487ACB]" };
+    return { text: "High Distinction", color: "bg-[#84A3F9]/20 text-[#11184F]" };
   };
 
   useEffect(() => {
@@ -52,41 +46,15 @@ const RecentExams: React.FC = () => {
         const threeDaysAgo = new Date();
         threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
 
-        const [examRes, studentsRes] = await Promise.all([
-          supabase
-            .from("student_results")
-            .select("*")
-            .gte("created_at", threeDaysAgo.toISOString())
-            .order("created_at", { ascending: false }),
-          supabase.from("students").select("id, branch"),
-        ]);
+        const examRes = await supabase
+          .from("student_results")
+          .select("*")
+          .gte("created_at", threeDaysAgo.toISOString())
+          .order("created_at", { ascending: false });
 
         if (examRes.error) throw examRes.error;
-        if (studentsRes.error) throw studentsRes.error;
 
-        // Filter students by admin's branch (same logic as AdminDashboard)
-        const branchStudents =
-          adminBranch === "Inqilab"
-            ? (studentsRes.data || []).filter(
-                (s) => s.branch === "Inqilab" || s.branch == null
-              )
-            : (studentsRes.data || []).filter((s) => s.branch === adminBranch);
-
-        const allowedIds = new Set(branchStudents.map((s) => s.id));
-
-        const branchMap = new Map<number, string>();
-        (studentsRes.data || []).forEach((s) => {
-          branchMap.set(s.id, s.branch || "");
-        });
-
-        const withBranch: ExamResultWithBranch[] = (examRes.data || [])
-          .filter((r) => allowedIds.has(r.student_id))
-          .map((r) => ({
-            ...r,
-            branch: branchMap.get(r.student_id) || "",
-          }));
-
-        setResults(withBranch);
+        setResults(examRes.data || []);
       } catch (err) {
         console.error("Error fetching recent exams:", err);
       } finally {
@@ -95,7 +63,7 @@ const RecentExams: React.FC = () => {
     };
 
     fetchRecentExams();
-  }, [adminBranch]);
+  }, []);
 
   const filteredResults = results.filter(
     (r) =>
@@ -103,7 +71,7 @@ const RecentExams: React.FC = () => {
       r.exam_name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const renderCard = (result: ExamResultWithBranch, index: number) => {
+  const renderCard = (result: ExamResult, index: number) => {
     const label = getScoreLabel(result.student_score, result.student_level);
     return (
       <motion.div
@@ -136,7 +104,7 @@ const RecentExams: React.FC = () => {
             <div className="flex justify-between items-center">
               <span className="text-xs text-gray-500">Score</span>
               <div className="flex items-center gap-1">
-                <Award className="w-3.5 h-3.5 text-indigo-500" />
+                <Award className="w-3.5 h-3.5 text-[#487ACB]" />
                 <span className="text-sm font-bold text-gray-900">
                   {Math.round(result.student_score)}%
                 </span>
@@ -211,7 +179,7 @@ const RecentExams: React.FC = () => {
             Son 3 günün imtahanları
           </h1>
           <p className="text-gray-500 text-sm mt-1">
-            {adminBranch || "—"} branch · son 3 gün ərzindəki nəticələr
+            Son 3 gün ərzindəki nəticələr
           </p>
         </div>
 
@@ -229,7 +197,7 @@ const RecentExams: React.FC = () => {
 
       {isLoading ? (
         <div className="flex flex-col items-center justify-center py-24">
-          <Loader2 className="w-10 h-10 text-indigo-500 animate-spin mb-4" />
+          <Loader2 className="w-10 h-10 text-[#487ACB] animate-spin mb-4" />
           <p className="text-gray-500 text-sm">İmtahan nəticələri yüklənir...</p>
         </div>
       ) : filteredResults.length === 0 ? (

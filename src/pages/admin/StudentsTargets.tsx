@@ -41,17 +41,13 @@ const StudentsTargets = () => {
 
   useEffect(() => {
     const fetchStudents = async () => {
-      const branch = JSON.parse(localStorage.getItem("branch") || '""');
       setIsLoading(true);
       try {
         const { data, error } = await supabase.from("students").select("*");
 
         if (error) throw error;
 
-        // setStudents(data)
-      const studentsData=branch=="Inqilab"? data.filter(student=>student.branch=="Inqilab" || student.branch==null):data.filter(student=>student.branch==branch)
-
-        setStudents(studentsData);
+        setStudents(data || []);
       } catch (err) {
         console.error(err);
       } finally {
@@ -64,12 +60,12 @@ const StudentsTargets = () => {
   // Function to get a color based on the first letter of the purpose
   const getPurposeColor = (purpose: string) => {
     const colors = [
-      "bg-gradient-to-br from-blue-400 to-indigo-500",
+      "bg-gradient-to-br from-[#487ACB] to-[#11184F]",
       "bg-gradient-to-br from-emerald-400 to-green-500",
-      "bg-gradient-to-br from-amber-400 to-orange-500",
-      "bg-gradient-to-br from-rose-400 to-pink-500",
-      "bg-gradient-to-br from-violet-400 to-purple-500",
-      "bg-gradient-to-br from-cyan-400 to-blue-500",
+      "bg-gradient-to-br from-[#84A3F9] to-[#487ACB]",
+      "bg-gradient-to-br from-[#11184F] to-[#487ACB]",
+      "bg-gradient-to-br from-[#487ACB] to-[#11184F]",
+      "bg-gradient-to-br from-[#84A3F9] to-[#487ACB]",
     ];
 
     const firstChar = purpose.charAt(0).toLowerCase();
@@ -82,7 +78,7 @@ const StudentsTargets = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
           <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-            <Target className="w-6 h-6 text-indigo-500" />
+            <Target className="w-6 h-6 text-[#487ACB]" />
             Student Targets
           </h2>
           <p className="text-gray-500 mt-1">View student goals and purposes</p>
@@ -97,7 +93,7 @@ const StudentsTargets = () => {
               placeholder="Search by name or purpose..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 w-full sm:w-64 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+              className="pl-10 pr-4 py-2 w-full sm:w-64 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#487ACB] transition-all"
             />
           </div>
 
@@ -109,7 +105,7 @@ const StudentsTargets = () => {
                 <select
                   value={filterLevel || ""}
                   onChange={(e) => setFilterLevel(e.target.value || null)}
-                  className="appearance-none pl-2 pr-8 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                  className="appearance-none pl-2 pr-8 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#487ACB] transition-all"
                 >
                   <option value="">All Levels</option>
                   {uniqueLevels.map((level) => (
@@ -128,7 +124,7 @@ const StudentsTargets = () => {
       {/* Loading State */}
       {isLoading && (
         <div className="flex flex-col items-center justify-center py-12 bg-white rounded-xl shadow-sm">
-          <Loader2 className="w-10 h-10 text-indigo-500 animate-spin mb-4" />
+          <Loader2 className="w-10 h-10 text-[#487ACB] animate-spin mb-4" />
           <p className="text-gray-600">Loading student data...</p>
         </div>
       )}
@@ -136,8 +132,8 @@ const StudentsTargets = () => {
       {/* Empty State */}
       {!isLoading && (!students || students.length === 0) && (
         <div className="flex flex-col items-center justify-center py-12 bg-white rounded-xl shadow-sm">
-          <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
-            <Users className="w-8 h-8 text-indigo-500" />
+          <div className="w-16 h-16 bg-[#84A3F9]/20 rounded-full flex items-center justify-center mb-4">
+            <Users className="w-8 h-8 text-[#487ACB]" />
           </div>
           <h3 className="text-lg font-medium text-gray-900 mb-1">
             No students found
@@ -154,8 +150,8 @@ const StudentsTargets = () => {
         students.length > 0 &&
         filteredStudents.length === 0 && (
           <div className="flex flex-col items-center justify-center py-12 bg-white rounded-xl shadow-sm">
-            <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4">
-              <Filter className="w-8 h-8 text-amber-500" />
+            <div className="w-16 h-16 bg-[#84A3F9]/20 rounded-full flex items-center justify-center mb-4">
+              <Filter className="w-8 h-8 text-[#487ACB]" />
             </div>
             <h3 className="text-lg font-medium text-gray-900 mb-1">
               No matching students
@@ -169,7 +165,7 @@ const StudentsTargets = () => {
                 setSearchTerm("");
                 setFilterLevel(null);
               }}
-              className="mt-4 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors"
+              className="mt-4 px-4 py-2 bg-[#84A3F9]/10 text-[#11184F] rounded-lg hover:bg-[#84A3F9]/20 transition-colors"
             >
               Clear Filters
             </button>
@@ -194,7 +190,7 @@ const StudentsTargets = () => {
                     {/* Avatar or Initials */}
                     <div className="relative">
                       {student.image_url ? (
-                        <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-indigo-100">
+                        <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#84A3F9]/40">
                           <img
                             src={student.image_url || "/placeholder.svg"}
                             alt={student.name}
@@ -202,14 +198,14 @@ const StudentsTargets = () => {
                           />
                         </div>
                       ) : (
-                        <div className="w-14 h-14 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-xl">
+                        <div className="w-14 h-14 rounded-full bg-[#84A3F9]/20 flex items-center justify-center text-[#11184F] font-bold text-xl">
                           {student.name.charAt(0).toUpperCase()}
                         </div>
                       )}
 
                       {/* Level Badge */}
                       {student.level && (
-                        <div className="absolute -bottom-1 -right-1 bg-indigo-500 text-white text-xs font-medium px-2 py-0.5 rounded-full">
+                        <div className="absolute -bottom-1 -right-1 bg-[#487ACB] text-white text-xs font-medium px-2 py-0.5 rounded-full">
                           {student.level.toUpperCase()}
                         </div>
                       )}
@@ -230,7 +226,7 @@ const StudentsTargets = () => {
                   {student.student_purpose ? (
                     <div className="mt-4">
                       <div className="flex items-center gap-2 mb-2">
-                        <Target className="w-4 h-4 text-indigo-500" />
+                        <Target className="w-4 h-4 text-[#487ACB]" />
                         <h4 className="text-sm font-medium text-gray-700">
                           Learning Purpose
                         </h4>

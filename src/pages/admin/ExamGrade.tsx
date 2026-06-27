@@ -113,9 +113,9 @@ const ExamGrade = () => {
 
   const getScoreColor = (score: number) => {
     if (score >= 90) return "from-green-400 to-emerald-500";
-    if (score >= 75) return "from-blue-400 to-indigo-500";
-    if (score >= 60) return "from-yellow-400 to-amber-500";
-    return "from-red-400 to-rose-500";
+    if (score >= 75) return "from-[#487ACB] to-[#11184F]";
+    if (score >= 60) return "from-[#84A3F9] to-[#487ACB]";
+    return "from-red-400 to-red-500";
   };
 
   const getScoreLabel = (score: number, level: string) => {
@@ -165,7 +165,7 @@ const ExamGrade = () => {
                   placeholder="Search by name or exam..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 w-full sm:w-64 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                  className="pl-10 pr-4 py-2 w-full sm:w-64 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#487ACB] transition-all"
                 />
               </div>
 
@@ -176,7 +176,7 @@ const ExamGrade = () => {
                   <select
                     value={filterLevel || ""}
                     onChange={(e) => setFilterLevel(e.target.value || null)}
-                    className="appearance-none pl-2 pr-8 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                    className="appearance-none pl-2 pr-8 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#487ACB] transition-all"
                   >
                     <option value="">All Levels</option>
                     {uniqueLevels.map((level) => (
@@ -194,7 +194,7 @@ const ExamGrade = () => {
           {/* Loading State */}
           {isLoading && (
             <div className="flex flex-col items-center justify-center py-12 bg-white rounded-xl shadow-sm">
-              <Loader2 className="w-10 h-10 text-indigo-500 animate-spin mb-4" />
+              <Loader2 className="w-10 h-10 text-[#487ACB] animate-spin mb-4" />
               <p className="text-gray-600">Loading exam results...</p>
             </div>
           )}
@@ -202,8 +202,8 @@ const ExamGrade = () => {
           {/* Empty State */}
           {!isLoading && (!results || results.length === 0) && (
             <div className="flex flex-col items-center justify-center py-12 bg-white rounded-xl shadow-sm">
-              <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
-                <AlertCircle className="w-8 h-8 text-indigo-500" />
+              <div className="w-16 h-16 bg-[#84A3F9]/20 rounded-full flex items-center justify-center mb-4">
+                <AlertCircle className="w-8 h-8 text-[#487ACB]" />
               </div>
               <h3 className="text-lg font-medium text-gray-900 mb-1">
                 No results found
@@ -251,7 +251,7 @@ const ExamGrade = () => {
                         <div className="flex justify-between items-center mb-2">
                           <span className="text-sm text-gray-600">Score</span>
                           <div className="flex items-center gap-1">
-                            <Award className="w-4 h-4 text-indigo-500" />
+                            <Award className="w-4 h-4 text-[#487ACB]" />
                             <span className="font-bold text-gray-900">
                               {result.student_score.toFixed(2)}%
                             </span>
@@ -261,7 +261,7 @@ const ExamGrade = () => {
                         <div className="flex justify-between items-center mb-2">
                           <span className="text-sm text-gray-600">Reading</span>
                           <div className="flex items-center gap-1">
-                            <Award className="w-4 h-4 text-indigo-500" />
+                            <Award className="w-4 h-4 text-[#487ACB]" />
                             <span className="font-bold text-gray-900">
                               {result.reading_score} / {result.reading_count}
                             </span>
@@ -273,7 +273,7 @@ const ExamGrade = () => {
                             Listening
                           </span>
                           <div className="flex items-center gap-1">
-                            <Award className="w-4 h-4 text-indigo-500" />
+                            <Award className="w-4 h-4 text-[#487ACB]" />
                             <span className="font-bold text-gray-900">
                               {result.listening_score} /{" "}
                               {result.listening_count}
@@ -284,7 +284,7 @@ const ExamGrade = () => {
                         <div className="flex justify-between items-center mb-2">
                           <span className="text-sm text-gray-600">Grammar</span>
                           <div className="flex items-center gap-1">
-                            <Award className="w-4 h-4 text-indigo-500" />
+                            <Award className="w-4 h-4 text-[#487ACB]" />
                             <span className="font-bold text-gray-900">
                               {result.grammar_score} / {result.grammar_count}
                             </span>
@@ -296,7 +296,7 @@ const ExamGrade = () => {
                             Vocabulary
                           </span>
                           <div className="flex items-center gap-1">
-                            <Award className="w-4 h-4 text-indigo-500" />
+                            <Award className="w-4 h-4 text-[#487ACB]" />
                             <span className="font-bold text-gray-900">
                               {result.vocabulary_score} /{" "}
                               {result.vocabulary_count}
@@ -327,7 +327,7 @@ const ExamGrade = () => {
                               result.student_level
                             );
                             return (
-                            <div className="flex items-center gap-2 text-[10px]"> 
+                            <div className="flex items-center gap-2 text-[10px]">
                              Result:
                               <p
                                 className={`text-right text-md  font-medium ${className}`}
@@ -360,8 +360,8 @@ const ExamGrade = () => {
             results.length > 0 &&
             filteredResults.length === 0 && (
               <div className="flex flex-col items-center justify-center py-12 bg-white rounded-xl shadow-sm">
-                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4">
-                  <Filter className="w-8 h-8 text-amber-500" />
+                <div className="w-16 h-16 bg-[#84A3F9]/20 rounded-full flex items-center justify-center mb-4">
+                  <Filter className="w-8 h-8 text-[#487ACB]" />
                 </div>
                 <h3 className="text-lg font-medium text-gray-900 mb-1">
                   No matching results
@@ -375,7 +375,7 @@ const ExamGrade = () => {
                     setSearchTerm("");
                     setFilterLevel(null);
                   }}
-                  className="mt-4 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors"
+                  className="mt-4 px-4 py-2 bg-[#84A3F9]/10 text-[#11184F] rounded-lg hover:bg-[#84A3F9]/20 transition-colors"
                 >
                   Clear Filters
                 </button>

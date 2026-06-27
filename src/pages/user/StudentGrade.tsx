@@ -73,9 +73,9 @@ const StudentGrade = () => {
 
     const getScoreColor = (score: number) => {
         if (score >= 90) return "from-green-400 to-emerald-500"
-        if (score >= 75) return "from-blue-400 to-indigo-500"
-        if (score >= 60) return "from-yellow-400 to-amber-500"
-        return "from-red-400 to-rose-500"
+        if (score >= 75) return "from-[#487ACB] to-[#11184F]"
+        if (score >= 60) return "from-[#84A3F9] to-[#487ACB]"
+        return "from-red-400 to-red-500"
     }
 
     const getScoreLabel = (score: number) => {
@@ -104,7 +104,7 @@ const StudentGrade = () => {
                                     placeholder="Search by name or exam..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="pl-10 pr-4 py-2 w-full sm:w-64 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                                    className="pl-10 pr-4 py-2 w-full sm:w-64 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#487ACB] transition-all"
                                 />
                             </div>
 
@@ -115,7 +115,7 @@ const StudentGrade = () => {
                                     <select
                                         value={filterLevel || ""}
                                         onChange={(e) => setFilterLevel(e.target.value || null)}
-                                        className="appearance-none pl-2 pr-8 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                                        className="appearance-none pl-2 pr-8 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#487ACB] transition-all"
                                     >
                                         <option value="">All Levels</option>
                                         {uniqueLevels.map((level) => (
@@ -133,7 +133,7 @@ const StudentGrade = () => {
                     {/* Loading State */}
                     {isLoading && (
                         <div className="flex flex-col items-center justify-center py-12 bg-white rounded-xl shadow-sm">
-                            <Loader2 className="w-10 h-10 text-indigo-500 animate-spin mb-4" />
+                            <Loader2 className="w-10 h-10 text-[#487ACB] animate-spin mb-4" />
                             <p className="text-gray-600">Loading exam results...</p>
                         </div>
                     )}
@@ -141,8 +141,8 @@ const StudentGrade = () => {
                     {/* Empty State */}
                     {!isLoading && (!results || results.length === 0) && (
                         <div className="flex flex-col items-center justify-center py-12 bg-white rounded-xl shadow-sm">
-                            <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
-                                <AlertCircle className="w-8 h-8 text-indigo-500" />
+                            <div className="w-16 h-16 bg-[#84A3F9]/20 rounded-full flex items-center justify-center mb-4">
+                                <AlertCircle className="w-8 h-8 text-[#487ACB]" />
                             </div>
                             <h3 className="text-lg font-medium text-gray-900 mb-1">No results found</h3>
                             <p className="text-gray-500 max-w-md text-center">
@@ -181,7 +181,7 @@ const StudentGrade = () => {
                                                 <div className="flex justify-between items-center mb-2">
                                                     <span className="text-sm text-gray-600">Score</span>
                                                     <div className="flex items-center gap-1">
-                                                        <Award className="w-4 h-4 text-indigo-500" />
+                                                        <Award className="w-4 h-4 text-[#487ACB]" />
                                                         <span className="font-bold text-gray-900">{result.student_score.toFixed(2)}%</span>
                                                     </div>
                                                 </div>
@@ -217,8 +217,8 @@ const StudentGrade = () => {
                     {/* Filtered Results Empty State */}
                     {!isLoading && results && results.length > 0 && filteredResults.length === 0 && (
                         <div className="flex flex-col items-center justify-center py-12 bg-white rounded-xl shadow-sm">
-                            <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4">
-                                <Filter className="w-8 h-8 text-amber-500" />
+                            <div className="w-16 h-16 bg-[#84A3F9]/20 rounded-full flex items-center justify-center mb-4">
+                                <Filter className="w-8 h-8 text-[#487ACB]" />
                             </div>
                             <h3 className="text-lg font-medium text-gray-900 mb-1">No matching results</h3>
                             <p className="text-gray-500 max-w-md text-center">
@@ -229,7 +229,7 @@ const StudentGrade = () => {
                                     setSearchTerm("")
                                     setFilterLevel(null)
                                 }}
-                                className="mt-4 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors"
+                                className="mt-4 px-4 py-2 bg-[#84A3F9]/10 text-[#11184F] rounded-lg hover:bg-[#84A3F9]/20 transition-colors"
                             >
                                 Clear Filters
                             </button>

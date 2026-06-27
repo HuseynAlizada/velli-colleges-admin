@@ -84,14 +84,14 @@ export default function Levels() {
       )}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold text-gray-800">Levels</h2>
-        <button onClick={openPopUp} className="p-2 translate-x-[-80px] rounded-full cursor-pointer inset-0 bg-gradient-to-r from-rose-500 to-pink-600  text-white hover:bg-rose-600 transition-colors">
+        <button onClick={openPopUp} className="p-2 translate-x-[-80px] rounded-full cursor-pointer inset-0 bg-gradient-to-r from-[#11184F] to-[#487ACB]  text-white hover:bg-[#487ACB] transition-colors">
           <AddIcon className="w-5 h-5" />
         </button>
       </div>
 
       <div className="overflow-x-auto rounded-lg border border-gray-200">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-purple-50">
+          <thead className="bg-[#84A3F9]/10">
             <tr>
               <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                 #
@@ -126,7 +126,7 @@ export default function Levels() {
                         </button>
                         <button
                           onClick={() => handleDelete(level.id)}
-                          className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-rose-600 cursor-pointer transition-colors inline-flex items-center gap-1"
+                          className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-[#487ACB] cursor-pointer transition-colors inline-flex items-center gap-1"
                         >
                           <DeleteIcon className="w-4 h-4" />
                           Delete

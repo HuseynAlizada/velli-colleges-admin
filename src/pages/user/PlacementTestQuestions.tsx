@@ -211,7 +211,6 @@ export default function PlacementTestQuestions() {
         reading_count: sectionTotals["Reading"],
         grammar_count: sectionTotals["Grammar"],
         vocabulary_count: sectionTotals["Vocabulary"],
-        branch: studentData?.branch || null,
         finish_time: timeLeft,
       });
 
@@ -242,7 +241,7 @@ export default function PlacementTestQuestions() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center w-full bg-gradient-to-br from-gray-50 to-gray-100">
-        <Loader2 className="w-8 h-8 text-indigo-600 animate-spin mx-auto mb-4" />
+        <Loader2 className="w-8 h-8 text-[#11184F] animate-spin mx-auto mb-4" />
         <p className="text-gray-600">Loading exam questions...</p>
       </div>
     );
@@ -282,8 +281,8 @@ export default function PlacementTestQuestions() {
               key={type}
               className={`px-6 py-4 rounded-full transition-all ${
                 examType === type
-                  ? "bg-indigo-500 text-white"
-                  : "bg-gray-50 hover:bg-indigo-500 hover:text-white"
+                  ? "bg-[#487ACB] text-white"
+                  : "bg-gray-50 hover:bg-[#487ACB] hover:text-white"
               }`}
               onClick={() => setExamType(type)}
               disabled={isSubmitted}
@@ -297,7 +296,7 @@ export default function PlacementTestQuestions() {
       {!isSubmitted && (
         <div className="sticky z-[999] top-18 right-0 w-full flex items-center justify-end">
           <div className="w-[200px] z-10 bg-white shadow-md p-4 text-center">
-            <p className="text-xl font-semibold text-indigo-600">
+            <p className="text-xl font-semibold text-[#11184F]">
               Time Left: {formatTime(timeLeft)}
             </p>
           </div>
@@ -379,7 +378,7 @@ export default function PlacementTestQuestions() {
                           disabled={isSubmitted}
                           className={`px-6 py-4 rounded-full transition-all ${
                             selectedAnswer === option
-                              ? "bg-indigo-600 text-white"
+                              ? "bg-[#11184F] text-white"
                               : "bg-gray-50 hover:bg-gray-100"
                           }`}
                         >
@@ -399,7 +398,7 @@ export default function PlacementTestQuestions() {
             (examType === "Vocabulary" ? (
               <button
                 onClick={handleSubmit}
-                className="px-8 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700"
+                className="px-8 py-3 bg-[#11184F] text-white rounded-full hover:bg-[#487ACB]"
               >
                 Submit Answers
               </button>
@@ -415,7 +414,7 @@ export default function PlacementTestQuestions() {
                 <button
                   onClick={() => handleNavigation("next")}
                   disabled={examType === "Vocabulary"}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-md disabled:opacity-50"
+                  className="px-4 py-2 bg-[#11184F] text-white rounded-md disabled:opacity-50"
                 >
                   Next
                 </button>

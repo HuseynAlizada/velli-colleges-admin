@@ -20,7 +20,7 @@ export default function LevelModal({ closePopUp, getLevels, editLevelData }: lev
   }, [editLevelData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    
+
 
     e.preventDefault();
     const action = editLevelData ? "update" : "insert";
@@ -43,7 +43,7 @@ export default function LevelModal({ closePopUp, getLevels, editLevelData }: lev
   return (
     <div className="bg-white rounded-lg w-full max-w-md mx-4">
       <ToastContainer autoClose={3000} />
-      <div className="flex items-center justify-between inset-0 bg-gradient-to-r from-rose-500 to-pink-600  text-white px-6 py-4 rounded-t-lg">
+      <div className="flex items-center justify-between inset-0 bg-gradient-to-r from-[#11184F] to-[#487ACB]  text-white px-6 py-4 rounded-t-lg">
         <h2 className="text-xl font-semibold">Levels</h2>
         <button className="text-white hover:text-gray-200 transition-colors" onClick={closePopUp}>
           <CloseIcon className="w-6 h-6" />
@@ -56,7 +56,7 @@ export default function LevelModal({ closePopUp, getLevels, editLevelData }: lev
             id="name"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:border-transparent"
           >
             {["a1", "a2", "b1", "b1+", "b2", "c1"].map((level) => (
               <option key={level} value={level}>{level.toUpperCase()}</option>
@@ -70,7 +70,7 @@ export default function LevelModal({ closePopUp, getLevels, editLevelData }: lev
             type="text"
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:border-transparent"
             placeholder="Description"
             required
           />
@@ -78,7 +78,7 @@ export default function LevelModal({ closePopUp, getLevels, editLevelData }: lev
         <div className="flex justify-end">
           <button
             type="submit"
-            className="px-4 py-2 inset-0 bg-gradient-to-r from-rose-500 to-pink-600  text-white rounded-md hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
+            className="px-4 py-2 inset-0 bg-gradient-to-r from-[#11184F] to-[#487ACB]  text-white rounded-md hover:bg-[#487ACB] transition-colors focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:ring-offset-2"
           >
             {editLevelData ? "Edit Level" : "Add Level"}
           </button>

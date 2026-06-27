@@ -266,7 +266,7 @@ export default function PracticeExamQuestions() {
     return (
       <div className="min-h-screen flex items-center justify-center w-full bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="text-center">
-          <Loader2 className="w-8 h-8 text-indigo-600 animate-spin mx-auto mb-4" />
+          <Loader2 className="w-8 h-8 text-[#11184F] animate-spin mx-auto mb-4" />
           <p className="text-gray-600">Loading exam questions...</p>
         </div>
       </div>
@@ -315,7 +315,7 @@ export default function PracticeExamQuestions() {
       {!isSubmitted && (
         <div className="sticky z-[999] top-18 right-0 w-full flex items-center justify-end">
           <div className="w-[200px] z-10 bg-white shadow-md p-4 text-center">
-            <p className="text-xl font-semibold text-indigo-600">
+            <p className="text-xl font-semibold text-[#11184F]">
               Time Left: {formatTime(timeLeft)}
             </p>
           </div>
@@ -427,7 +427,7 @@ export default function PracticeExamQuestions() {
                                   className={`relative overflow-hidden px-6 py-4 rounded-full text-left transition-all duration-200 group hover:shadow-md
                                   ${
                                     isOptionSelected
-                                      ? "bg-indigo-600 text-white"
+                                      ? "bg-[#11184F] text-white"
                                       : "bg-gray-50 text-gray-900 hover:bg-gray-100"
                                   }`}
                                 >
@@ -457,7 +457,7 @@ export default function PracticeExamQuestions() {
           {!submited && (
             <button
               onClick={handleSubmit}
-              className="px-8 py-3 bg-indigo-600 text-white rounded-full font-medium hover:bg-indigo-700 transition-colors"
+              className="px-8 py-3 bg-[#11184F] text-white rounded-full font-medium hover:bg-[#487ACB] transition-colors"
             >
               Submit Answers
             </button>

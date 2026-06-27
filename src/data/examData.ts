@@ -35,7 +35,3 @@ export const examOptions = [
 
 
 export const PracticeExamOptions = ["Reading", "Listening", "Writing", "Grammar"]
-
-
-
-export const SatExamOptions = ["SAT Placement Test Medium","SAT Placement Test Hard"]

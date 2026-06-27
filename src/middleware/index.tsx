@@ -11,9 +11,9 @@ const RequireAuth = () => {
         let isMounted = true;
 
         const checkAuth = async () => {
-            const { data } = await supabase.auth.getSession();
-            const user = data.session?.user;
-            const email = user?.email;
+            const storedAdmin = localStorage.getItem("adminUser");
+            const admin = storedAdmin ? JSON.parse(storedAdmin) : null;
+            const email = typeof admin?.email === "string" ? admin.email : "";
 
             if (!email) {
                 if (isMounted) {
@@ -23,20 +23,20 @@ const RequireAuth = () => {
                 return;
             }
 
-            const metadataBranch = user.user_metadata?.branch;
-            const branchFromMetadata =
-                typeof metadataBranch === "string" ? metadataBranch : "";
-
             const { data: adminInfo } = await supabase
-                .from("admin_data")
-                .select("branch")
+                .from("admin_users")
+                .select("approved")
                 .eq("email", email)
                 .maybeSingle();
 
-            localStorage.setItem(
-                "branch",
-                JSON.stringify(adminInfo?.branch || branchFromMetadata || "Inqilab")
-            );
+            if (!adminInfo || adminInfo.approved === false) {
+                localStorage.removeItem("adminUser");
+                if (isMounted) {
+                    setIsAuthorized(false);
+                    setLoading(false);
+                }
+                return;
+            }
 
             if (isMounted) {
                 setIsAuthorized(true);

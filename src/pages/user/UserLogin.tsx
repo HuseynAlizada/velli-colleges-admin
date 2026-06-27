@@ -17,7 +17,6 @@ interface Student {
     id: string; // Adjust to number if your schema uses numeric IDs
     email: string;
     password: string;
-    branch?: string;
 }
 
 export default function UserLogin() {
@@ -63,7 +62,7 @@ export default function UserLogin() {
     useEffect(() => {
         const studentID = Cookies.get("studentID");
         if (studentID) {
-            navigate("/news");
+            navigate("/");
         }
     }, [navigate]);
 
@@ -81,7 +80,6 @@ export default function UserLogin() {
             }
 
             Cookies.set("studentID", user.id, { expires: 1, secure: true, sameSite: "Strict" });
-            localStorage.setItem("studentBranch", user.branch ?? "");
             navigate("/", { replace: true });
         } catch (err) {
             console.error("Unexpected error:", err);
@@ -102,7 +100,7 @@ export default function UserLogin() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-rose-500 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-[#11184F] via-[#487ACB] to-[#84A3F9] flex items-center justify-center p-4">
             <div className="bg-white rounded-3xl overflow-hidden w-full max-w-5xl flex shadow-xl h-[600px]">
                 <div className="w-1/2 relative hidden md:block p-10">
                     <div className="w-full h-full rounded-2xl">
@@ -112,7 +110,7 @@ export default function UserLogin() {
                 <div className="w-full md:w-1/2 p-8 md:p-12">
                     <div className="flex justify-between items-center mb-4">
                         <div className="w-[220px] h-[100px] -ml-7">
-                            <img src="/images/main-logo.png" className="w-full h-full" alt="Logo" />
+                            <img src="/images/velli-logo.png" className="w-full h-full object-contain" alt="Velli Logo" />
                         </div>
                         <div className="relative" ref={dropdownRef}>
                             <button
@@ -163,7 +161,7 @@ export default function UserLogin() {
                                         placeholder={t("emailText")}
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full px-4 mt-2 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                        className="w-full px-4 mt-2 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#487ACB]"
                                         required
                                         disabled={loading}
                                     />
@@ -176,7 +174,7 @@ export default function UserLogin() {
                                         placeholder="••••••••"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full px-4 py-3 mt-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                        className="w-full px-4 py-3 mt-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#487ACB]"
                                         required
                                         disabled={loading}
                                     />
@@ -192,7 +190,7 @@ export default function UserLogin() {
                             </div>
                             <button
                                 type="submit"
-                                className="w-full bg-yellow-400 text-black font-semibold py-3 rounded-lg hover:bg-yellow-500 transition-colors disabled:bg-gray-400"
+                                className="w-full bg-[#11184F] text-white font-semibold py-3 rounded-lg hover:bg-[#487ACB] transition-colors disabled:bg-gray-400"
                                 disabled={loading || users.length === 0}
                             >
                                 {loading ? t("loggingIn") : t("login")}

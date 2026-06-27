@@ -14,30 +14,10 @@ const levels = [
   { id: "b1+", name: "B1+" },
   { id: "b2", name: "B2" },
   { id: "c1", name: "C1" },
-
-
   // { id: "placement-test", name: "Placement Test" },
-  // {id:"kids", name:"Kids" },
 ];
 
 const placementTest = [{ id: true, name: "Placement Test" }];
-const kidsTest = [{ id: "kids-test", name: "Kids" }];
-const ieltsTofel = [
-  { id: "ielts", name: "IELTS" },
-  
-  { id: "tofel", name: "TOFEL" },
-];
-
-const satLevels = [
-  { id: "sat-placement-test-medium", name: "SAT Placement Test Medium" },
-  { id: "sat-placement-test-hard", name: "SAT Placement Test Hard" },
-];
-
-const branches = [
-  { id: "hazi-aslanov", name: "Hazi Aslanov" },
-  { id: "inqilab", name: "Inqilab" },
-  { id: "naxchivan", name: "Naxchivan" },
-];
 
 export default function AddStudent() {
   const { id } = useParams();
@@ -57,8 +37,6 @@ export default function AddStudent() {
     imageUrl: "",
     studentSchool: "",
     studentPurpose: "",
-    branch: "",
-    sat_level: "",
     placement_test: false,
     stock: false,
   });
@@ -106,8 +84,6 @@ export default function AddStudent() {
           imageUrl: data.image_url || "",
           studentSchool: data.student_school || "",
           studentPurpose: data.student_purpose || "",
-          branch: data.branch || "",
-          sat_level: data.sat_level || "",
           placement_test: data.placement_test || false,
           stock: data.stock || false,
         });
@@ -146,13 +122,13 @@ export default function AddStudent() {
       return;
     }
 
-    if (!formData.studentSchool || !formData.studentPurpose) {
-      toast.error(
-        "Please fill in all required fields (Student School and Purpose)"
-      );
-      setSubmitting(false);
-      return;
-    }
+    // if (!formData.studentSchool || !formData.studentPurpose) {
+    //   toast.error(
+    //     "Please fill in all required fields (Student School and Purpose)"
+    //   );
+    //   setSubmitting(false);
+    //   return;
+    // }
 
     try {
       let imageUrl = formData.imageUrl;
@@ -187,9 +163,7 @@ export default function AddStudent() {
               image_url: imageUrl,
               student_school: formData.studentSchool,
               student_purpose: formData.studentPurpose,
-              branch: formData.branch,
               placement_test: formData.placement_test,
-              sat_level: formData.sat_level,
               stock: formData.stock,
             })
             .eq("id", edit)
@@ -207,8 +181,6 @@ export default function AddStudent() {
               student_school: formData.studentSchool,
               student_purpose: formData.studentPurpose,
               placement_test: formData.placement_test,
-              branch: formData.branch,
-              sat_level: formData.sat_level,
               stock: formData.stock,
             })
             .select();
@@ -240,8 +212,6 @@ export default function AddStudent() {
         imageUrl: "",
         studentSchool: "",
         studentPurpose: "",
-        branch: "",
-        sat_level: "",
         placement_test: false,
         stock: false,
       });
@@ -298,7 +268,7 @@ export default function AddStudent() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:border-transparent"
                 placeholder="Enter Name"
                 required
               />
@@ -317,7 +287,7 @@ export default function AddStudent() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:border-transparent"
                 placeholder="Enter Email"
                 required
               />
@@ -336,7 +306,7 @@ export default function AddStudent() {
                 name="studentPurpose"
                 value={formData.studentPurpose}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:border-transparent"
                 placeholder="Enter student purpose"
                 required
               />
@@ -387,9 +357,8 @@ export default function AddStudent() {
                 name="studentSchool"
                 value={formData.studentSchool}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:border-transparent"
                 placeholder="Enter student school"
-                required
               />
             </div>
 
@@ -406,9 +375,8 @@ export default function AddStudent() {
                 name="parentName"
                 value={formData.parentName}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:border-transparent"
                 placeholder="Enter parent name"
-                required
               />
             </div>
 
@@ -435,7 +403,7 @@ export default function AddStudent() {
                 name="image"
                 accept="image/*"
                 onChange={handleImageChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:border-transparent"
               />
             </div>
           </div>
@@ -454,7 +422,7 @@ export default function AddStudent() {
                 name="level"
                 value={formData.level}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:border-transparent"
               >
                 <option value="">Choose Level</option>
                 {levels.map((level) => (
@@ -465,29 +433,6 @@ export default function AddStudent() {
               </select>
             </div>
 
-            <div className="space-y-2">
-              <label
-                htmlFor="level"
-                className="block text-sm font-medium text-gray-700"
-              >
-               SAT Level Test
-              </label>
-              <select
-                id="sat_level"
-                name="sat_level"
-                value={formData.sat_level}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-              >
-                <option value="">Choose Level</option>
-                {satLevels.map((level) => (
-                  <option key={level.id} value={level.name}>
-                    {level.name}
-                  </option>
-                ))}
-              
-              </select>
-            </div>
               <div className="space-y-2">
                   <label
                     htmlFor="placement_test"
@@ -500,7 +445,7 @@ export default function AddStudent() {
                     name="placement_test"
                     value={String(formData.placement_test)}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:border-transparent"
                   >
                     <option value="false">Choose Level</option>
                     {placementTest.map((level) => (
@@ -509,52 +454,6 @@ export default function AddStudent() {
                       </option>
                     ))}
                   </select>
-                </div>
-
-            <div className="space-y-2">
-              <label
-                htmlFor="level"
-                className="block text-sm font-medium text-gray-700"
-              >
-               IELTS TOEFL Program
-              </label>
-              <select
-                id="level"
-                name="level"
-                value={formData.level}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-              >
-                <option value="">Choose Level</option>
-                {ieltsTofel.map((level) => (
-                  <option key={level.id} value={level.name}>
-                    {level.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <label
-                htmlFor="level"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Kids Program
-              </label>
-              <select
-                id="level"
-                name="level"
-                // value={formData.level}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-              >
-                <option value="">Choose Level</option>
-                {kidsTest.map((level) => (
-                  <option key={level.id} value={level.name}>
-                    {level.name}
-                  </option>
-                ))}
-              </select>
             </div>
 
             <div className="space-y-2">
@@ -572,30 +471,6 @@ export default function AddStudent() {
               />
             </div>
           </div>
-
-          <div className="space-y-2">
-            <label
-              htmlFor="level"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Branch
-            </label>
-            <select
-              id="branch"
-              name="branch"
-              value={formData.branch}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-              required
-            >
-              <option value="">Choose Level</option>
-              {branches.map((level) => (
-                <option key={level.id} value={level.name}>
-                  {level.name}
-                </option>
-              ))}
-            </select>
-          </div>
         </div>
 
         {/* Action Buttons */}
@@ -612,7 +487,7 @@ export default function AddStudent() {
             className={`px-4 py-2 text-white rounded-md transition-colors ${
               submitting
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-rose-500 hover:bg-rose-600"
+                : "bg-[#11184F] hover:bg-[#487ACB]"
             }`}
           >
             {submitting

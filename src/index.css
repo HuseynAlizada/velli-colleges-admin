@@ -1,6 +1,11 @@
 @import "tailwindcss";
 @import "tailwindcss";
 
+:root {
+  --brand-navy: #11184F;
+  --brand-blue: #487ACB;
+  --brand-sky: #84A3F9;
+}
 
 .flex-items {
   display: flex;
@@ -8,11 +13,11 @@
 }
 
 .menu-animation {
-  transition: 1s all;
+  transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
 }
 
 .menu-animation.active {
-  transform: translateX(30px);
+  transform: translateX(6px);
 }
 
 
@@ -24,7 +29,7 @@
   left: -45px;
   width: 5px;
   height: 100%;
-  background: blue;
+  background: var(--brand-blue);
 }
 
 
@@ -57,15 +62,14 @@ position: relative;
 }
 
 .submenu.active {
-display: block;   
+display: block;
 }
 
 .submenu.active + .menu-animation {
  margin-bottom: 60px;
- border: 4px solid green;
- 
+
   }
-/* 
+/*
 .list:has(.submenu.active)  {
 padding-bottom: 0px;
 } */
@@ -188,4 +192,3 @@ body {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
-

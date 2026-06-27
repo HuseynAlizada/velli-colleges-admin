@@ -5,78 +5,44 @@ import { supabase } from "../../utils/supabase-client";
 const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showResetModal, setShowResetModal] = useState(false);
-  const [resetEmail, setResetEmail] = useState("");
-  const [isSendingReset, setIsSendingReset] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     const email = username.trim();
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password: password,
-    });
+    const { data, error } = await supabase
+      .from("admin_users")
+      .select("id,email,password,approved")
+      .eq("email", email)
+      .eq("password", password)
+      .maybeSingle();
 
-    if (error) {
+    if (error || !data) {
       console.log("Login error:", error);
       alert("Invalid credentials!");
       return;
     }
 
-    const metadataBranch = data.user?.user_metadata?.branch;
-    const branchFromMetadata =
-      typeof metadataBranch === "string" ? metadataBranch : "";
-
-    const { data: adminInfo } = await supabase
-      .from("admin_data")
-      .select("branch")
-      .eq("email", email)
-      .maybeSingle();
-
-    localStorage.setItem(
-      "branch",
-      JSON.stringify(adminInfo?.branch || branchFromMetadata || "Inqilab")
-    );
-    // const { data: session } = await supabase.auth.getSession();
-    navigate("/admin/dashboard");
-  };
-  const handleResetPassword = async () => {
-    const email = resetEmail.trim();
-
-    if (!email) {
-      alert("Email daxil edin!");
+    if (data.approved === false) {
+      alert("Admin user is not approved!");
       return;
     }
 
-    setIsSendingReset(true);
-
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/admin/reset-password`,
-      });
-
-      if (error) {
-        alert("Xəta: " + error.message);
-        return;
-      }
-
-      alert("Reset linki emailə göndərildi. Linkə keçib yeni parolu təyin edin.");
-      setShowResetModal(false);
-      setResetEmail("");
-    } finally {
-      setIsSendingReset(false);
-    }
+    localStorage.setItem(
+      "adminUser",
+      JSON.stringify({ id: data.id, email: data.email })
+    );
+    navigate("/admin/dashboard");
   };
 
   return (
-    <div className="bg-gray-300 w-full h-screen flex items-center justify-center">
-      <div className="bg-white flex flex-col px-4 pt-6 pb-8 min-w-[500px] rounded-2xl relative">
+    <div className="bg-gradient-to-br from-[#11184F] via-[#487ACB] to-[#84A3F9] w-full h-screen flex items-center justify-center">
+      <div className="bg-white flex flex-col px-4 pt-6 pb-8 min-w-[500px] rounded-2xl relative shadow-2xl">
         <div className="flex items-center ml-6">
           <img
-            src="/images/main-logo.png"
+            src="/images/velli-logo.png"
             className="w-auto h-[100px]"
-            alt=""
+            alt="Velli Logo"
           />
         </div>
         <div className="flex flex-col w-[80%] mx-auto">
@@ -89,7 +55,7 @@ const AdminLogin = () => {
             value={username}
             required
             onChange={(e) => setUsername(e.target.value)}
-            className="h-10 mb-3 border-2 border-gray-300 rounded-sm mt-2 pl-2"
+            className="h-10 mb-3 border-2 border-gray-300 rounded-sm mt-2 pl-2 focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:border-transparent"
           />
           <label>Password</label>
           <input
@@ -97,67 +63,16 @@ const AdminLogin = () => {
             value={password}
             required
             onChange={(e) => setPassword(e.target.value)}
-            className="h-10 border-2 border-gray-300 rounded-sm mt-2 pl-2"
+            className="h-10 border-2 border-gray-300 rounded-sm mt-2 pl-2 focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:border-transparent"
           />
-          {!showResetModal && (
-            <button
-              onClick={handleLogin}
-              className="w-full h-[40px] bg-[#D33D5A] mt-5 text-white rounded-sm"
-            >
-              Login
-            </button>
-          )}
-
-          {/* <Link
-                        to="/admin/register"
-                        className="w-full h-[40px] bg-blue-400 mt-5 text-white rounded-sm text-center leading-[40px]"
-                    >
-                        Register
-                    </Link> */}
           <button
-            onClick={() => {
-              setResetEmail(username.trim());
-              setShowResetModal(true);
-            }}
-            className="w-full h-[40px] bg-yellow-500 mt-5 text-white rounded-sm"
+            onClick={handleLogin}
+            className="w-full h-[40px] bg-[#11184F] hover:bg-[#487ACB] mt-5 text-white rounded-sm transition-colors"
           >
-            Reset Password
+            Login
           </button>
-        </div>
 
-        {/* Reset Password Modal */}
-        {showResetModal && (
-          <div className="absolute top-5 left-0 w-full h-full  bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white p-6 rounded-xl w-[400px]">
-              <h2 className="text-xl font-bold mb-4">Reset Password</h2>
-              <label>Email</label>
-              <input
-                type="email"
-                value={resetEmail}
-                onChange={(e) => setResetEmail(e.target.value)}
-                className="w-full border-2 border-gray-300 rounded-sm mt-2 mb-3 pl-2 h-10"
-              />
-              <div className="flex justify-end gap-2">
-                <button
-                  onClick={() => {
-                    setShowResetModal(false);
-                    setResetEmail("");
-                  }}
-                  className="px-4 py-2 bg-gray-400 rounded text-white"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleResetPassword}
-                  disabled={isSendingReset}
-                  className="px-4 py-2 bg-green-600 rounded text-white"
-                >
-                  {isSendingReset ? "Sending..." : "Send Link"}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );

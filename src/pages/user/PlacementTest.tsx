@@ -1,4 +1,4 @@
-import { RequestedExams, StudentData } from "../../types";
+import { RequestedExams } from "../../types";
 import {
   Clock,
   Calendar,
@@ -19,27 +19,7 @@ const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isRequestLoading, setIsRequestLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-    const [userData, setUserData] = useState<StudentData | null>(null);
-  
-
   const userId = Cookies.get("studentID");
-
-    useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("students")
-          .select("*")
-          .eq("id", userId)
-          .single();
-        if (error) throw error;
-        setUserData(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchUser();
-  }, [userId]);
 
 
   useEffect(() => {
@@ -81,7 +61,6 @@ const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
         created_at: exam.created_at,
         file_url: exam.exam_file,
         locked: false,
-        branch: userData?.branch,
       });
 
       if (error) throw error;
@@ -147,7 +126,7 @@ const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
       {/* Header */}
       <div className="flex justify-between items-start mb-4">
         <div className="space-y-1">
-          <span className="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-blue-100 text-blue-800">
+          <span className="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-[#84A3F9]/20 text-[#11184F]">
             Placement Exam
           </span>
           <h3 className="text-lg font-semibold text-gray-800">{exam.title}</h3>
@@ -177,7 +156,7 @@ const PlacementTest = ({ exam }: { exam: RequestedExams }) => {
       <button
         onClick={handleRequestUnlock}
         disabled={sendRequest || isRequestLoading}
-        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-[#11184F] text-white rounded-md hover:bg-[#487ACB] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:ring-offset-2 disabled:opacity-50"
       >
         {isRequestLoading ? (
           <div className="flex items-center gap-2">

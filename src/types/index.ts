@@ -16,35 +16,6 @@ export interface levelModal {
 // Levels type end
 
 
-// News type start
-export interface news {
-    created_at: string,
-    description: string,
-    id: number,
-    image_url: string,
-    link: string,
-    title: string
-}
-
-export interface Podcast {
-    id: number
-    title: string
-    description: string
-    duration: string
-    author: string
-    image: string
-}
-
-export interface NewsItem {
-    id: number
-    title: string
-    author: string
-    date: string
-    image: string
-}
-// News type end
-
-
 // Exams type start
 export interface Exam {
     created_at?: string | undefined,
@@ -112,8 +83,6 @@ export interface StudentData {
     image_url?: string,
     student_school?: string,
     student_purpose?: string,
-    branch?: string,
-    sat_level?: string,
     stock?: boolean,
     placement_test?: boolean
 }
@@ -234,18 +203,17 @@ export type examResults = {
 
 
 
-// START ADMIN DATA
+// START ADMIN USER
 
-export interface adminData {
+export interface AdminUser {
     id: number,
     created_at: number,
     email: string,
     password: string,
-    branch?: string,
     approved?: boolean
 }
 
-// END ADMIN DATA
+// END ADMIN USER
 
 // Start Student Grade
 

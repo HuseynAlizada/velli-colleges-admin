@@ -44,14 +44,15 @@ const PracticeExamCard = ({
   useEffect(() => {
     (async () => {
       try {
-        const { data, error } = await supabase.from("admin_data").select("*");
-        const dataLocale = localStorage.getItem("studentBranch");
-        const examPassword = data?.filter(
-          (item) => item.branch === dataLocale
-        )[0]?.password;
+        const { data, error } = await supabase
+          .from("admin_users")
+          .select("password")
+          .eq("approved", true)
+          .limit(1)
+          .maybeSingle();
 
         if (error) throw new Error();
-        setCorrectPassword(examPassword || "Family135!");
+        setCorrectPassword(data?.password || "Family135!");
       } catch (err) {
         console.log(err);
       }
@@ -175,7 +176,7 @@ const PracticeExamCard = ({
               value={inputPassword}
               onChange={(e) => setInputPassword(e.target.value)}
               placeholder="Enter password"
-              className="w-full border border-gray-300 rounded px-3 py-2 mb-3 focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full border border-gray-300 rounded px-3 py-2 mb-3 focus:outline-none focus:ring focus:border-[#487ACB]"
             />
             {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
             <div className="flex justify-end gap-3">
@@ -187,7 +188,7 @@ const PracticeExamCard = ({
               </button>
               <button
                 onClick={handleSubmitPassword}
-                className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600"
+                className="px-4 py-2 rounded bg-[#11184F] text-white hover:bg-[#487ACB]"
               >
                 Submit
               </button>
@@ -268,55 +269,22 @@ const DifficultyBar = ({ level, colors }: { level: string; colors: any }) => {
 };
 
 const getLevelColors = (level: string) => {
+  const brandScheme = {
+    bg: "from-[#84A3F9]/20 to-white",
+    border: "border-[#84A3F9]/50",
+    accent: "bg-[#84A3F9]",
+    text: "text-[#11184F]",
+    button: "bg-[#11184F] hover:bg-[#487ACB]",
+    icon: "text-[#487ACB]",
+  };
+
   const colorSchemes = {
-    A1: {
-      bg: "from-green-50 to-emerald-100",
-      border: "border-green-200",
-      accent: "bg-green-200",
-      text: "text-green-700",
-      button: "bg-green-500 hover:bg-green-600",
-      icon: "text-green-500",
-    },
-    A2: {
-      bg: "from-blue-50 to-sky-100",
-      border: "border-blue-200",
-      accent: "bg-blue-200",
-      text: "text-blue-700",
-      button: "bg-blue-500 hover:bg-blue-600",
-      icon: "text-blue-500",
-    },
-    B1: {
-      bg: "from-indigo-50 to-violet-100",
-      border: "border-indigo-200",
-      accent: "bg-indigo-200",
-      text: "text-indigo-700",
-      button: "bg-indigo-500 hover:bg-indigo-600",
-      icon: "text-indigo-500",
-    },
-    B2: {
-      bg: "from-purple-50 to-fuchsia-100",
-      border: "border-purple-200",
-      accent: "bg-purple-200",
-      text: "text-purple-700",
-      button: "bg-purple-500 hover:bg-purple-600",
-      icon: "text-purple-500",
-    },
-    C1: {
-      bg: "from-amber-50 to-yellow-100",
-      border: "border-amber-200",
-      accent: "bg-amber-200",
-      text: "text-amber-700",
-      button: "bg-amber-500 hover:bg-amber-600",
-      icon: "text-amber-500",
-    },
-    C2: {
-      bg: "from-rose-50 to-pink-100",
-      border: "border-rose-200",
-      accent: "bg-rose-200",
-      text: "text-rose-700",
-      button: "bg-rose-500 hover:bg-rose-600",
-      icon: "text-rose-500",
-    },
+    A1: brandScheme,
+    A2: brandScheme,
+    B1: brandScheme,
+    B2: brandScheme,
+    C1: brandScheme,
+    C2: brandScheme,
   };
   return colorSchemes[level as keyof typeof colorSchemes] || colorSchemes["A2"];
 };

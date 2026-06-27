@@ -74,7 +74,6 @@ export default function ExamCard({ exam }: { exam: Exam }) {
         created_at: exam.created_at,
         file_url: exam.file_url,
         locked: false,
-        branch: userData?.branch,
         student_name: userData?.name,
       });
 

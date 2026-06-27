@@ -27,27 +27,20 @@ export default function AdminStockDashboard() {
   }, []);
 
   const fetchStudents = async () => {
-    const branch = JSON.parse(localStorage.getItem("branch") || '""');
     const { data, error } = await supabase.from("students").select("*");
 
     if (error) {
       console.error("Error fetching students:", error);
     } else {
-      const studentsData =
-        branch == "Inqilab"
-          ? data.filter(
-              (student) => student.branch == "Inqilab" || student.branch == null
-            )
-          : data.filter((student) => student.branch == branch);
-      setStudents(studentsData.filter(item=>item.stock));
+      setStudents((data || []).filter((item) => item.stock));
     }
   };
 
   const getLevelColor = (level: string): string => {
     const colors: Record<Level, string> = {
       beginner: "bg-emerald-50 text-emerald-700 ring-emerald-600/20",
-      intermediate: "bg-blue-50 text-blue-700 ring-blue-600/20",
-      advanced: "bg-purple-50 text-purple-700 ring-purple-600/20",
+      intermediate: "bg-[#84A3F9]/10 text-[#11184F] ring-[#487ACB]/20",
+      advanced: "bg-[#84A3F9]/20 text-[#11184F] ring-[#11184F]/20",
     };
     return (
       colors[level?.toLowerCase() as Level] ||
@@ -83,7 +76,7 @@ export default function AdminStockDashboard() {
 
   return (
     <div className="w-full mx-auto p-6 bg-gray-50/50">
-      <h1 className="text-3xl font-bold text-[#D33D5A] mb-6 text-center">
+      <h1 className="text-3xl font-bold text-[#11184F] mb-6 text-center">
         Students List
       </h1>
 
@@ -94,19 +87,19 @@ export default function AdminStockDashboard() {
           placeholder="Search by name..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-400 focus:border-rose-400 outline-none"
+          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#487ACB] focus:border-[#487ACB] outline-none"
         />
         <Search className="w-5 h-5 absolute left-3 top-2.5 text-gray-400" />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {filteredStudents.length > 0 ? (
           filteredStudents.map((student) => (
             <div
               key={student.id}
               className="group relative bg-white rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
             >
-              <div className="relative h-32 bg-gradient-to-r from-rose-400 to-rose-600">
+              <div className="relative h-32 bg-gradient-to-r from-[#11184F] to-[#487ACB]">
                 <div className="absolute -bottom-12 left-6">
                   <img
                     src={student.image_url || "/images/student_avatar.jpeg"}
@@ -157,21 +150,21 @@ export default function AdminStockDashboard() {
                     </div>
                   </div>
                 </div>
-                <div className="mt-6 flex gap-2">
+                <div className="mt-6 flex flex-wrap gap-2">
                   <button
-                    className="flex-1 cursor-pointer px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg transition-all hover:scale-110"
+                    className="min-w-[78px] flex-1 cursor-pointer rounded-lg bg-green-500 px-4 py-2 text-sm font-medium text-white transition-all hover:scale-[1.03]"
                     onClick={() => handleEdit(student.id)}
                   >
                     Edit
                   </button>
                   <button
-                    className="flex-1 cursor-pointer px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg transition-all hover:scale-110"
+                    className="min-w-[78px] flex-1 cursor-pointer rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white transition-all hover:scale-[1.03]"
                     onClick={() => handleDelete(student.id)}
                   >
                     Delete
                   </button>
                   <button
-                    className="flex-1 cursor-pointer px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg transition-all hover:scale-110"
+                    className="min-w-[78px] flex-1 cursor-pointer rounded-lg bg-[#487ACB] px-4 py-2 text-sm font-medium text-white transition-all hover:scale-[1.03]"
                     onClick={() =>
                       navigate(`/admin/student-profile/${student.id}`)
                     }

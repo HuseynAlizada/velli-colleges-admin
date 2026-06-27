@@ -1,146 +1,159 @@
-
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react"; // Icons for the mobile menu toggle
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
-import GradeIcon from '@mui/icons-material/Grade';
-
+import { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { ChevronDown, Menu, X } from "lucide-react";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import GradeIcon from "@mui/icons-material/Grade";
 
 const StudentSidebar = () => {
-    const [activeMenu, setActiveMenu] = useState<number | null>(null);
+    const location = useLocation();
+    const [examsOpen, setExamsOpen] = useState(false);
     const [mobileMenu, setMobileMenu] = useState<boolean>(false);
 
-    const handleMenuClick = (id: number) => {
-        setActiveMenu(activeMenu === id ? null : id); // Toggle submenu if clicked again
-        setMobileMenu(false); // Close mobile menu on item click
-    };
+    useEffect(() => {
+        setExamsOpen(location.pathname === "/approved-exams" || location.pathname === "/locked-exams");
+    }, [location.pathname]);
+
+    const closeMobileMenu = () => setMobileMenu(false);
+
+    const navClass = ({ isActive }: { isActive: boolean }) =>
+        `group flex min-h-11 items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
+            isActive
+                ? "bg-[#11184F] text-white shadow-[0_12px_28px_rgba(17,24,79,0.22)]"
+                : "text-[#11184F]/75 hover:bg-[#84A3F9]/14 hover:text-[#11184F]"
+        }`;
+
+    const iconClass =
+        "flex h-9 w-9 items-center justify-center rounded-xl bg-[#84A3F9]/16 text-[#487ACB] [&>svg]:h-5 [&>svg]:w-5";
+
+    const isExamRoute = location.pathname === "/approved-exams" || location.pathname === "/locked-exams";
 
     return (
         <>
-            {/* Mobile Menu Button */}
             <button
                 onClick={() => setMobileMenu(!mobileMenu)}
                 aria-label={mobileMenu ? "Close menu" : "Open menu"}
-                className={`md:hidden fixed top-16 left-2 z-50 bg-blue-400 text-white p-2 rounded-md shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 ${mobileMenu && 'bg-white'}`}
+                className={`md:hidden fixed left-4 top-4 z-50 rounded-2xl p-3 shadow-[0_16px_34px_rgba(17,24,79,0.24)] transition focus:outline-none focus:ring-2 focus:ring-[#84A3F9] ${
+                    mobileMenu ? "bg-white text-[#11184F]" : "bg-[#11184F] text-white"
+                }`}
             >
-                {mobileMenu ? <X size={24} className="text-blue-400" /> : <Menu size={24} />}
+                {mobileMenu ? <X size={22} /> : <Menu size={22} />}
             </button>
 
-            {/* Sidebar */}
-            <div
-                className={`fixed top-0 left-0 h-full w-[240px] bg-gradient-to-r bg-white py-10 z-40 transition-transform duration-300 ${mobileMenu ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-                    }`}
+            <aside
+                className={`fixed left-0 top-0 z-40 flex h-full w-[256px] flex-col overflow-hidden border-r border-[#84A3F9]/30 bg-white/92 shadow-[18px_0_48px_rgba(17,24,79,0.10)] backdrop-blur-xl transition-transform duration-300 ${
+                    mobileMenu ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+                }`}
             >
-                {/* Logo */}
-                <Link to="/" className="w-full flex justify-start" onClick={() => setMobileMenu(false)}>
-                    <div className="w-[70%] mt-[30px]">
+                <div className="px-5 pb-5 pt-5">
+                    <Link
+                        to="/"
+                        className="flex items-center justify-center rounded-3xl border border-[#84A3F9]/30 bg-gradient-to-br from-[#84A3F9]/18 to-white px-4 py-4 shadow-[0_18px_38px_rgba(72,122,203,0.10)]"
+                        onClick={closeMobileMenu}
+                    >
                         <img
-                            src="/images/main-logo.png"
-                            alt="Logo"
-                            className="w-full"
-                            onError={(e) => (e.currentTarget.src = "/fallback-logo.png")} // Fallback image
+                            src="/images/velli-logo.png"
+                            alt="Velli Logo"
+                            className="h-20 w-auto object-contain"
+                            onError={(e) => (e.currentTarget.src = "/fallback-logo.png")}
                         />
-                    </div>
-                </Link>
-
-                {/* Menu Items */}
-                <nav className="text-blue-600 mt-4 px-4 flex flex-col gap-3">
-                    {/* Menu Item 1: Dashboard */}
-                    <Link to="/" onClick={() => handleMenuClick(1)}>
-                        <div
-                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${1 === activeMenu ? "bg-blue-600 text-white" : ""
-                                }`}
-                        >
-                            <DashboardIcon />
-                            <span>Dashboard</span>
-                        </div>
                     </Link>
+                </div>
 
-                    {/* Menu Item 2: Profile */}
+                <nav className="flex-1 space-y-1.5 overflow-y-auto px-4 pb-5">
+                    <NavLink to="/" onClick={closeMobileMenu} className={navClass}>
+                        <span className={iconClass}>
+                            <DashboardIcon />
+                        </span>
+                        <span>Dashboard</span>
+                    </NavLink>
 
-
-                    {/* Menu Item 3: Courses (with submenu) */}
-                    <div>
-                        <div
-                            className={`flex items-center gap-2 cursor-pointer py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${3 === activeMenu ? "bg-blue-600 text-white" : ""
-                                }`}
-                            onClick={() => setActiveMenu(3 === activeMenu ? null : 3)}
+                    <div className="space-y-1">
+                        <button
+                            type="button"
+                            className={`group flex min-h-11 w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
+                                isExamRoute
+                                    ? "bg-[#11184F] text-white shadow-[0_12px_28px_rgba(17,24,79,0.22)]"
+                                    : "text-[#11184F]/75 hover:bg-[#84A3F9]/14 hover:text-[#11184F]"
+                            }`}
+                            onClick={() => setExamsOpen(!examsOpen)}
+                            aria-expanded={examsOpen}
                         >
-                            <LibraryBooksIcon />
-                            <span>Exams</span>
-                        </div>
-                        {3 === activeMenu && (
-                            <div className="flex flex-col gap-2 pl-8 mt-2">
-                                <Link to="/approved-exams" onClick={() => setMobileMenu(false)}>
-                                    <div className="py-2 hover:text-indigo-200">Approved Exams</div>
-                                </Link>
-                                <Link to="/locked-exams" onClick={() => setMobileMenu(false)}>
-                                    <div className="py-2 hover:text-indigo-200">Locked Exams</div>
-                                </Link>
+                            <span className={iconClass}>
+                                <LibraryBooksIcon />
+                            </span>
+                            <span className="flex-1 text-left">Exams</span>
+                            <ChevronDown
+                                size={18}
+                                className={`transition-transform duration-200 ${examsOpen ? "rotate-180" : ""}`}
+                            />
+                        </button>
+
+                        {examsOpen && (
+                            <div className="ml-6 space-y-1 border-l border-[#84A3F9]/35 pl-4">
+                                <NavLink
+                                    to="/approved-exams"
+                                    onClick={closeMobileMenu}
+                                    className={({ isActive }) =>
+                                        `block rounded-xl px-3 py-2 text-sm transition-colors ${
+                                            isActive
+                                                ? "bg-[#84A3F9]/18 font-semibold text-[#11184F]"
+                                                : "text-[#11184F]/62 hover:bg-[#84A3F9]/12 hover:text-[#11184F]"
+                                        }`
+                                    }
+                                >
+                                    Approved Exams
+                                </NavLink>
+                                <NavLink
+                                    to="/locked-exams"
+                                    onClick={closeMobileMenu}
+                                    className={({ isActive }) =>
+                                        `block rounded-xl px-3 py-2 text-sm transition-colors ${
+                                            isActive
+                                                ? "bg-[#84A3F9]/18 font-semibold text-[#11184F]"
+                                                : "text-[#11184F]/62 hover:bg-[#84A3F9]/12 hover:text-[#11184F]"
+                                        }`
+                                    }
+                                >
+                                    Locked Exams
+                                </NavLink>
                             </div>
                         )}
                     </div>
 
-                    <Link to="/practice-exam" onClick={() => handleMenuClick(2)}>
-                        <div
-                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${2 === activeMenu ? "bg-blue-600 text-white" : ""
-                                }`}
-                        >
+                    <NavLink to="/practice-exam" onClick={closeMobileMenu} className={navClass}>
+                        <span className={iconClass}>
                             <LibraryBooksIcon />
-                            <span>Practice Exams</span>
-                        </div>
-                    </Link>
+                        </span>
+                        <span>Practice Exams</span>
+                    </NavLink>
 
-                    <Link to="/placement-tests" onClick={() => handleMenuClick(7)}>
-                        <div
-                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${7 === activeMenu ? "bg-blue-600 text-white" : ""
-                                }`}
-                        >
+                    <NavLink to="/placement-tests" onClick={closeMobileMenu} className={navClass}>
+                        <span className={iconClass}>
                             <LibraryBooksIcon />
-                            <span>Placement Test</span>
-                        </div>
-                    </Link>
+                        </span>
+                        <span>Placement Test</span>
+                    </NavLink>
 
-                     <Link to="/sat-placement-tests" onClick={() => handleMenuClick(12)}>
-                        <div
-                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${12 === activeMenu ? "bg-blue-600 text-white" : ""
-                                }`}
-                        >
-                            <LibraryBooksIcon />
-                            <span>SAT Placement Test</span>
-                        </div>
-                    </Link>
-
-                    <Link to="/exam-grade" onClick={() => handleMenuClick(5)}>
-                        <div
-                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${5 === activeMenu ? "bg-blue-600 text-white" : ""
-                                }`}
-                        >
+                    <NavLink to="/exam-grade" onClick={closeMobileMenu} className={navClass}>
+                        <span className={iconClass}>
                             <GradeIcon />
-                            <span>Student Grade</span>
-                        </div>
-                    </Link>
-
-                    {/* Menu Item 5: Settings */}
-                    <Link to="/news" onClick={() => handleMenuClick(6)}>
-                        <div
-                            className={`gap-2 cursor-pointer flex items-center py-4 menu-animation hover:bg-blue-600 hover:text-white rounded-md px-2 ${6 === activeMenu ? "bg-blue-600 text-white" : ""
-                                }`}
-                        >
-                            <NewspaperIcon />
-                            <span>News & Articles</span>
-                        </div>
-                    </Link>
+                        </span>
+                        <span>Student Grade</span>
+                    </NavLink>
                 </nav>
-            </div>
 
-            {/* Background Overlay on Mobile */}
+                <div className="border-t border-[#84A3F9]/25 bg-[#84A3F9]/8 px-5 py-4">
+                    <div className="rounded-2xl bg-white px-4 py-3 text-sm font-medium text-[#11184F] shadow-[0_12px_28px_rgba(72,122,203,0.10)]">
+                        Velli School
+                    </div>
+                </div>
+            </aside>
+
             {mobileMenu && (
                 <div
-                    className="fixed inset-0 bg-black opacity-50 z-30 md:hidden"
-                    onClick={() => setMobileMenu(false)}
+                    className="fixed inset-0 z-30 bg-[#11184F]/25 backdrop-blur-sm md:hidden"
+                    onClick={closeMobileMenu}
                     aria-hidden="true"
                 />
             )}

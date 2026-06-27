@@ -49,11 +49,11 @@ export default function LockedExams() {
     }, [userData])
 
     return (
-        <div className="min-h-screen w-full bg-gradient-to-b from-amber-50/50 to-white p-8 py-20">
+        <div className="min-h-screen w-full bg-gradient-to-b from-[#84A3F9]/10 to-white p-8 py-20">
             {isLoading ? (
                 <div className="max-w-7xl mx-auto flex justify-center items-center min-h-[50vh]">
                     <div className="flex flex-col items-center gap-4">
-                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#487ACB]"></div>
                         <span className="text-gray-600 text-lg">Loading exams...</span>
                     </div>
                 </div>

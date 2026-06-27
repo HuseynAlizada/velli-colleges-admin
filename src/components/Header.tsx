@@ -34,41 +34,40 @@ const Header = () => {
 
   return (
     <div
-      className="z-50 flex items-center justify-between px-4 py-[12px] bg-white text-blue-400 fixed top-0 w-full 
-                        shadow-[0_4px_20px_rgba(59,130,246,0.3)] border-b border-blue-100"
+      className="fixed left-3 right-3 top-3 z-30 flex min-h-14 items-center justify-between rounded-3xl border border-[#84A3F9]/30 bg-white/88 px-4 py-2 text-[#11184F] shadow-[0_18px_48px_rgba(17,24,79,0.10)] backdrop-blur-xl md:left-[272px] md:right-6 md:px-5"
     >
-      <h1 className="md:text-xl text-[18px]  font-semibold">Student Dashboard</h1>
+      <h1 className="text-[16px] font-semibold md:text-xl">Student Dashboard</h1>
       {/* <h3 className='md:text-xl text-md font-semibold md:block hidden'>Build your future</h3> */}
       <div className="relative">
         <div className="flex items-center md:gap-4 gap-1">
-          <h3 className="md:text-[18px] text-[14px]">
+          <h3 className="hidden text-[14px] md:block md:text-[16px]">
             Hello, <span className="font-medium">{userData && userData.name}</span>
           </h3>
           <div
-            className="flex items-center cursor-pointer hover:opacity-80 transition-opacity "
+            className="flex cursor-pointer items-center rounded-2xl border border-[#84A3F9]/24 bg-[#84A3F9]/10 px-2 py-1 transition hover:bg-[#84A3F9]/16"
             onClick={() => setMenu(!menu)}
           >
-            <div className="w-8 h-8  rounded-full flex items-center justify-center overflow-hidden border-2 border-blue-200 shadow-sm">
+            <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border-2 border-white shadow-sm">
               <img
                 src={userData?.image_url || "/images/student_avatar.jpeg"}
                 alt=""
-                className="rounded-full w-full h-full object-cover"
+                className="h-full w-full rounded-full object-cover"
               />
             </div>
-            <KeyboardArrowDownIcon className="text-blue-500" />
+            <KeyboardArrowDownIcon className="text-[#487ACB]" />
           </div>
         </div>
 
         {menu && (
-          <div className="absolute right-0 w-[150px] top-[calc(100%+8px)] bg-white rounded-lg shadow-[0_5px_15px_rgba(59,130,246,0.25)] border border-blue-100 overflow-hidden">
+          <div className="absolute right-0 top-[calc(100%+10px)] w-[170px] overflow-hidden rounded-2xl border border-[#84A3F9]/35 bg-white shadow-[0_18px_42px_rgba(17,24,79,0.12)]">
             <Link
               to="/student-profile"
-              className="block py-3 px-4 w-full cursor-pointer text-blue-600 hover:bg-blue-50 transition-colors"
+              className="block w-full cursor-pointer px-4 py-3 text-[#11184F] transition-colors hover:bg-[#84A3F9]/12"
             >
               My Profile
             </Link>
             <div
-              className="py-3 px-4 w-full cursor-pointer text-blue-600 hover:bg-blue-50 transition-colors border-t border-blue-100"
+              className="w-full cursor-pointer border-t border-[#84A3F9]/30 px-4 py-3 text-[#11184F] transition-colors hover:bg-[#84A3F9]/12"
               onClick={logoutUser}
             >
               Logout
@@ -81,4 +80,3 @@ const Header = () => {
 }
 
 export default Header
-

@@ -8,16 +8,11 @@ const ExamRequests = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const fetchRequestExams = async () => {
-    const branch = JSON.parse(localStorage.getItem("branch") || '""');
     try {
       const { data, error } = await supabase.from("approved-exams").select("*");
       if (error) throw error;
-      const studentsData =
-        branch == "Inqilab"
-          ? data.filter((student) => student.branch == "Inqilab" || student.branch == null)
-          : data.filter((student) => student.branch == branch);
 
-      setRequestedExams(studentsData);
+      setRequestedExams(data || []);
     } catch (error) {
       console.error("Error fetching exams:", error);
     }
@@ -49,7 +44,7 @@ const filteredExams = requestedExams?.filter((exam) => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50/50 to-white p-8 py-20 flex flex-col items-center">
+    <div className="min-h-screen bg-gradient-to-b from-[#84A3F9]/10 to-white p-8 py-20 flex flex-col items-center">
       {/* 🔍 Search Bar */}
       <div className="w-full max-w-3xl mb-8">
         <input
@@ -57,7 +52,7 @@ const filteredExams = requestedExams?.filter((exam) => {
           placeholder="Search exams by title..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#487ACB]"
         />
       </div>
 
@@ -78,4 +73,3 @@ const filteredExams = requestedExams?.filter((exam) => {
 };
 
 export default ExamRequests;
-  

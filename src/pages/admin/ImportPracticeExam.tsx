@@ -186,7 +186,7 @@ export default function ImportPracticeExam() {
       <div className="bg-white rounded-xl shadow-lg w-full">
         <ToastContainer position="top-right" autoClose={3000} />
         {/* Header */}
-        <div className="inset-0 bg-gradient-to-r from-rose-500 to-pink-600 px-6 py-4 rounded-t-xl">
+        <div className="inset-0 bg-gradient-to-r from-[#11184F] to-[#487ACB] px-6 py-4 rounded-t-xl">
           <h1 className="text-white text-xl font-semibold">
             {editExam ? "Edit Practice Exam" : "Import Practice Exam"}
           </h1>
@@ -204,7 +204,7 @@ export default function ImportPracticeExam() {
                 name="selectedExam"
                 value={examData.selectedExam}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#487ACB] focus:border-[#487ACB] transition duration-200"
               >
                 {PracticeExamOptions.map((item, index) => (
                   <option key={index} value={item}>
@@ -227,7 +227,7 @@ export default function ImportPracticeExam() {
                     href={examData.selectedFile}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inset-0 bg-gradient-to-r from-rose-500 to-pink-600 hover:underline text-white px-2 rounded-md"
+                    className="inset-0 bg-gradient-to-r from-[#11184F] to-[#487ACB] hover:underline text-white px-2 rounded-md"
                   >
                     View File
                   </a>
@@ -237,7 +237,7 @@ export default function ImportPracticeExam() {
                 type="file"
                 onChange={handleFileChange}
                 accept=".xlsx, .xls"
-                className="w-full border border-gray-300 rounded-lg p-2 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100 transition duration-200"
+                className="w-full border border-gray-300 rounded-lg p-2 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-[#84A3F9]/10 file:text-[#11184F] hover:file:bg-[#84A3F9]/20 transition duration-200"
               />
             </div>
 
@@ -253,7 +253,7 @@ export default function ImportPracticeExam() {
                   placeholder="Pass Score"
                   value={examData.passScore}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#487ACB] focus:border-[#487ACB] transition duration-200"
                 />
               </div>
               <div className="space-y-2">
@@ -267,7 +267,7 @@ export default function ImportPracticeExam() {
                   max="100"
                   value={examData.duration}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#487ACB] focus:border-[#487ACB] transition duration-200"
                 />
               </div>
             </div>
@@ -281,7 +281,7 @@ export default function ImportPracticeExam() {
                 name="level"
                 value={examData.level}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#487ACB] focus:border-[#487ACB] transition duration-200"
               >
                 <option value="">Select Level</option>
                 {levels.map((item) => (
@@ -300,7 +300,7 @@ export default function ImportPracticeExam() {
                 name="unit"
                 value={examData.unit}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition duration-200"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#487ACB] focus:border-[#487ACB] transition duration-200"
               >
                 <option value="">Select Unit</option>
                 {units.map((item) => (
@@ -323,7 +323,7 @@ export default function ImportPracticeExam() {
               <button
                 type="submit"
                 disabled={uploading}
-                className={`px-5 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition duration-200 ${
+                className={`px-5 py-2 bg-[#11184F] text-white rounded-lg hover:bg-[#487ACB] transition duration-200 ${
                   uploading ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >

@@ -65,7 +65,7 @@ export function PhoneInput({ value, onChange, name, id, placeholder }: PhoneInpu
         name={name}
         value={inputValue} // Controlled by internal state, synced with prop
         onChange={handleChange}
-        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#487ACB] focus:border-transparent"
         placeholder={placeholder || "+994 050 562 53 06"}
         minLength={17}
         maxLength={18}
@@ -73,7 +73,7 @@ export function PhoneInput({ value, onChange, name, id, placeholder }: PhoneInpu
         required
       />
       {inputValue.length > 5 && !isValidPhoneNumber(inputValue) && (
-        <p className="absolute text-xs text-rose-500 mt-1">Format: +994 050 562 53 06</p>
+        <p className="absolute text-xs text-red-500 mt-1">Format: +994 050 562 53 06</p>
       )}
     </div>
   );

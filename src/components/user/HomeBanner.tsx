@@ -1,10 +1,4 @@
-import {
-  ArrowRight,
-  BookOpen,
-  Calendar,
-  GraduationCap,
-  Users,
-} from "lucide-react";
+import { ArrowRight, BookOpen, Calendar, GraduationCap, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../../utils/supabase-client";
@@ -101,7 +95,7 @@ useEffect(() => {
           .single();
 
         if (error) throw Error;
-        
+
         setTakenExams(data);
       } catch (err) {
         console.log(err);
@@ -114,21 +108,21 @@ useEffect(() => {
   const stats = [
     {
       icon: BookOpen,
-      bgColor: "bg-gradient-to-r from-indigo-400 to-purple-500",
+      bgColor: "bg-gradient-to-r from-[#11184F] to-[#487ACB]",
       iconColor: "text-white",
       value: studentLevel?.toUpperCase(),
       label: "Your Level",
     },
     {
       icon: GraduationCap,
-      bgColor: "bg-gradient-to-r from-rose-400 to-red-500",
+      bgColor: "bg-gradient-to-r from-[#487ACB] to-[#84A3F9]",
       iconColor: "text-white",
       value: takenExams?.exam_count,
       label: "Taken Exams",
     },
     {
       icon: Users,
-      bgColor: "bg-gradient-to-r from-amber-400 to-yellow-500",
+      bgColor: "bg-gradient-to-r from-[#84A3F9] to-[#487ACB]",
       iconColor: "text-white",
       value: takenExams?.practice_count,
       label: "Taken Practice Exams",
@@ -145,9 +139,9 @@ useEffect(() => {
     <section className="relative overflow-hidden bg-white">
       {/* Background Pattern */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-indigo-100 opacity-70"></div>
-        <div className="absolute top-1/2 -left-24 w-64 h-64 rounded-full bg-rose-100 opacity-70"></div>
-        <div className="absolute -bottom-20 right-1/3 w-80 h-80 rounded-full bg-amber-100 opacity-60"></div>
+        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-[#84A3F9]/30 opacity-70"></div>
+        <div className="absolute top-1/2 -left-24 w-64 h-64 rounded-full bg-[#487ACB]/20 opacity-70"></div>
+        <div className="absolute -bottom-20 right-1/3 w-80 h-80 rounded-full bg-[#11184F]/10 opacity-60"></div>
         <div className="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
       </div>
 
@@ -156,13 +150,13 @@ useEffect(() => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text Content */}
           <div className="space-y-8">
-            {/* <div className="inline-flex items-center px-4 py-2 bg-indigo-50 rounded-full text-indigo-600 font-medium text-sm">
+            {/* <div className="inline-flex items-center px-4 py-2 bg-[#84A3F9]/10 rounded-full text-[#11184F] font-medium text-sm">
                             <span className="animate-pulse mr-2">●</span> Student Portal v2.0
                         </div> */}
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
               You Are Part
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-rose-500">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#11184F] to-[#487ACB]">
                 Of Our Family
               </span>
             </h1>
@@ -174,18 +168,18 @@ useEffect(() => {
 
             <div className="flex flex-wrap gap-4">
               <Link
-                to="/news"
-                className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors shadow-lg hover:shadow-indigo-200 group"
+                to="/locked-exams"
+                className="inline-flex items-center px-6 py-3 bg-[#11184F] text-white font-medium rounded-lg hover:bg-[#487ACB] transition-colors shadow-lg hover:shadow-[#84A3F9]/40 group"
               >
-                Go to News
+                Explore Exams
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
 
               <Link
-                to="/locked-exams"
-                className="inline-flex items-center px-6 py-3 bg-white text-indigo-600 font-medium rounded-lg border-2 border-indigo-600 hover:bg-indigo-50 transition-colors"
+                to="/practice-exam"
+                className="inline-flex items-center px-6 py-3 bg-white text-[#11184F] font-medium rounded-lg border-2 border-[#11184F] hover:bg-[#84A3F9]/10 transition-colors"
               >
-                Explore Exams
+                Practice Exams
               </Link>
             </div>
           </div>

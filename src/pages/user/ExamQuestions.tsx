@@ -47,7 +47,7 @@ export default function ExamQuestions() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [sectionScores, setSectionScores] = useState<{ [key: string]: number }>(
-    {}
+    {},
   );
   const [totalScore, setTotalScore] = useState<number | null>(null);
   const [examScore, setExamScore] = useState<number | null>(null);
@@ -59,7 +59,7 @@ export default function ExamQuestions() {
   const examSections = ["Listening", "Reading", "Grammar", "Vocabulary"];
 
   const [sectionTotals, setSectionTotals] = useState<{ [key: string]: number }>(
-    {}
+    {},
   );
 
   const navigate = useNavigate();
@@ -89,7 +89,7 @@ export default function ExamQuestions() {
 
         const { data, error } = await supabase
           .from(
-            pathNameUrl[1] === "approved-exams" ? "approved-exams" : "exams"
+            pathNameUrl[1] === "approved-exams" ? "approved-exams" : "exams",
           )
           .select("*")
           .eq("id", id)
@@ -114,7 +114,7 @@ export default function ExamQuestions() {
           const formattedData = jsonData.map((row, index) => ({
             "Question No":
               Number(
-                row["Question No"] || row["question_no"] || row["QuestionNo"]
+                row["Question No"] || row["question_no"] || row["QuestionNo"],
               ) || index + 1,
             Question: String(row["Question"] || ""),
             "Option A": String(row["Option A"] || ""),
@@ -128,12 +128,15 @@ export default function ExamQuestions() {
 
           setQuestions(formattedData);
 
-          const totals = examSections.reduce((acc, section) => {
-            acc[section] = formattedData.filter(
-              (q) => q.Section === section
-            ).length;
-            return acc;
-          }, {} as { [key: string]: number });
+          const totals = examSections.reduce(
+            (acc, section) => {
+              acc[section] = formattedData.filter(
+                (q) => q.Section === section,
+              ).length;
+              return acc;
+            },
+            {} as { [key: string]: number },
+          );
           setSectionTotals(totals);
         }
       } catch (err) {
@@ -252,7 +255,7 @@ export default function ExamQuestions() {
 
       if (resultError) {
         throw new Error(
-          "Exam results could not be saved: " + resultError.message
+          "Exam results could not be saved: " + resultError.message,
         );
       }
 
@@ -263,10 +266,7 @@ export default function ExamQuestions() {
         .maybeSingle();
 
       if (fetchError) {
-        console.error(
-          "Unable to fetch taken exam count:",
-          fetchError.message
-        );
+        console.error("Unable to fetch taken exam count:", fetchError.message);
       } else if (takenExamsData) {
         const currentExamCount = takenExamsData.exam_count || 0;
         const { error: updateError } = await supabase
@@ -287,7 +287,10 @@ export default function ExamQuestions() {
           });
 
         if (insertCountError) {
-          console.error("Failed to create exam count:", insertCountError.message);
+          console.error(
+            "Failed to create exam count:",
+            insertCountError.message,
+          );
         }
       }
 
@@ -307,7 +310,8 @@ export default function ExamQuestions() {
       }
     } catch (err) {
       console.error(err);
-      const message = err instanceof Error ? err.message : "Unknown error occurred.";
+      const message =
+        err instanceof Error ? err.message : "Unknown error occurred.";
       setSubmitError(message);
       setIsModalOpen(true);
       setIsSubmitted(false);
@@ -319,7 +323,7 @@ export default function ExamQuestions() {
   };
 
   const filteredQuestions = questions.filter(
-    (question) => question.Section === examType
+    (question) => question.Section === examType,
   );
 
   const formatTime = (seconds: number) => {
@@ -383,7 +387,7 @@ export default function ExamQuestions() {
               href={content}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-indigo-600 underline"
+              className="text-[#11184F] underline"
             >
               View PDF Content
             </a>
@@ -428,7 +432,7 @@ export default function ExamQuestions() {
     return (
       <div className="min-h-screen flex items-center justify-center w-full bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="text-center">
-          <Loader2 className="w-8 h-8 text-indigo-600 animate-spin mx-auto mb-4" />
+          <Loader2 className="w-8 h-8 text-[#11184F] animate-spin mx-auto mb-4" />
           <p className="text-gray-600">Exam Questions Loading...</p>
         </div>
       </div>
@@ -475,8 +479,8 @@ export default function ExamQuestions() {
                                 transition-all duration-200 group hover:shadow-md
                                 ${
                                   examType === type
-                                    ? "bg-indigo-500 text-white"
-                                    : "bg-gray-50 text-gray-900 hover:bg-indigo-500 hover:text-white"
+                                    ? "bg-[#487ACB] text-white"
+                                    : "bg-gray-50 text-gray-900 hover:bg-[#487ACB] hover:text-white"
                                 }`}
               onClick={() => setExamType(type)}
               disabled={isSubmitted}
@@ -490,7 +494,7 @@ export default function ExamQuestions() {
       {!isSubmitted && (
         <div className="sticky z-[999] top-18 right-0 w-full flex items-center justify-end">
           <div className="w-[200px] z-10 bg-white shadow-md p-4 text-center">
-            <p className="text-xl font-semibold text-indigo-600">
+            <p className="text-xl font-semibold text-[#11184F]">
               Time Remaining {formatTime(timeLeft)}
             </p>
           </div>
@@ -518,7 +522,7 @@ export default function ExamQuestions() {
                 const questionKey = question["Question No"] || index;
                 const selectedAnswer = selectedAnswers[questionKey];
                 const availableOptions = ["A", "B", "C", "D"].filter(
-                  (option) => question[`Option ${option}` as keyof Question]
+                  (option) => question[`Option ${option}` as keyof Question],
                 );
 
                 const shouldShowContent =
@@ -555,7 +559,7 @@ export default function ExamQuestions() {
                             className={`relative overflow-hidden px-6 py-4 rounded-full text-left transition-all duration-200 group hover:shadow-md
                                                             ${
                                                               isOptionSelected
-                                                                ? "bg-indigo-600 text-white"
+                                                                ? "bg-[#11184F] text-white"
                                                                 : "bg-gray-50 text-gray-900 hover:bg-gray-100"
                                                             }`}
                           >
@@ -580,7 +584,7 @@ export default function ExamQuestions() {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="px-8 py-3 bg-indigo-600 text-white rounded-full font-medium hover:bg-indigo-700 transition-colors"
+                className="px-8 py-3 bg-[#11184F] text-white rounded-full font-medium hover:bg-[#487ACB] transition-colors"
               >
                 {isSubmitting ? "Sending..." : "Send Answers"}
               </button>
@@ -596,7 +600,7 @@ export default function ExamQuestions() {
                 <button
                   onClick={() => handleNavigation("next")}
                   disabled={examType === "Vocabulary"}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-md disabled:opacity-50"
+                  className="px-4 py-2 bg-[#11184F] text-white rounded-md disabled:opacity-50"
                 >
                   Next
                 </button>
@@ -622,10 +626,13 @@ export default function ExamQuestions() {
                   Submission Failed
                 </h2>
                 <p className="text-gray-600 mb-4">
-                  Your exam could not be saved. Please try again or contact support.
+                  Your exam could not be saved. Please try again or contact
+                  support.
                 </p>
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <p className="text-red-700 text-sm font-mono break-words">{submitError}</p>
+                  <p className="text-red-700 text-sm font-mono break-words">
+                    {submitError}
+                  </p>
                 </div>
               </>
             ) : (
@@ -648,7 +655,11 @@ export default function ExamQuestions() {
                       Total Score: {examScore?.toFixed(2)} %
                     </h3>
                     {examScore !== null && (
-                      <h3 className={getScoreLabel(examScore, studentLevelData).className}>
+                      <h3
+                        className={
+                          getScoreLabel(examScore, studentLevelData).className
+                        }
+                      >
                         {getScoreLabel(examScore, studentLevelData).text}
                       </h3>
                     )}
