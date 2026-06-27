@@ -52,7 +52,7 @@ const PracticeExamCard = ({
           .maybeSingle();
 
         if (error) throw new Error();
-        setCorrectPassword(data?.password || "Family135!");
+        setCorrectPassword(data?.password || "Velli.029");
       } catch (err) {
         console.log(err);
       }

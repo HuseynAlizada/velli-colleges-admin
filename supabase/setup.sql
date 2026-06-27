@@ -193,7 +193,7 @@ begin
 end $$;
 
 insert into public.admin_users (email, password, approved)
-values ('admin@familyschool.az', 'Family135!', true)
+values ('vellicolleges@gmail.com', 'Velli.029', true)
 on conflict (email) do update
 set password = excluded.password,
     approved = excluded.approved;

@@ -22,7 +22,7 @@ Velli School is an interactive educational platform built with React, TypeScript
 
 ## Installation
 ```bash
-git clone https://github.com/your-repo/family-school.git  
+git clone https://github.com/your-repo/velli-colleges-admin.git  
 cd family-school  
 npm install  
 ```

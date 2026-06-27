@@ -145,7 +145,7 @@ const HomeFeatures = () => {
                         </p>
                         <div className="flex items-center gap-3 justify-center">
                             <a
-                                href="https://familyschool.az/"
+                                href="https://velli.az/"
                                 target="_blank"
                                 className="inline-flex items-center gap-2 bg-white text-[#11184F] px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors group"
                             >
@@ -154,7 +154,7 @@ const HomeFeatures = () => {
                             </a>
                             <a
                                 target="_blank"
-                                href="https://www.instagram.com/familyschool.az/"
+                                href="https://www.instagram.com/vellicolleges/?hl=en"
                                 className="inline-flex items-center gap-2 bg-[#84A3F9] text-[#11184F] px-6 py-3 rounded-full font-medium hover:bg-white transition-colors"
                             >
                                 <InstagramIcon />
