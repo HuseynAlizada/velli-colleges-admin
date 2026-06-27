@@ -138,7 +138,7 @@ const HomeFeatures = () => {
 
                     <div className="relative px-8 py-16 md:py-16 text-center">
                         <h2 className="text-2xl md:text-4xl font-bold text-white mb-6 [text-wrap:balance]">
-                            Visit our website to learn more about Family School.
+                            Visit our website to learn more about Velli School.
                         </h2>
                         <p className="text-white/90 md:text-lg text-md mb-8 max-w-2xl mx-auto">
                             Join thousands of students who are already using our platform to achieve their academic goals.

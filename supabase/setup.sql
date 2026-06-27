@@ -1,4 +1,4 @@
--- Family School Supabase setup
+-- Velli School Supabase setup
 -- Run this in Supabase SQL Editor for the cleaned project.
 -- SAT, news/articles, and Supabase Auth admin tables are intentionally omitted.
 

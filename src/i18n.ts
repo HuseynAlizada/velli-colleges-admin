@@ -8,7 +8,7 @@ i18n.use(initReactI18next).init({
     resources: {
         en: {
             translation: {
-                title: 'Login to Family School Portal',
+                title: 'Login to Velli School Portal',
                 description: "Welcome back! Please log in to continue",
                 email: "Email",
                 emailText: "Please enter your email",

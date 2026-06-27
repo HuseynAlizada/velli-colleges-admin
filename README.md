@@ -1,6 +1,6 @@
-# Family School 📚🎮
+# Velli School 📚🎮
 
-Family School is an interactive educational platform built with React, TypeScript, Tailwind CSS, and Supabase. It allows students to take exams, complete placement tests, play educational games, and track their rankings.
+Velli School is an interactive educational platform built with React, TypeScript, Tailwind CSS, and Supabase. It allows students to take exams, complete placement tests, play educational games, and track their rankings.
 
 ## Features
 
